@@ -23,17 +23,15 @@ void UBTService_SelectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	AChip* OwningCharacter = Cast<AChip>(OwnerComp.GetAIOwner()->GetPawn());
 	UAIPerceptionComponent* Perception = OwnerComp.GetAIOwner()->GetPerceptionComponent();
 	AActor* FoundTarget = FindTarget(Perception, OwningCharacter);
+	
+	
 	OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Object>(TEXT("Target"), FoundTarget);
 
 	if (FoundTarget != NULL)
 	{
 		OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Bool>(TEXT("InCombat"), true);
 	}
-	else
-	{
-		OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Bool>(TEXT("InCombat"), false);
 
-	}
 
 
 

@@ -62,7 +62,9 @@ void AEnemyAIController::Tick(float DeltaTime)
 
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
 	{
-		Pawn->AttackMechanics();
+		Pawn->AttackMechanics(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
+
+
 	}
 
 }

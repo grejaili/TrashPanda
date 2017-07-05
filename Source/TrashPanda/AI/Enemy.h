@@ -27,7 +27,7 @@ public:
 
 	FVector CalculateRandomPos();
 
-	void AttackMechanics();
+	void AttackMechanics(UObject* Player);
 
 
 protected:

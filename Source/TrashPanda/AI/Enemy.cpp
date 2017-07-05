@@ -47,8 +47,8 @@ void AEnemy::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
-	
-	
+
+
 
 }
 
@@ -63,10 +63,19 @@ FVector AEnemy::CalculateRandomPos()
 	return  RandomPos;
 }
 
-void AEnemy::AttackMechanics()
+void AEnemy::AttackMechanics(UObject* CPlayer)
 {
+	AActor* Player = Cast<AActor>(CPlayer);
+	float distance = FVector::Dist(this->GetActorLocation(), Player->GetActorLocation());
+
+	//we have to setup the types of attacks 
+	if (distance < 100)
+	{
+		print("Vem para o pau caralho");
+	}
 
 
-	print("Come join us");
 
 }
+
+
