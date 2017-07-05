@@ -10,11 +10,10 @@
 #include "Perception/AISense_Sight.h"
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
-
 void AEnemyAIController::Possess(APawn* InPawn)
 {
 	Super::Possess(InPawn);
-	
+
 	if (BehaviorTreeAsset)
 	{
 		RunBehaviorTree(BehaviorTreeAsset);
@@ -47,19 +46,26 @@ ETeamAttitude::Type AEnemyAIController::GetAttitudeTowards(FGenericTeamId TeamA,
 
 ETeamAttitude::Type AEnemyAIController::GetAttitudeTowardsPlayer(const AActor& Other) const
 {
+
+
 	return ETeamAttitude::Hostile;
 }
 
-//ITS SHITTY BUT I DONT CARE
+
 void AEnemyAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-   	NextLocation = Pawn->CalculateRandomPos();
-	if (UPathFollowingComponent::HasReachedDestination(NextLocation);
+
+	//I have to change this but IDK how to make it better
+	NextLocation = Pawn->CalculateRandomPos();
+	GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
+
+	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
 	{
-		print("hehe");
+		Pawn->AttackMechanics();
 	}
 
-
 }
+
+
+

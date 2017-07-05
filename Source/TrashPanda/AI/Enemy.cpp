@@ -1,5 +1,6 @@
 #include "TrashPanda.h"
 #include "Enemy.h"
+#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
 
 // Sets default values
@@ -38,7 +39,6 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 // Called every frame
@@ -47,14 +47,26 @@ void AEnemy::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
+	
+	
+
 }
 
 
 FVector AEnemy::CalculateRandomPos()
 {
 	FVector RandomPos;
-	RandomPos.X = 0;
+	uint32 negative = MaxRandomization * -1;
+	RandomPos.X = (FMath::RandRange(0, MaxRandomization));
 	RandomPos.Z = 0;
-	RandomPos.Y = 0;
+	RandomPos.Y = (FMath::RandRange(0, MaxRandomization));
 	return  RandomPos;
+}
+
+void AEnemy::AttackMechanics()
+{
+
+
+	print("Come join us");
+
 }

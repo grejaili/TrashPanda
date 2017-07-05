@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "GameFramework/Character.h"
@@ -22,21 +23,26 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(EditAnywhere, Category = Behavior)
-	class UBehaviorTree* EnemyBehavior;
-	
+		class UBehaviorTree* EnemyBehavior;
+
 	FVector CalculateRandomPos();
+
+	void AttackMechanics();
+
+
 protected:
-	
-	UPROPERTY(VisibleAnywhere)
-	uint32 Health;
-	
-	UPROPERTY(VisibleAnywhere)
-	uint32 DamageReduction;
-	
-	UPROPERTY(VisibleAnywhere)
-	uint32 Damage;
 
+	UPROPERTY(VisibleAnywhere)
+		uint32 Health;
 
+	UPROPERTY(VisibleAnywhere)
+		uint32 DamageReduction;
+
+	UPROPERTY(VisibleAnywhere)
+		uint32 Damage;
+
+	UPROPERTY(EditAnywhere, Category = Randomization)
+	uint32 MaxRandomization;
 
 
 

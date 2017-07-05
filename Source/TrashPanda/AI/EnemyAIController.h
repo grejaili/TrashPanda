@@ -20,11 +20,6 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-protected:
-	UPROPERTY(EditDefaultsOnly)
-		class UBehaviorTree* BehaviorTreeAsset;
-	UPROPERTY(EditDefaultsOnly)
-		FGenericTeamId TeamId;
 
 public:
 	FGenericTeamId GetGenericTeamId() const override { return TeamId; }
@@ -32,12 +27,16 @@ public:
 	static ETeamAttitude::Type GetAttitudeTowards(FGenericTeamId TeamA, FGenericTeamId TeamB);
 
 protected:
+	UPROPERTY(EditDefaultsOnly)
+		class UBehaviorTree* BehaviorTreeAsset;
+	UPROPERTY(EditDefaultsOnly)
+		FGenericTeamId TeamId;
+
 	virtual ETeamAttitude::Type GetAttitudeTowardsPlayer(const AActor& Other) const;
-
-	
-
 	AEnemy* Pawn;
+
+	UPROPERTY(VisibleAnywhere)
 	FVector NextLocation;
 
-
+	
 };
