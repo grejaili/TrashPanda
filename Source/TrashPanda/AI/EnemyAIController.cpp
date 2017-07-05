@@ -19,9 +19,10 @@ void AEnemyAIController::Possess(APawn* InPawn)
 	{
 		RunBehaviorTree(BehaviorTreeAsset);
 	}
-	CalculateRandomPos();
 
+	Pawn = Cast<AEnemy>(InPawn);
 }
+
 
 
 ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Other) const
@@ -49,13 +50,16 @@ ETeamAttitude::Type AEnemyAIController::GetAttitudeTowardsPlayer(const AActor& O
 	return ETeamAttitude::Hostile;
 }
 
-void AEnemyAIController::CalculateRandomPos()
- {
-	FVector RandomPos;
-	RandomPos.X = 0;
-	RandomPos.Z = 0;
-	RandomPos.Y = 0;
+//ITS SHITTY BUT I DONT CARE
+void AEnemyAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+   	NextLocation = Pawn->CalculateRandomPos();
+	if (UPathFollowingComponent::HasReachedDestination(NextLocation);
+	{
+		print("hehe");
+	}
 
-	BrainComponent->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), RandomPos);
 
- }
+}

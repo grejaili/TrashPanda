@@ -50,7 +50,11 @@ void AEnemy::Tick(float DeltaTime)
 }
 
 
-void AEnemy::LootDrop()
+FVector AEnemy::CalculateRandomPos()
 {
-
+	FVector RandomPos;
+	RandomPos.X = 0;
+	RandomPos.Z = 0;
+	RandomPos.Y = 0;
+	return  RandomPos;
 }

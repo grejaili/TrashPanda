@@ -23,16 +23,21 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Behavior)
 	class UBehaviorTree* EnemyBehavior;
-
+	
+	FVector CalculateRandomPos();
 protected:
+	
 	UPROPERTY(VisibleAnywhere)
 	uint32 Health;
+	
 	UPROPERTY(VisibleAnywhere)
 	uint32 DamageReduction;
+	
 	UPROPERTY(VisibleAnywhere)
 	uint32 Damage;
 
-	UFUNCTION()
-	void LootDrop();
+
+
+
 
 };

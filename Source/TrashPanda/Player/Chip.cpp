@@ -478,6 +478,7 @@ void AChip::MoveForward(float Value)
 	}
 }
 
+// it should be on player contrller
 void AChip::MoveRight(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
@@ -495,6 +496,10 @@ void AChip::MoveRight(float Value)
 
 
 }
+
+// the way ryan teached us is wrong
+// do not open the project by visual studio
+
 
 
 // TO DO - Nick:
