@@ -25,25 +25,43 @@ public:
 	UPROPERTY(EditAnywhere, Category = Behavior)
 		class UBehaviorTree* EnemyBehavior;
 
-	FVector CalculateRandomPos();
+	FVector NextPos();
 
 	void AttackMechanics(UObject* Player);
+	
+
 
 
 protected:
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnyWhere, Category = Stats)
 		uint32 Health;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnyWhere, Category = Stats)
 		uint32 DamageReduction;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnyWhere, Category = Stats)
 		uint32 Damage;
 
-	UPROPERTY(EditAnywhere, Category = Randomization)
-	uint32 MaxRandomization;
+	UPROPERTY(EditAnywhere, Category = AIBehavior)
+		uint32 MoveRadius;
+// ATTACK OPTIONS
+	UPROPERTY(EditAnyWhere, Category = AIBehavior)
+		uint32 MelleAttackRange;
+	UPROPERTY(EditAnywhere, Category = AIBehavior)
+		uint32 ChargeRange;
+
+	FTimerHandle AttackTimerHandler;
+	bool bIsPossibletoAttack = true;
+
+	UPROPERTY(EditAnywhere, Category = AIBehavior)
+		float GlobalCD;
 
 
-
+	virtual float TakeDamage(
+		float DamageAmount,
+		struct FDamageEvent const & DamageEvent,
+		class AController * EventInstigator,
+		AActor * DamageCauser
+	);
 };

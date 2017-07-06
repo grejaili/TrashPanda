@@ -39,6 +39,8 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, GeneralAttackCD, false);
 }
 
 // Called every frame
@@ -53,13 +55,21 @@ void AEnemy::Tick(float DeltaTime)
 }
 
 
-FVector AEnemy::CalculateRandomPos()
+FVector AEnemy::NextPos()
 {
+	float TmpRandom = FMath::RandRange(0, 360);
+	float t = FMath::DegreesToRadians(TmpRandom)		;
+
+
+	float x = MoveRadius*cos(t) + this->GetActorLocation().X;
+	float y = MoveRadius*sin(t) + this->GetActorLocation().X;
+
+	print("BUGOU");
+
 	FVector RandomPos;
-	uint32 negative = MaxRandomization * -1;
-	RandomPos.X = (FMath::RandRange(0, MaxRandomization));
+	RandomPos.X = x;
 	RandomPos.Z = 0;
-	RandomPos.Y = (FMath::RandRange(0, MaxRandomization));
+	RandomPos.Y = y;
 	return  RandomPos;
 }
 
@@ -67,15 +77,48 @@ void AEnemy::AttackMechanics(UObject* CPlayer)
 {
 	AActor* Player = Cast<AActor>(CPlayer);
 	float distance = FVector::Dist(this->GetActorLocation(), Player->GetActorLocation());
-
-	//we have to setup the types of attacks 
-	if (distance < 100)
+	//ATTTACK TYPES 
+//----------Melle Attack---------\\//
+	if (GetWorld()->GetTimerManager().GetTimerRemaining(AttackTimerHandler) <= 0)
 	{
-		print("Vem para o pau caralho");
+		bIsPossibletoAttack = true;
+	}
+
+	//Global CoolDown
+	//attack one
+	if ((distance <= MelleAttackRange) && (bIsPossibletoAttack == true))
+	{
+		print("Attack");
+		//place the animations calls here
+		bIsPossibletoAttack = false;
+		//those two should in a separate function but later
+		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
+		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, GlobalCD, false);
 	}
 
 
 
 }
+
+
+float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser)
+{
+	// Call the base class - this will tell us how much damage to apply  
+	const float ActualDamage = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+	if (ActualDamage > 0.f)
+	{
+		Health -= ActualDamage;
+		// If the damage depletes our health set our lifespan to zero - which will destroy the actor  
+		if (Health <= 0.f)
+		{
+			SetLifeSpan(0.001f);
+		}
+	}
+
+	return ActualDamage;
+}
+
+
+
 
 

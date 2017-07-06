@@ -57,14 +57,19 @@ void AEnemyAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	//I have to change this but IDK how to make it better
-	NextLocation = Pawn->CalculateRandomPos();
-	GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
+	NextLocation = Pawn->NextPos();
 
+	//NON COMBAT BEHAVIORS
+	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == false)
+	{
+		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
+	}
+
+
+	// COMBAT BEHAVIORS
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
 	{
 		Pawn->AttackMechanics(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
-
-
 	}
 
 }
