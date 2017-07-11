@@ -6,23 +6,30 @@
 #include "AIAnimInstance.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class TRASHPANDA_API UAIAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
-	
-public :
+
+public:
 	virtual void NativeUpdateAnimation(float DeltaSceonds) override;
 
-	
+
+	UFUNCTION()
+		void isAttacking(bool OnOff);
+	UFUNCTION()
+		bool getbisAttacking();
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		float Speed;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	bool	bIsAttacking;
+		bool	bIsAttacking;
 
 
-	
+
+
+
 };

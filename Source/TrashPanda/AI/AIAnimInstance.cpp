@@ -19,3 +19,17 @@ void UAIAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 
 }
+
+
+bool UAIAnimInstance::getbisAttacking()
+{
+	return bIsAttacking;
+}
+
+
+void  UAIAnimInstance::isAttacking(bool  OnOff)
+{
+	
+
+
+}

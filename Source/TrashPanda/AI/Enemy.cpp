@@ -81,6 +81,7 @@ FVector AEnemy::NextPos()
 
 void AEnemy::AttackMechanics(UObject* CPlayer)
 {
+	/*
 	AActor* Player = Cast<AActor>(CPlayer);
 	float distance = FVector::Dist(this->GetActorLocation(), Player->GetActorLocation());
 	//ATTTACK TYPES 
@@ -90,20 +91,26 @@ void AEnemy::AttackMechanics(UObject* CPlayer)
 		bIsPossibletoAttack = true;
 	}
 
-	//Global CoolDown
+	//Global CoolDown DATA
 	//attack one
 	if ((distance <= MelleAttackRange) && (bIsPossibletoAttack == true))
 	{
 		print("Attack");
+		AttackHappening= true;
 		//place the animations calls here
 		bIsPossibletoAttack = false;
+
 		//those two should in a separate function but later
 		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
 		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, GlobalCD, false);
+
+		
 	}
 
+	*/
+// animation
 
-
+	
 }
 
 

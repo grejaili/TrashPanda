@@ -28,7 +28,7 @@ public:
 	FVector NextPos();
 
 	void AttackMechanics(UObject* Player);
-	
+
 
 
 
@@ -45,7 +45,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = AIBehavior)
 		uint32 MoveRadius;
-// ATTACK OPTIONS
+	// ATTACK OPTIONS
 	UPROPERTY(EditAnyWhere, Category = AIBehavior)
 		uint32 MelleAttackRange;
 	UPROPERTY(EditAnywhere, Category = AIBehavior)
@@ -58,10 +58,9 @@ protected:
 		float GlobalCD;
 
 
-	virtual float TakeDamage(
-		float DamageAmount,
-		struct FDamageEvent const & DamageEvent,
-		class AController * EventInstigator,
-		AActor * DamageCauser
-	);
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
+	
+
+	bool AttackHappening;
+
 };
