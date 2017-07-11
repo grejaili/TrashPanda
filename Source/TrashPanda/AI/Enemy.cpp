@@ -19,7 +19,12 @@ AEnemy::AEnemy()
 	//Inventory = CreateDefaultSubobject<Inventory>(TEXT("Inventory Class Directory Here"));
 	//Inventory->SetupAttachment(RootComponent);
 
+	
+	
+	
+	//CACA
 	//Attach Skeletal Mesh to Enemy.  Edit path to attach proper enemy mesh.
+	/*
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> EnemySkeletalMesh(TEXT("/Game/Mannequin/Character/Mesh/SK_Mannequin"));
 	if (EnemySkeletalMesh.Succeeded())
 	{
@@ -33,6 +38,8 @@ AEnemy::AEnemy()
 	{
 		this->GetMesh()->SetAnimInstanceClass(EnemyAnim.Object->GetAnimBlueprintGeneratedClass());
 	}
+	*/
+	
 }
 
 // Called when the game starts or when spawned
@@ -64,7 +71,6 @@ FVector AEnemy::NextPos()
 	float x = MoveRadius*cos(t) + this->GetActorLocation().X;
 	float y = MoveRadius*sin(t) + this->GetActorLocation().X;
 
-	print("BUGOU");
 
 	FVector RandomPos;
 	RandomPos.X = x;
