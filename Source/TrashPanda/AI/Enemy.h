@@ -27,7 +27,7 @@ public:
 
 	FVector NextPos();
 
-	void AttackMechanics(UObject* Player);
+	void AttackMelle(UObject* Player);
 
 
 

@@ -64,15 +64,16 @@ void AEnemyAIController::Tick(float DeltaTime)
 	{
 		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
 	}
-
-
-	// COMBAT BEHAVIORS
-	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
-	{
-		Pawn->AttackMechanics(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
-	}
-
 }
 
+void AEnemyAIController::AttackCommand()
+{
+	// COMBAT BEHAVIORS
 
+
+	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
+	{
+		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
+	}
+}
 

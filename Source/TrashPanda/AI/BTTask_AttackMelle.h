@@ -14,7 +14,7 @@ class TRASHPANDA_API UBTTask_AttackMelle : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 	
-		/*
+		
 public:
 
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
@@ -22,7 +22,7 @@ public:
 protected:
 	virtual EBTNodeResult::Type AbortTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
-	friend class AEnemy;
-	*/
+	friend class AAIController;
+	
 	
 };

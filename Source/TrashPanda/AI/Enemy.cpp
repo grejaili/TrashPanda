@@ -19,9 +19,9 @@ AEnemy::AEnemy()
 	//Inventory = CreateDefaultSubobject<Inventory>(TEXT("Inventory Class Directory Here"));
 	//Inventory->SetupAttachment(RootComponent);
 
-	
-	
-	
+
+
+
 	//CACA
 	//Attach Skeletal Mesh to Enemy.  Edit path to attach proper enemy mesh.
 	/*
@@ -39,7 +39,7 @@ AEnemy::AEnemy()
 		this->GetMesh()->SetAnimInstanceClass(EnemyAnim.Object->GetAnimBlueprintGeneratedClass());
 	}
 	*/
-	
+
 }
 
 // Called when the game starts or when spawned
@@ -65,7 +65,7 @@ void AEnemy::Tick(float DeltaTime)
 FVector AEnemy::NextPos()
 {
 	float TmpRandom = FMath::RandRange(0, 360);
-	float t = FMath::DegreesToRadians(TmpRandom)		;
+	float t = FMath::DegreesToRadians(TmpRandom);
 
 
 	float x = MoveRadius*cos(t) + this->GetActorLocation().X;
@@ -79,11 +79,10 @@ FVector AEnemy::NextPos()
 	return  RandomPos;
 }
 
-void AEnemy::AttackMechanics(UObject* CPlayer)
+void AEnemy::AttackMelle(UObject* CPlayer)
 {
-	/*
-	AActor* Player = Cast<AActor>(CPlayer);
-	float distance = FVector::Dist(this->GetActorLocation(), Player->GetActorLocation());
+
+
 	//ATTTACK TYPES 
 //----------Melle Attack---------\\//
 	if (GetWorld()->GetTimerManager().GetTimerRemaining(AttackTimerHandler) <= 0)
@@ -91,12 +90,11 @@ void AEnemy::AttackMechanics(UObject* CPlayer)
 		bIsPossibletoAttack = true;
 	}
 
-	//Global CoolDown DATA
-	//attack one
-	if ((distance <= MelleAttackRange) && (bIsPossibletoAttack == true))
+
+	if ((bIsPossibletoAttack == true))
 	{
-		print("Attack");
-		AttackHappening= true;
+		print("Attack  Melle");
+		AttackHappening = true;
 		//place the animations calls here
 		bIsPossibletoAttack = false;
 
@@ -104,13 +102,13 @@ void AEnemy::AttackMechanics(UObject* CPlayer)
 		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
 		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, GlobalCD, false);
 
-		
+
 	}
 
-	*/
-// animation
 
-	
+	// animation
+
+
 }
 
 
