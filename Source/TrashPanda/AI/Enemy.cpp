@@ -79,37 +79,72 @@ FVector AEnemy::NextPos()
 	return  RandomPos;
 }
 
-void AEnemy::AttackMelle(UObject* CPlayer)
+// COMBAT MECHANICS AND FUNCTIONS
+
+
+//GLOBAL CD FOR HABILITES
+bool AEnemy::GetGlobalCD()
 {
-
-
-	//ATTTACK TYPES 
-//----------Melle Attack---------\\//
 	if (GetWorld()->GetTimerManager().GetTimerRemaining(AttackTimerHandler) <= 0)
 	{
 		bIsPossibletoAttack = true;
 	}
 
+	else
+	{
+		bIsPossibletoAttack = false;
+	}
 
-	if ((bIsPossibletoAttack == true))
+
+	return bIsPossibletoAttack;
+}
+
+
+void AEnemy::SetGlobalCD()
+{
+	GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
+	GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, BaseGlobalCD, false);
+}
+
+
+void AEnemy::SetGlobalCD(float CD)
+{
+	check (CD < BaseGlobalCD)
+	
+		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
+		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, CD, false);
+}
+
+
+
+//Light attack here too
+void AEnemy::AttackMelle(UObject* CPlayer)
+{
+
+
+	if (GetGlobalCD())
 	{
 		print("Attack  Melle");
 		AttackHappening = true;
 		//place the animations calls here
-		bIsPossibletoAttack = false;
 
-		//those two should in a separate function but later
-		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
-		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, GlobalCD, false);
-
-
+		SetGlobalCD();
 	}
 
 
-	// animation
-
 
 }
+
+void AEnemy::AttackHeavy(UObject* CPlayer)
+{
+	GetGlobalCD();
+
+
+	SetGlobalCD();
+}
+
+
+
 
 
 float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser)

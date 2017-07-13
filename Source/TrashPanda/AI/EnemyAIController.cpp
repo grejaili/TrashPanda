@@ -66,14 +66,20 @@ void AEnemyAIController::Tick(float DeltaTime)
 	}
 }
 
+
+//Rename to light attack
 void AEnemyAIController::AttackCommand()
 {
-	// COMBAT BEHAVIORS
-
-
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
 	{
 		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 	}
 }
 
+void AEnemyAIController::AttackHeavy()
+{
+	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
+	{
+		//Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
+	}
+}

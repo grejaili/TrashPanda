@@ -27,8 +27,20 @@ public:
 
 	FVector NextPos();
 
-	void AttackMelle(UObject* Player);
+	//CDS TIMERS
+	bool GetGlobalCD();
+	void SetGlobalCD(float CD);
+	void SetGlobalCD();
 
+	UPROPERTY(EditAnywhere, Category = AIBehavior)
+		float BaseGlobalCD;
+
+
+	//------- ATTACK FUNCTIONS
+
+
+	void AttackMelle(UObject* Player);
+	void AttackHeavy(UObject* Player);
 
 
 
@@ -54,13 +66,16 @@ protected:
 	FTimerHandle AttackTimerHandler;
 	bool bIsPossibletoAttack = true;
 
-	UPROPERTY(EditAnywhere, Category = AIBehavior)
-		float GlobalCD;
+
 
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
-	
-
 	bool AttackHappening;
+
+	//SOUNDS
+
+
+	void WalkingSound()
+
 
 };

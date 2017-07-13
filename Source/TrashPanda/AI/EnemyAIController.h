@@ -19,7 +19,12 @@ public:
 	virtual void Possess(APawn* InPawn) override;
 
 	virtual void Tick(float DeltaSeconds) override;
+	
+	
+	// ATTACK FUNCTIONS----------
 	void AttackCommand();
+	void AttackHeavy();
+
 
 
 public:
