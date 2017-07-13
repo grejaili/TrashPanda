@@ -98,49 +98,21 @@ void AChip::Tick(float DeltaTime)
 }
 
 // Called to bind functionality to input
+
+/*
 void AChip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	check(PlayerInputComponent);
 
-	InputComponent->BindAxis("MoveForward", this, &ThisClass::MoveForward);
-	InputComponent->BindAxis("MoveRight", this, &ThisClass::MoveRight);
-	InputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	InputComponent->BindAxis("TurnRate", this, &ThisClass::TurnAtRate);
-	InputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	InputComponent->BindAxis("LookUpRate", this, &ThisClass::LookUpAtRate);
 
-	InputComponent->BindAction("LAttack", IE_Pressed, this, &ThisClass::LightAttackPressed);
-	InputComponent->BindAction("LAttack", IE_Released, this, &ThisClass::LightAttackReleased);
-	InputComponent->BindAction("HAttack", IE_Pressed, this, &ThisClass::HeavyAttackPressed);
-	InputComponent->BindAction("HAttack", IE_Released, this, &ThisClass::LightAttackReleased);
-	InputComponent->BindAction("Dodge", IE_Pressed, this, &ThisClass::Dodge);
-	InputComponent->BindAction("Interact", IE_Pressed, this, &ThisClass::Interact);
-	InputComponent->BindAction("ReadInv", IE_Pressed, this, &ThisClass::ReadInv);
-	InputComponent->BindAction("OpenCharPanel", IE_Pressed, this, &ThisClass::OpenCharPanel);
-
-	//Allow player to toggle pause
-	FInputActionBinding& pauseToggle = InputComponent->BindAction("PauseGame", IE_Pressed, this, &ThisClass::PauseGame);
-	pauseToggle.bExecuteWhenPaused = true;
-
-	//Allow player to toggle pause when opening inventory
-	FInputActionBinding& invToggle = InputComponent->BindAction("OpenInv", IE_Pressed, this, &ThisClass::OpenInv);
-	invToggle.bExecuteWhenPaused = true;
 }
+*/
 
-bool AChip::GetIsLightAttacking()
-{
-	return bisLightAttacking;
-}
-
-bool AChip::GetIsHeavyAttacking()
-{
-
-	return bisHeavyAttacking;
-}
 
 void AChip::SetPlayerStats(int32 level)
 {
+	/*
 	MaxHealth = 100;
 	MaxFury = 100;
 	CurrentHealth = MaxHealth;
@@ -152,96 +124,19 @@ void AChip::SetPlayerStats(int32 level)
 	CritModifier = 1.2f;
 
 	DodgeDistance = 4;
+	*/
 }
 
-void AChip::Interact()
-{
-	print("Interacting...");
-	for (int32 i = 0; i < itemsInRange.Num(); i++)
-	{
-		if (itemsInRange[i])
-		{
-			if (ABaseItem* thing = Cast<ABaseItem>(itemsInRange[i]))
-			{
-				Inventory->AddItem(thing->GetClass());
-				UE_LOG(LogTemp, Warning, TEXT("ItemType %s"), *GetNameSafe(thing->GetClass()));
 
-				const int32* count = Inventory->GetItems().Find(thing->GetClass());
-				UE_LOG(LogTemp, Warning, TEXT("Items in TMap %d"), *count);
 
-				thing->Destroy();
-			}
-		}
-	}
-}
 
-void AChip::LightAttackPressed()
-{
-	bisLightAttacking = true;
-}
-
-void AChip::LightAttackReleased()
-{
-	bisLightAttacking = false;
-}
-
-void AChip::HeavyAttackPressed()
-{
-	AGameMode* aux = Cast <AGameMode>(GetWorld()->GetAuthGameMode());
-	aux->RestartGame();
-
-	bisHeavyAttacking = true;
-	print("Heavy Attack");
-}
-
-void AChip::HeavyAttackReleased()
-{
-	bisHeavyAttacking = false;
-}
-
-void AChip::Dodge()
-{
-	print("Dodge");
-}
-
-void AChip::Rabid()
-{
-	print("Rabid");
-}
 
 void AChip::AddFury(int32 fury)
 {
 	CurrentFury += fury;
 }
 
-void AChip::OpenInv()
-{
-	if (InvWidget->Visibility == ESlateVisibility::Hidden)
-	{
-		InvWidget->SetVisibility(ESlateVisibility::Visible);
-		PauseGame();
-	}
-	else if (InvWidget->Visibility == ESlateVisibility::Visible)
-	{
-		InvWidget->SetVisibility(ESlateVisibility::Hidden);
-		PauseGame();
-	}
 
-}
-void AChip::OpenCharPanel()
-{
-	if (SwitchWidget)
-	{
-		if (SwitchWidget->Visibility == ESlateVisibility::Hidden)
-		{
-			SwitchWidget->SetVisibility(ESlateVisibility::Visible);
-		}
-		else if (SwitchWidget->Visibility == ESlateVisibility::Visible)
-		{
-			SwitchWidget->SetVisibility(ESlateVisibility::Hidden);
-		}
-	}
-}
 
 
 //Experience bar needs to update a bar on the HUD eventually. ------TO DO----------------
@@ -278,54 +173,6 @@ void AChip::LevelUp(int32 overflowExperience)
 	//I believe the function to do that is SetPlayerStats(); but we need the "int level" we pass it to actually do something
 }
 
-void AChip::PauseGame()
-{
-	print("ok");
-
-	if (bGamePaused == false) //Is the game Paused? If not, pause it.
-	{
-		UGameplayStatics::SetGamePaused(GetWorld(), true);
-		print("Paused Game");
-		bGamePaused = true;
-		FInputModeGameAndUI Mode;
-		Mode.SetWidgetToFocus(PauseGameWidget->GetCachedWidget());
-		GetWorld()->GetFirstPlayerController()->SetInputMode(Mode);
-		GetWorld()->GetFirstPlayerController()->bShowMouseCursor = true;
-
-		//Trying to get the mouse to return to center screen when you pause the game.
-		//FViewport* v = Cast<FViewport>(GetWorld()->GetGameViewport()->Viewport->SetMouse(0.5, 0.5));
-
-
-		//Is the inventory open? Then don't open the pause menu.
-		if (InvWidget->Visibility == ESlateVisibility::Hidden)
-		{
-			PauseGameWidget->SetVisibility(ESlateVisibility::Visible);
-		}
-	}
-	else //Is the game paused? If so, un-pause it.
-	{
-		UGameplayStatics::SetGamePaused(GetWorld(), false);
-		print("Un-Paused Game");
-		bGamePaused = false;
-		FInputModeGameOnly GameOnly;
-		GetWorld()->GetFirstPlayerController()->SetInputMode(GameOnly);
-		GetWorld()->GetFirstPlayerController()->bShowMouseCursor = false;
-
-		if (InvWidget->Visibility == ESlateVisibility::Hidden)
-		{
-			PauseGameWidget->SetVisibility(ESlateVisibility::Hidden);
-		}
-		if (InvWidget->Visibility == ESlateVisibility::Visible)
-		{
-			InvWidget->SetVisibility(ESlateVisibility::Hidden);
-		}
-		if (PauseGameWidget->Visibility == ESlateVisibility::Visible)
-		{
-			PauseGameWidget->SetVisibility(ESlateVisibility::Hidden);
-		}
-	}
-
-}
 
 void AChip::ReSpawn()
 {
@@ -343,20 +190,7 @@ void AChip::Death()
 						 //ReSpawn(); //?
 }
 
-void AChip::ReadInv()
-{
-	print("Read Inv Pressed");
-	if (int32 num = Inventory->GetItems().Num())
-	{
-		//const int32* count = Inventory->GetItems().Find(AIConsumable::StaticClass());
-		//UE_LOG(LogTemp, Warning, TEXT("Items in TMap %d"), count);
-		//count = Inventory->GetItems().Find(AIMaterial::StaticClass());
-		//UE_LOG(LogTemp, Warning, TEXT("Items in TMap %d"), count);
-		//count = Inventory->GetItems().Find(ABaseItem::StaticClass());
-		//UE_LOG(LogTemp, Warning, TEXT("Items in TMap %d"), count);
-		UE_LOG(LogTemp, Warning, TEXT("Items in TMap %d"), num);
-	}
-}
+
 /*
 void AChip::TakeDamage(float damage)
 {
@@ -451,51 +285,9 @@ void AChip::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* Other
 		}
 	}
 }
-void AChip::TurnAtRate(float Rate)
-{
-	// calculate delta for this frame from the rate information
-	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
-}
-
-void AChip::LookUpAtRate(float Rate)
-{
-	// calculate delta for this frame from the rate information
-	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
-}
-
-
-void AChip::MoveForward(float Value)
-{
-	if ((Controller != NULL) && (Value != 0.0f))
-	{
-		// find out which way is forward
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		// get forward vector
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		AddMovementInput(Direction, Value);
-	}
-}
-
-// it should be on player contrller
-void AChip::MoveRight(float Value)
-{
-	if ((Controller != NULL) && (Value != 0.0f))
-	{
-		// find out which way is right
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		// get right vector 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		// add movement in that direction
-		AddMovementInput(Direction, Value);
-	}
 
 
 
-}
 
 // the way ryan teached us is wrong
 // do not open the project by visual studio

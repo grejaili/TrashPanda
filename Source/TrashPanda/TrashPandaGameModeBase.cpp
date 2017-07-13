@@ -5,19 +5,21 @@
 #include "TrashPandaPlayerState.h"
 #include "TrashPandaGameState.h"
 #include "TrashPandaGameModeBase.h"
+#include "Player/ControllerChip.h"
 #include "UI/PlayerHUD.h"
 
 
 
 ATrashPandaGameModeBase::ATrashPandaGameModeBase(const FObjectInitializer& ObjectInitializer)
 {
+
+	PlayerControllerClass = AControllerChip::StaticClass();
 	DefaultPawnClass = AChip::StaticClass();
 	GameStateClass = ATrashPandaGameState::StaticClass();
-	PlayerStateClass = ATrashPandaPlayerState::StaticClass();
+	//PlayerStateClass = ATrashPandaPlayerState::StaticClass();
 	HUDClass = APlayerHUD::StaticClass();
 
-	ConstructorHelpers::FClassFinder<AChip> CharacterClass(
-		TEXT("Blueprint'/Game/Player/Chip_BP.Chip_BP_C'"));
+	ConstructorHelpers::FClassFinder<AChip> CharacterClass(	TEXT("Blueprint'/Game/Player/Chip_BP.Chip_BP_C'"));
 
 	if (CharacterClass.Class)
 	{

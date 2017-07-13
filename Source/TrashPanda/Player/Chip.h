@@ -19,7 +19,7 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -56,19 +56,10 @@ public:
 	void DebugFury();
 
 	//Pause
-	void PauseGame();
+
 
 protected:
-	bool bisRabid;
-	bool bisLightAttacking;
-	bool bisHeavyAttacking;
-	int32 Damage;
-	int32 DamageReduction;
-	int32 Speed;
-	int32 DodgeDistance;
 
-	int32 CritChance;
-	int32 CritModifier;
 
 	//UENUM(BlueprintType, Category = "Levels")
 	enum ExperienceToLevel //28 levels for now, increase/decrease according to # of skills in skill trees/ max level
@@ -126,30 +117,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = Player)
 		TArray<AActor*> itemsInRange;
 
-	void SetPlayerStats(int32 level);
-	void Interact();
-	void LightAttackPressed();
-	void LightAttackReleased();
-	void HeavyAttackPressed();
-	void HeavyAttackReleased();
-	void Dodge();
-	void Rabid();
-	void AddFury(int32 fury);
-	void OpenInv();
-	void OpenCharPanel();
+
 
 	void GainExperience(int32 amount);
 	void LevelUp(int32 overflowExperience);
 
+	void SetPlayerStats(int32 level);
+	void AddFury(int32 fury);
 
 	void ReSpawn();
 	void Death();
-
-	void ReadInv();
-
-
-
-
 
 	UFUNCTION()
 		void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -157,24 +134,6 @@ protected:
 	UFUNCTION()
 		void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-protected:
-	/** Called for forwards/backward input */
-	void MoveForward(float Value);
-
-	/** Called for side to side input */
-	void MoveRight(float Value);
-
-	/**
-	* Called via input to turn at a given rate.
-	* @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
-	*/
-	void TurnAtRate(float Rate);
-
-	/**
-	* Called via input to turn look up/down at a given rate.
-	* @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
-	*/
-	void LookUpAtRate(float Rate);
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
