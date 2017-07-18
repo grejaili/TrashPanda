@@ -23,10 +23,12 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Behavior)
 	class UBehaviorTree* EnemyBehavior;
-
-protected:
+	
 	UPROPERTY(VisibleAnywhere)
 	uint32 Health;
+
+protected:
+	
 	UPROPERTY(VisibleAnywhere)
 	uint32 DamageReduction;
 	UPROPERTY(VisibleAnywhere)

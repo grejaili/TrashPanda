@@ -135,7 +135,6 @@ bool AChip::GetIsLightAttacking()
 
 bool AChip::GetIsHeavyAttacking()
 {
-
 	return bisHeavyAttacking;
 }
 
@@ -154,6 +153,25 @@ void AChip::SetPlayerStats(int32 level)
 	DodgeDistance = 4;
 }
 
+void AChip::LightAttackPressed()
+{
+	bisLightAttacking = true;
+}
+
+void AChip::LightAttackReleased()
+{
+	bisLightAttacking = false;
+}
+
+void AChip::HeavyAttackPressed()
+{
+	bisHeavyAttacking = true;
+}
+
+void AChip::HeavyAttackReleased()
+{
+	bisHeavyAttacking = false;
+}
 void AChip::Interact()
 {
 	print("Interacting...");
@@ -175,29 +193,7 @@ void AChip::Interact()
 	}
 }
 
-void AChip::LightAttackPressed()
-{
-	bisLightAttacking = true;
-}
 
-void AChip::LightAttackReleased()
-{
-	bisLightAttacking = false;
-}
-
-void AChip::HeavyAttackPressed()
-{
-	AGameMode* aux = Cast <AGameMode>(GetWorld()->GetAuthGameMode());
-	aux->RestartGame();
-
-	bisHeavyAttacking = true;
-	print("Heavy Attack");
-}
-
-void AChip::HeavyAttackReleased()
-{
-	bisHeavyAttacking = false;
-}
 
 void AChip::Dodge()
 {
