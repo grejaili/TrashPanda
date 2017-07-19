@@ -18,25 +18,18 @@ void AEnemyAIController::Possess(APawn* InPawn)
 	{
 		RunBehaviorTree(BehaviorTreeAsset);
 	}
-<<<<<<< HEAD
 
 	Pawn = Cast<AEnemy>(InPawn);
 }
 
 
 
-=======
-
-
-}
->>>>>>> master
 ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Other) const
 {
 	if (const APawn* OtherCharacter = Cast<APawn>(&Other))
 	{
 		if (const IGenericTeamAgentInterface* TeamAgent = Cast<IGenericTeamAgentInterface>(OtherCharacter->GetController()))
 		{
-
 			return Super::GetTeamAttitudeTowards(*OtherCharacter->GetController());
 		}
 
@@ -48,17 +41,11 @@ ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Oth
 
 ETeamAttitude::Type AEnemyAIController::GetAttitudeTowards(FGenericTeamId TeamA, FGenericTeamId TeamB)
 {
-
 	return TeamA == TeamB ? ETeamAttitude::Friendly : ETeamAttitude::Hostile;
 }
 
-
-
-
-
 ETeamAttitude::Type AEnemyAIController::GetAttitudeTowardsPlayer(const AActor& Other) const
 {
-<<<<<<< HEAD
 
 
 	return ETeamAttitude::Hostile;
@@ -79,45 +66,13 @@ void AEnemyAIController::Tick(float DeltaTime)
 	}
 }
 
-
-//Rename to light attack
 void AEnemyAIController::AttackCommand()
 {
+	// COMBAT BEHAVIORS
+
+
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
 	{
 		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 	}
 }
-
-void AEnemyAIController::AttackHeavy()
-{
-	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
-	{
-		//Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
-	}
-}
-=======
-	
-	return ETeamAttitude::Hostile;
-}
-
-
-
-void AEnemyAIController::CalculateRandomPos()
-{
-	FVector RandomPos;
-	RandomPos.X = 100;
-	RandomPos.Z = 150;
-	RandomPos.Y = 0;
-}
-
-
-
- void AEnemyAIController::AttackBasic()
-{
-	//GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Bool>(TEXT("IsInAttackRange"), true);
-	 print("im in AIContrller");
-	//if in range attack
-}
-
->>>>>>> master

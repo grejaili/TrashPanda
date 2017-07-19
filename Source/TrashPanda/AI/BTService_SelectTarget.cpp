@@ -26,21 +26,12 @@ void UBTService_SelectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	
 	
 	OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Object>(TEXT("Target"), FoundTarget);
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 	if (FoundTarget != NULL)
 	{
 		OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Bool>(TEXT("InCombat"), true);
 	}
-<<<<<<< HEAD
 
-
-
-
-=======
->>>>>>> master
 }
 
 AActor* UBTService_SelectTarget::FindTarget(class UAIPerceptionComponent* PerceptionComponent, class AChip* OwningCharacter)
@@ -49,10 +40,7 @@ AActor* UBTService_SelectTarget::FindTarget(class UAIPerceptionComponent* Percep
 	PerceptionComponent->GetHostileActors(Hostiles);
 	if (Hostiles.Num() > 0)
 	{
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 		return Hostiles[0];
 	}
 	return NULL;

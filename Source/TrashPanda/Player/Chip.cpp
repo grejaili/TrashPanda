@@ -58,7 +58,7 @@ void AChip::CameraXAxisMovement(float Rate)
 
 void AChip::AttackInput()
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Attack");
+	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Attack");
 	//printf("I ATTACKED");
 }
 

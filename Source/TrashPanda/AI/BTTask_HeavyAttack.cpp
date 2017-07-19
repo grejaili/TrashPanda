@@ -18,8 +18,7 @@ EBTNodeResult::Type UBTTask_HeavyAttack::ExecuteTask(UBehaviorTreeComponent& Own
 
 	if (AEnemyAIController* Controller = Cast<AEnemyAIController>(BehaviorTree->GetAIOwner()))
 	{
-		Controller->AttackHeavy();
-		//Use the function from the AI Class
+
 	}
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }

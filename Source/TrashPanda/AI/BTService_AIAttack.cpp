@@ -20,10 +20,6 @@ void UBTService_AIAttack::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 //	AChip* OwningCharacter = Cast<AChip>(OwnerComp.GetAIOwner()->GetPawn());
 
 
-	if (controller != NULL)
-		controller->AttackBasic();
-	if (controller == NULL)
-		print("NUll");
 
 
 
