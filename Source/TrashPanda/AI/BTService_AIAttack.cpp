@@ -21,10 +21,13 @@ void UBTService_AIAttack::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (controller != NULL)
 		controller->AttackBasic();
 	if (controller == NULL)
 		print("NUll");
+=======
+>>>>>>> AI-Master
 =======
 >>>>>>> AI-Master
 
