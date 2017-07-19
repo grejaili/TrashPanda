@@ -2,6 +2,7 @@
 
 #include "GameFramework/Character.h"
 #include "Ai/Enemy.h"
+#include "Projectile.h"
 #include "Chip.generated.h"
 
 UCLASS()
@@ -32,7 +33,15 @@ public:
 #pragma 
 	//apply the animation funtion here o
 
-	void AttackInput();
+	void LightAttack();
+	void Shoot();
+
+
+	//shooting mechanics
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<AProjectile> ProjectileClass;
+		
+
 
 #pragma endregion Combat REGION
 

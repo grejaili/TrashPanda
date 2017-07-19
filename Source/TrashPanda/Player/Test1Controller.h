@@ -51,6 +51,6 @@ protected:
 
 	void LightAttackPressed();
 #pragma endregion Combat Functions
-
+	void ShootPressed();
 
 };

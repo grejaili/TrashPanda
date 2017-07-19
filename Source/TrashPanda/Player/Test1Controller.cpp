@@ -41,7 +41,9 @@ void ATest1Controller::SetupInputComponent()
 	//COMBAT INPUTS
 
 #pragma
+	//Attack_Heavy
 	InputComponent->BindAction("Attack_Light", IE_Pressed, this, &ThisClass::LightAttackPressed);
+	InputComponent->BindAction("Attack_Shoot", IE_Pressed, this, &ThisClass::ShootPressed);
 
 #pragma endregion Combat REGION
 
@@ -118,6 +120,15 @@ void ATest1Controller::LightAttackPressed()
 {
 	APawn* const MyPawn = GetPawn();
 	//UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
-	Cast<AChip>(MyPawn)->AttackInput();
+	Cast<AChip>(MyPawn)->LightAttack();
+
+}
+
+
+void ATest1Controller::ShootPressed()
+{
+	APawn* const MyPawn = GetPawn();
+	Cast<AChip>(MyPawn)->Shoot();
+
 
 }
