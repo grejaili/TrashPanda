@@ -14,7 +14,8 @@ float UChipHUDWidget::GetPlayerHealth() const
 {
 	if (AChip* OwningCharacter = Cast<AChip>(GetOwningPlayerPawn()))
 	{
-		return OwningCharacter->GetHealthAsPercentage();
+//	return OwningCharacter->GetHealthAsPercentage();
+		return 0.0;
 	}
 	else
 	{
@@ -26,7 +27,8 @@ float UChipHUDWidget::GetPlayerFury() const
 {
 	if (AChip* OwningCharacter = Cast<AChip>(GetOwningPlayerPawn()))
 	{
-		return OwningCharacter->GetFuryAsPercentage();
+	//	return OwningCharacter->GetFuryAsPercentage();
+		return 0.0f;
 	}
 	else
 	{
@@ -38,7 +40,8 @@ int32 UChipHUDWidget::GetPlayerHealthConsumableQ() const
 {
 	if (AChip* OwningCharacter = Cast<AChip>(GetOwningPlayerPawn()))
 	{
-		return OwningCharacter->GetHConsumablesQuantity();
+	//	return OwningCharacter->GetHConsumablesQuantity();
+		return 0;
 	}
 	else
 	{
@@ -50,7 +53,8 @@ int32 UChipHUDWidget::GetPlayerFuryConsumableQ() const
 {
 	if (AChip* OwningCharacter = Cast<AChip>(GetOwningPlayerPawn()))
 	{
-		return OwningCharacter->GetFConsumablesQuantity();
+	//	return OwningCharacter->GetFConsumablesQuantity();
+		return 0;
 	}
 	else
 	{

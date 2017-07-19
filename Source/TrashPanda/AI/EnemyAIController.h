@@ -3,6 +3,7 @@
 #pragma once
 
 #include "AIController.h"
+#include "Enemy.h"
 #include "EnemyAIController.generated.h"
 
 /**
@@ -11,6 +12,7 @@
 UCLASS()
 class TRASHPANDA_API AEnemyAIController : public AAIController
 {
+<<<<<<< HEAD
 
 	GENERATED_BODY()
 
@@ -26,6 +28,21 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 		FGenericTeamId TeamId;
+=======
+
+
+	GENERATED_BODY()
+
+public:
+	virtual void Possess(APawn* InPawn) override;
+
+	virtual void Tick(float DeltaSeconds) override;
+	
+	
+	// ATTACK FUNCTIONS----------
+	void AttackCommand();
+
+
 
 public:
 	FGenericTeamId GetGenericTeamId() const override { return TeamId; }
@@ -34,10 +51,34 @@ public:
 
 
 
+
+protected:
+	UPROPERTY(EditDefaultsOnly)
+		class UBehaviorTree* BehaviorTreeAsset;
+	UPROPERTY(EditDefaultsOnly)
+		FGenericTeamId TeamId;
+
+	virtual ETeamAttitude::Type GetAttitudeTowardsPlayer(const AActor& Other) const;
+	AEnemy* Pawn;
+
+	UPROPERTY(VisibleAnywhere)
+	FVector NextLocation;
+>>>>>>> AI-Master
+
+public:
+	FGenericTeamId GetGenericTeamId() const override { return TeamId; }
+	ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
+	static ETeamAttitude::Type GetAttitudeTowards(FGenericTeamId TeamA, FGenericTeamId TeamB);
+
+<<<<<<< HEAD
+
+
 protected:
 	virtual ETeamAttitude::Type GetAttitudeTowardsPlayer(const AActor& Other) const;
 
 
 	void CalculateRandomPos();
+=======
+>>>>>>> AI-Master
 
 };

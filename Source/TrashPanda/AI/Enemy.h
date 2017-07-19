@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "GameFramework/Character.h"
@@ -22,17 +23,63 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(EditAnywhere, Category = Behavior)
-	class UBehaviorTree* EnemyBehavior;
+		class UBehaviorTree* EnemyBehavior;
+
+	FVector NextPos();
+
+	//CDS TIMERS
+	bool GetGlobalCD();
+	void SetGlobalCD(float CD);
+	void SetGlobalCD();
+
+	UPROPERTY(EditAnywhere, Category = AIBehavior)
+		float BaseGlobalCD;
+
+
+	//------- ATTACK FUNCTIONS
+
+
+	void AttackMelle(UObject* Player);
+	void AttackHeavy(UObject* Player);
+
+
 
 protected:
-	UPROPERTY(VisibleAnywhere)
-	uint32 Health;
-	UPROPERTY(VisibleAnywhere)
-	uint32 DamageReduction;
-	UPROPERTY(VisibleAnywhere)
-	uint32 Damage;
 
-	UFUNCTION()
-	void LootDrop();
+	UPROPERTY(EditAnyWhere, Category = Stats)
+		uint32 Health;
+
+	UPROPERTY(EditAnyWhere, Category = Stats)
+		uint32 DamageReduction;
+
+	UPROPERTY(EditAnyWhere, Category = Stats)
+		uint32 Damage;
+
+	UPROPERTY(EditAnywhere, Category = AIBehavior)
+		uint32 MoveRadius;
+	// ATTACK OPTIONS
+	UPROPERTY(EditAnyWhere, Category = AIBehavior)
+		uint32 MelleAttackRange;
+	UPROPERTY(EditAnywhere, Category = AIBehavior)
+		uint32 ChargeRange;
+
+	FTimerHandle AttackTimerHandler;
+	bool bIsPossibletoAttack = true;
+
+
+
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
+	bool AttackHappening;
+
+	//SOUNDS
+
+
+	void WalkingSound();
+
+
+//	USoundClass
+
+	  
 
 };

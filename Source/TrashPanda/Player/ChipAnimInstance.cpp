@@ -9,6 +9,7 @@
 
 void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
+	/*
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
 	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
@@ -18,6 +19,7 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bisLightAttackingAnim = OwningPawn->GetIsLightAttacking();
 
 	}
+	*/
 }
 
 void UChipAnimInstance::isAttacking(bool onOff)
@@ -44,5 +46,6 @@ void UChipAnimInstance::AnimNotify_DamageOFF()
 
 bool UChipAnimInstance::getbIsAttacking()
 {
-	return bisLightAttackingAnim;
+	//return bisLightAttackingAnim;
+	return true;
 }
