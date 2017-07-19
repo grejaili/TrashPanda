@@ -75,7 +75,11 @@ protected:
 	//SOUNDS
 
 
-	void WalkingSound()
+	void WalkingSound();
 
+
+//	USoundClass
+
+	  
 
 };

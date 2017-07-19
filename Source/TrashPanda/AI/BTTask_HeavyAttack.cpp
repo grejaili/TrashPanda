@@ -28,3 +28,5 @@ EBTNodeResult::Type UBTTask_HeavyAttack::AbortTask(UBehaviorTreeComponent& Owner
 {
 	return Super::AbortTask(OwnerComp, NodeMemory);
 }
+
+

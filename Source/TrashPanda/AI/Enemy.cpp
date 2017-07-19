@@ -144,6 +144,10 @@ void AEnemy::AttackHeavy(UObject* CPlayer)
 }
 
 
+void  AEnemy:: WalkingSound()
+{
+
+}
 
 
 
