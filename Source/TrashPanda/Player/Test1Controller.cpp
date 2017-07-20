@@ -41,27 +41,33 @@ void ATest1Controller::SetupInputComponent()
 	//COMBAT INPUTS
 
 #pragma
-	//Attack_Heavy
+
 	InputComponent->BindAction("Attack_Light", IE_Pressed, this, &ThisClass::LightAttackPressed);
 	InputComponent->BindAction("Attack_Shoot", IE_Pressed, this, &ThisClass::ShootPressed);
 
 #pragma endregion Combat REGION
 
 
-
+	InputComponent->BindAction("Dodge", IE_Pressed, this, &ThisClass::DoubleClick);
 
 }
 
 void ATest1Controller::MoveForward(float Value)
 {
-	APawn* const MyPawn = GetPawn();
-	if (MyPawn)
+	if (Value != 0) 
 	{
-		const FRotator Rotation = MyPawn->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		MyPawn->AddMovementInput(Direction, Value);
+
+
+
+		APawn* const MyPawn = GetPawn();
+		if (MyPawn)
+		{
+			const FRotator Rotation = MyPawn->GetControlRotation();
+			const FRotator YawRotation(0, Rotation.Yaw, 0);
+			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+			MyPawn->AddMovementInput(Direction, Value);
+		}
 	}
 
 }
@@ -132,3 +138,23 @@ void ATest1Controller::ShootPressed()
 
 
 }
+
+void ATest1Controller::DoubleClick()
+{
+//	GetWorld()->GetTimerManager().ClearTimer(DodgeTimerHandler);
+	//GetWorld()->GetTimerManager().SetTimer(DodgeTimerHandler, 2, false);
+	//GetWorldTimerManager().SetTimer(this, &ThisClass::FunctionToCall, TimeInFloat);
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "dodge");
+	if (GetWorld()->GetTimerManager().GetTimerRemaining(DodgeTimerHandler) <= 0)
+	{
+
+	}
+	
+}
+
+
+
+
+
+

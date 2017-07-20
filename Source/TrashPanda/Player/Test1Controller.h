@@ -27,7 +27,8 @@ protected:
 	// PLAYER CONTROLL FUNCTIONS
 	void MoveForward(float Value);
 	void MoveSides(float Value);
-#pragma endregion Controll Functions
+	FTimerHandle DodgeTimerHandler;
+#pragma endregion Controll Functions ---------------------------------------------------------
 
 #pragma
 	void TurnAtRate(float Rate);
@@ -42,7 +43,7 @@ protected:
 
 	void CameraYControll(float Rate);
 	void CameraXControll(float Rate);
-#pragma endregion Camera Controlls
+#pragma endregion Camera Controlls--------------------------------------------------------------------------
 
 
 
@@ -50,7 +51,11 @@ protected:
 #pragma 
 
 	void LightAttackPressed();
-#pragma endregion Combat Functions
 	void ShootPressed();
+#pragma endregion Combat Functions -----------------------------------------------------
+
+
+
+	void DoubleClick();
 
 };
