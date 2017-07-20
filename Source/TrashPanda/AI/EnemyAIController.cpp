@@ -20,8 +20,12 @@ void AEnemyAIController::Possess(APawn* InPawn)
 	}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/AI-Master
 
+	Pawn = Cast<AEnemy>(InPawn);
 }
 =======
 =======
@@ -33,9 +37,12 @@ void AEnemyAIController::Possess(APawn* InPawn)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> AI-Master
 =======
 >>>>>>> AI-Master
+=======
+>>>>>>> origin/AI-Master
 ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Other) const
 {
 	if (const APawn* OtherCharacter = Cast<APawn>(&Other))
@@ -64,6 +71,7 @@ ETeamAttitude::Type AEnemyAIController::GetAttitudeTowards(FGenericTeamId TeamA,
 
 ETeamAttitude::Type AEnemyAIController::GetAttitudeTowardsPlayer(const AActor& Other) const
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	
@@ -142,13 +150,44 @@ void AEnemyAIController::AttackCommand()
 
 
 >>>>>>> AI-Master
+=======
+
+
+	return ETeamAttitude::Hostile;
+}
+
+
+void AEnemyAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	//I have to change this but IDK how to make it better
+	NextLocation = Pawn->NextPos();
+
+	//NON COMBAT BEHAVIORS
+	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == false)
+	{
+		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
+	}
+}
+
+void AEnemyAIController::AttackCommand()
+{
+	// COMBAT BEHAVIORS
+
+
+>>>>>>> origin/AI-Master
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
 	{
 		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 >>>>>>> AI-Master
 =======
 }
 >>>>>>> AI-Master
+=======
+}
+>>>>>>> origin/AI-Master

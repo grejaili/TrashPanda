@@ -51,6 +51,10 @@ protected:
 
 	void LightAttackPressed();
 #pragma endregion Combat Functions
+<<<<<<< HEAD
 
+=======
+	void ShootPressed();
+>>>>>>> origin/AI-Master
 
 };

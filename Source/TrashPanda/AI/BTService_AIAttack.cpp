@@ -22,6 +22,7 @@ void UBTService_AIAttack::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (controller != NULL)
 		controller->AttackBasic();
 	if (controller == NULL)
@@ -30,6 +31,8 @@ void UBTService_AIAttack::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 >>>>>>> AI-Master
 =======
 >>>>>>> AI-Master
+=======
+>>>>>>> origin/AI-Master
 
 
 
