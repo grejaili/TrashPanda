@@ -10,7 +10,6 @@
 #include "Perception/AISense_Sight.h"
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
-
 void AEnemyAIController::Possess(APawn* InPawn)
 {
 	Super::Possess(InPawn);
@@ -20,15 +19,17 @@ void AEnemyAIController::Possess(APawn* InPawn)
 		RunBehaviorTree(BehaviorTreeAsset);
 	}
 
-
+	Pawn = Cast<AEnemy>(InPawn);
 }
+
+
+
 ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Other) const
 {
 	if (const APawn* OtherCharacter = Cast<APawn>(&Other))
 	{
 		if (const IGenericTeamAgentInterface* TeamAgent = Cast<IGenericTeamAgentInterface>(OtherCharacter->GetController()))
 		{
-
 			return Super::GetTeamAttitudeTowards(*OtherCharacter->GetController());
 		}
 
@@ -40,36 +41,38 @@ ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Oth
 
 ETeamAttitude::Type AEnemyAIController::GetAttitudeTowards(FGenericTeamId TeamA, FGenericTeamId TeamB)
 {
-
 	return TeamA == TeamB ? ETeamAttitude::Friendly : ETeamAttitude::Hostile;
 }
 
-
-
-
-
 ETeamAttitude::Type AEnemyAIController::GetAttitudeTowardsPlayer(const AActor& Other) const
 {
-	
+
+
 	return ETeamAttitude::Hostile;
 }
 
 
-
-void AEnemyAIController::CalculateRandomPos()
+void AEnemyAIController::Tick(float DeltaTime)
 {
-	FVector RandomPos;
-	RandomPos.X = 100;
-	RandomPos.Z = 150;
-	RandomPos.Y = 0;
+	Super::Tick(DeltaTime);
+
+	//I have to change this but IDK how to make it better
+	NextLocation = Pawn->NextPos();
+
+	//NON COMBAT BEHAVIORS
+	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == false)
+	{
+		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
+	}
 }
 
-
-
- void AEnemyAIController::AttackBasic()
+void AEnemyAIController::AttackCommand()
 {
-	//GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Bool>(TEXT("IsInAttackRange"), true);
-	 print("im in AIContrller");
-	//if in range attack
-}
+	// COMBAT BEHAVIORS
 
+
+	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
+	{
+		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
+	}
+}

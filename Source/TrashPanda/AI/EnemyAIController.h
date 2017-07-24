@@ -3,6 +3,7 @@
 #pragma once
 
 #include "AIController.h"
+#include "Enemy.h"
 #include "EnemyAIController.generated.h"
 
 /**
@@ -12,20 +13,19 @@ UCLASS()
 class TRASHPANDA_API AEnemyAIController : public AAIController
 {
 
+
 	GENERATED_BODY()
 
 public:
 	virtual void Possess(APawn* InPawn) override;
-	void AttackBasic();
 
-protected:
-	UPROPERTY(EditDefaultsOnly)
-		class UBehaviorTree* BehaviorTreeAsset;
+	virtual void Tick(float DeltaSeconds) override;
+	
+	
+	// ATTACK FUNCTIONS----------
+	void AttackCommand();
 
 
-
-	UPROPERTY(EditDefaultsOnly)
-		FGenericTeamId TeamId;
 
 public:
 	FGenericTeamId GetGenericTeamId() const override { return TeamId; }
@@ -34,10 +34,19 @@ public:
 
 
 
+
 protected:
+	UPROPERTY(EditDefaultsOnly)
+		class UBehaviorTree* BehaviorTreeAsset;
+	UPROPERTY(EditDefaultsOnly)
+		FGenericTeamId TeamId;
+
 	virtual ETeamAttitude::Type GetAttitudeTowardsPlayer(const AActor& Other) const;
+	AEnemy* Pawn;
+
+	UPROPERTY(VisibleAnywhere)
+	FVector NextLocation;
 
 
-	void CalculateRandomPos();
 
 };

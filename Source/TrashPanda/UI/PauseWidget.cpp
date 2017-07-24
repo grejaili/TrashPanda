@@ -34,7 +34,7 @@ void UPauseWidget::OnResumeClicked()
 	//Get chip and all of his functions/variables
 	if (AChip* player = Cast<AChip>(GetOwningPlayer()->GetPawn()))
 	{
-		player->PauseGame();
+//		player->PauseGame();
 	}
 	else
 	{

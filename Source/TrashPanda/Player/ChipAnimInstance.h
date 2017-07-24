@@ -20,26 +20,13 @@ public:
 	void isAttacking(bool onOff);
 
 	UFUNCTION()
-		bool getbIsLightAttacking();
-
-	UFUNCTION()
-		bool getbIsHeavyAttacking();
-
-	UFUNCTION()
-		bool GetCanDamage();
-
+		bool getbIsAttacking();
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float Speed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	bool bIsLightAttackingAnim;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	bool bIsHeavyAttackingAnim;
-
-	//Variable thats needed in BaseWeapon class to determine whether or not collision will apply damage
-	bool bCanDamage;
+	bool bisLightAttackingAnim;
 
 protected:
 	UFUNCTION()
@@ -47,6 +34,7 @@ protected:
 	
 	UFUNCTION()
 		void AnimNotify_DamageOFF();
+
 
 
 };
