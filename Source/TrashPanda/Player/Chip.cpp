@@ -83,6 +83,18 @@ void AChip::Shoot()
 void AChip::DodgeLeft()
 {
 
-	UE_LOG(LogTemp, Warning, TEXT("THEREFORE I STRAFE"));
+	UE_LOG(LogTemp, Warning, TEXT("Dodge Right"));
 
+}
+
+void AChip::DodgeRight()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Dodge Left"));
+}
+
+
+
+void AChip::DodgeBack()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
 }

@@ -22,6 +22,9 @@ public:
 	UFUNCTION()
 		bool getbIsAttacking();
 protected:
+
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float Speed;
 

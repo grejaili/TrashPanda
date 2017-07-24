@@ -36,6 +36,9 @@ public:
 	void LightAttack();
 	void Shoot();
 	void DodgeLeft();
+	void DodgeRight();
+	void DodgeBack();
+
 
 	//shooting mechanics
 	UPROPERTY(EditDefaultsOnly)

@@ -9,17 +9,14 @@
 
 void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
-	/*
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
 	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
 	if (OwningPawn)
 	{
 		Speed = OwningPawn->GetVelocity().Size();
-		bisLightAttackingAnim = OwningPawn->GetIsLightAttacking();
-
+		
 	}
-	*/
 }
 
 void UChipAnimInstance::isAttacking(bool onOff)
