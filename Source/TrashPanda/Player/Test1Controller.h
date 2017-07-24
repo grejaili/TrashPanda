@@ -53,6 +53,12 @@ protected:
 	void LightAttackPressed();
 	void ShootPressed();
 #pragma endregion Combat Functions -----------------------------------------------------
+	void DoubleClick();
+
+	FTimerHandle DodgeLeftTimeHandler;
+	bool bIsPossibleDodgeLeft;
+
+
 
 
 

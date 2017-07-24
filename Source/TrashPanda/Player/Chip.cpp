@@ -79,3 +79,10 @@ void AChip::Shoot()
 
 }
 #pragma endregion Combat Region
+
+void AChip::DodgeLeft()
+{
+
+	UE_LOG(LogTemp, Warning, TEXT("THEREFORE I STRAFE"));
+
+}

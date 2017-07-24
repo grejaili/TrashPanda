@@ -48,7 +48,7 @@ void ATest1Controller::SetupInputComponent()
 #pragma endregion Combat REGION
 
 
-	InputComponent->BindAction("Dodge", IE_Pressed, this, &ThisClass::DoubleClick);
+	InputComponent->BindAction("DodgeLEFT", IE_Pressed, this, &ThisClass::DoubleClick);
 
 }
 
@@ -134,5 +134,26 @@ void ATest1Controller::ShootPressed()
 
 
 
+void ATest1Controller::DoubleClick()
+{
+	if (bIsPossibleDodgeLeft == false)
+	{
+		
+
+		GetWorld()->GetTimerManager().ClearTimer(DodgeLeftTimeHandler);
+		GetWorld()->GetTimerManager().SetTimer(DodgeLeftTimeHandler, 0.5, false);
+		bIsPossibleDodgeLeft = true;
+	}
+	
+	else if ((bIsPossibleDodgeLeft == true) && (GetWorld()->GetTimerManager().GetTimerRemaining(DodgeLeftTimeHandler) > 0))
+	{
+		// set variable to true
+		APawn* const MyPawn = GetPawn();
+		Cast<AChip>(MyPawn)->DodgeLeft();
+		bIsPossibleDodgeLeft = false;
+	}
+
+
+}
 
 
