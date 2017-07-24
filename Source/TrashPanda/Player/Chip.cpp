@@ -105,5 +105,6 @@ float  AChip::GetDirection()
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-	return Direction.Size();
+	return Direction.Size()
+		;
 }
