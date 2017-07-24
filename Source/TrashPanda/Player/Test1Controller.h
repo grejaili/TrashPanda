@@ -56,6 +56,4 @@ protected:
 
 
 
-	void DoubleClick();
-
 };

@@ -54,11 +54,6 @@ void ATest1Controller::SetupInputComponent()
 
 void ATest1Controller::MoveForward(float Value)
 {
-	if (Value != 0) 
-	{
-
-
-
 
 		APawn* const MyPawn = GetPawn();
 		if (MyPawn)
@@ -68,7 +63,7 @@ void ATest1Controller::MoveForward(float Value)
 			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 			MyPawn->AddMovementInput(Direction, Value);
 		}
-	}
+	
 
 }
 
@@ -106,10 +101,7 @@ void ATest1Controller::LookUpAtRate(float Rate)
 
 void ATest1Controller::CameraYControll(float Rate)
 {
-
-
 	APawn* const MyPawn = GetPawn();
-
 	Cast<AChip>(MyPawn)->CameraYAxisMovement(Rate);
 }
 
@@ -137,20 +129,6 @@ void ATest1Controller::ShootPressed()
 	Cast<AChip>(MyPawn)->Shoot();
 
 
-}
-
-void ATest1Controller::DoubleClick()
-{
-//	GetWorld()->GetTimerManager().ClearTimer(DodgeTimerHandler);
-	//GetWorld()->GetTimerManager().SetTimer(DodgeTimerHandler, 2, false);
-	//GetWorldTimerManager().SetTimer(this, &ThisClass::FunctionToCall, TimeInFloat);
-
-	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "dodge");
-	if (GetWorld()->GetTimerManager().GetTimerRemaining(DodgeTimerHandler) <= 0)
-	{
-
-	}
-	
 }
 
 
