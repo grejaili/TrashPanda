@@ -15,30 +15,6 @@ AEnemy::AEnemy()
 	EnemySphere->InitSphereRadius(40.0f);
 	EnemySphere->SetCollisionProfileName(TEXT("PAWN"));
 
-	//InventoryComponent for loot table;
-	//Inventory = CreateDefaultSubobject<Inventory>(TEXT("Inventory Class Directory Here"));
-	//Inventory->SetupAttachment(RootComponent);
-
-
-
-
-	//CACA
-	//Attach Skeletal Mesh to Enemy.  Edit path to attach proper enemy mesh.
-	/*
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> EnemySkeletalMesh(TEXT("/Game/Mannequin/Character/Mesh/SK_Mannequin"));
-	if (EnemySkeletalMesh.Succeeded())
-	{
-		GetMesh()->SetSkeletalMesh(EnemySkeletalMesh.Object);
-		GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
-		GetMesh()->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
-	}
-	//Attach Animation Blueprint to the enemy.  Edit path to attach proper enemy animation blueprint.
-	static ConstructorHelpers::FObjectFinder<UAnimBlueprint> EnemyAnim(TEXT("/Game/Mannequin/Animations/ThirdPerson_AnimBP"));
-	if (EnemyAnim.Succeeded())
-	{
-		this->GetMesh()->SetAnimInstanceClass(EnemyAnim.Object->GetAnimBlueprintGeneratedClass());
-	}
-	*/
 
 }
 
@@ -54,10 +30,6 @@ void AEnemy::BeginPlay()
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-
-
-
 
 }
 
@@ -79,37 +51,76 @@ FVector AEnemy::NextPos()
 	return  RandomPos;
 }
 
-void AEnemy::AttackMelle(UObject* CPlayer)
+// COMBAT MECHANICS AND FUNCTIONS
+
+
+//GLOBAL CD FOR HABILITES
+bool AEnemy::GetGlobalCD()
 {
-
-
-	//ATTTACK TYPES 
-//----------Melle Attack---------\\//
 	if (GetWorld()->GetTimerManager().GetTimerRemaining(AttackTimerHandler) <= 0)
 	{
 		bIsPossibletoAttack = true;
 	}
 
-
-	if ((bIsPossibletoAttack == true))
+	else
 	{
-		print("Attack  Melle");
-		AttackHappening = true;
-		//place the animations calls here
 		bIsPossibletoAttack = false;
-
-		//those two should in a separate function but later
-		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
-		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, GlobalCD, false);
-
-
 	}
 
 
-	// animation
+	return bIsPossibletoAttack;
+}
+
+
+void AEnemy::SetGlobalCD()
+{
+	GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
+	GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, BaseGlobalCD, false);
+}
+
+
+void AEnemy::SetGlobalCD(float CD)
+{
+	check (CD < BaseGlobalCD)
+	
+		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
+		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, CD, false);
+}
+
+
+
+//Light attack here too
+void AEnemy::AttackMelle(UObject* CPlayer)
+{
+
+
+	if (GetGlobalCD())
+	{
+	//	print("Attack  Melle");
+		AttackHappening = true;
+		//place the animations calls here
+
+		SetGlobalCD();
+	}
+
 
 
 }
+
+void AEnemy::AttackHeavy(UObject* CPlayer)
+{
+	GetGlobalCD();
+
+
+	SetGlobalCD();
+}
+
+
+void  AEnemy:: WalkingSound()
+{
+
+}
+
 
 
 float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser)

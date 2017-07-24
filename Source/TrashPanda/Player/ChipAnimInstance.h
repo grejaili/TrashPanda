@@ -36,4 +36,5 @@ protected:
 		void AnimNotify_DamageOFF();
 
 
+
 };

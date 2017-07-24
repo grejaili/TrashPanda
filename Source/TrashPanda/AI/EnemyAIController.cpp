@@ -76,4 +76,3 @@ void AEnemyAIController::AttackCommand()
 		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 	}
 }
-

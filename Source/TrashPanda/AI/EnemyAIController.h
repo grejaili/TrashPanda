@@ -13,13 +13,18 @@ UCLASS()
 class TRASHPANDA_API AEnemyAIController : public AAIController
 {
 
+
 	GENERATED_BODY()
 
 public:
 	virtual void Possess(APawn* InPawn) override;
 
 	virtual void Tick(float DeltaSeconds) override;
+	
+	
+	// ATTACK FUNCTIONS----------
 	void AttackCommand();
+
 
 
 public:
@@ -43,6 +48,5 @@ protected:
 	FVector NextLocation;
 
 
-	friend class UBTTask_BlackboardBase;
 
 };

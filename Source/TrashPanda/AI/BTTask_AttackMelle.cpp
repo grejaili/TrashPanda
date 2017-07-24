@@ -2,7 +2,7 @@
 
 #include "TrashPanda.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "EnemyAICOntroller.h"
+#include "EnemyAIController.h"
 #include "Engine.h"
 #include "BTTask_AttackMelle.h"
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
@@ -18,11 +18,8 @@ EBTNodeResult::Type UBTTask_AttackMelle::ExecuteTask(UBehaviorTreeComponent& Own
 	if (AEnemyAIController* Controller = Cast<AEnemyAIController>(BehaviorTree->GetAIOwner()))
 	{
 		Controller->AttackCommand();
-
 		//Use the function from the AI Class
-	
 	}
-
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }
 

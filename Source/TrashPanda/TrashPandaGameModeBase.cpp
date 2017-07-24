@@ -2,6 +2,7 @@
 
 #include "TrashPanda.h"
 #include "Player/Chip.h"
+#include "Player/Test1Controller.h"
 #include "TrashPandaPlayerState.h"
 #include "TrashPandaGameState.h"
 #include "TrashPandaGameModeBase.h"
@@ -11,22 +12,33 @@
 
 ATrashPandaGameModeBase::ATrashPandaGameModeBase(const FObjectInitializer& ObjectInitializer)
 {
-	DefaultPawnClass = AChip::StaticClass();
-	GameStateClass = ATrashPandaGameState::StaticClass();
-	PlayerStateClass = ATrashPandaPlayerState::StaticClass();
-	HUDClass = APlayerHUD::StaticClass();
+	//	GameStateClass = ATrashPandaGameState::StaticClass();
+		//PlayerStateClass = ATrashPandaPlayerState::StaticClass();
 
-	ConstructorHelpers::FClassFinder<AChip> CharacterClass(
-		TEXT("Blueprint'/Game/Player/Chip_BP.Chip_BP_C'"));
 
-	if (CharacterClass.Class)
+	PlayerControllerClass = ATest1Controller::StaticClass();
+
+	static	ConstructorHelpers::FClassFinder<AChip> CharacterClass(TEXT("Blueprint'/Game/Player/Chip_BP.Chip_BP_C'"));
+
+	if (CharacterClass.Class != NULL)
 	{
 		DefaultPawnClass = CharacterClass.Class;
+
 	}
 
+
+
+
+
+
+	///UIIIIIIIII CLASSSESSS
+
+
+	HUDClass = APlayerHUD::StaticClass();
 	ConstructorHelpers::FClassFinder<APlayerHUD>ChipHUDWidgetClass(
 		TEXT("Blueprint'/Game/UI/ChipHUD.ChipHUD_C'"));
 	//cant find the HUD for some reason. fix.
+
 
 	if (ChipHUDWidgetClass.Class)
 	{
