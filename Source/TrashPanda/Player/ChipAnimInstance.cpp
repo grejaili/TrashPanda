@@ -15,7 +15,8 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (OwningPawn)
 	{
 		Speed = OwningPawn->GetVelocity().Size();
-		
+		Direction = OwningPawn->GetDirection();
+
 	}
 }
 
@@ -46,3 +47,5 @@ bool UChipAnimInstance::getbIsAttacking()
 	//return bisLightAttackingAnim;
 	return true;
 }
+
+

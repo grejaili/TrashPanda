@@ -98,3 +98,12 @@ void AChip::DodgeBack()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
 }
+
+float  AChip::GetDirection()
+{
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+	return Direction.Size();
+}

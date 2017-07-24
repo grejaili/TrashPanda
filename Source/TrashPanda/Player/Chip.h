@@ -38,7 +38,7 @@ public:
 	void DodgeLeft();
 	void DodgeRight();
 	void DodgeBack();
-
+	float  GetDirection();
 
 	//shooting mechanics
 	UPROPERTY(EditDefaultsOnly)
