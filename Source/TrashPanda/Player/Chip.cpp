@@ -19,6 +19,12 @@
 AChip::AChip()
 {
 
+
+	PlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Root"));
+	PlayerSphere->SetupAttachment(RootComponent);
+	PlayerSphere->InitSphereRadius(40.0f);
+	PlayerSphere->SetCollisionProfileName(TEXT("PAWN"));
+
 	//CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
@@ -76,6 +82,7 @@ void AChip::Shoot()
 void AChip::DodgeLeft()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Dodge Right"));
+	PlayerSphere->AddForce(FVector(100, 0, 0));
 }
 
 void AChip::DodgeRight()

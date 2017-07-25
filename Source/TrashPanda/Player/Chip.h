@@ -16,6 +16,10 @@ public:
 
 
 #pragma
+
+	UPROPERTY(EditDefaultsOnly)
+		USphereComponent* PlayerSphere;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class USpringArmComponent* CameraBoom;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
