@@ -40,8 +40,8 @@ AChip::AChip()
 	static ConstructorHelpers::FObjectFinder<UAnimSequence> idleanim(TEXT("AnimSequence'/Game/Player/ANIM/IdleAnim.IdleAnim'"));
 	IdleAnim = idleanim.Object;
 
-	static ConstructorHelpers::FObjectFinder<UAnimSequence> attackanim(TEXT("AnimSequence'/Game/Player/ANIM/AttackComboAnim1.AttackComboAnim1'"));
-	AttackAnim = attackanim.Object;
+	//static ConstructorHelpers::FObjectFinder<UAnimSequence> attackanim(TEXT("AnimSequence'/Game/Player/ANIM/AttackComboAnim1.AttackComboAnim1'"));
+	//AttackAnim = attackanim.Object;
 
 	static ConstructorHelpers::FObjectFinder<UAnimSequence> dodgeanim(TEXT("AnimSequence'/Game/Player/ANIM/DodgeAnim2.DodgeAnim2'"));
 	DodgeAnim = dodgeanim.Object;
@@ -76,13 +76,18 @@ void AChip::CameraXAxisMovement(float Rate)
 
 #pragma
 
-void AChip::LightAttack()
+void AChip::Attack()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Attack");
 	//printf("I ATTACKED");
 	
-	//Play attack animation, loop = false
-	GetMesh()->PlayAnimation(AttackAnim, false);
+	// Get reference to custom anim class
+	UChipAnimInstance* AnimInstanceRef = Cast<UChipAnimInstance>(GetMesh()->GetAnimInstance());
+
+	if (AnimInstanceRef)
+	{
+		AnimInstanceRef->Attack();
+	}
 }
 
 void AChip::Shoot()

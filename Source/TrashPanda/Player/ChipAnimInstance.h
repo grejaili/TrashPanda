@@ -21,6 +21,25 @@ public:
 
 	UFUNCTION()
 		bool getbIsAttacking();
+
+	// Attack montage (Combo) 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AnimMontage")
+		UAnimMontage* MeleeAttackMontage;
+
+	// True if Chip can preform attack 2
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AnimMontage")
+		bool bAcceptsSecondAttackInput;
+
+	// True if Chip can preform attack 3
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AnimMontage")
+		bool bAcceptsThirdAttackInput;
+
+	// True if Chip can preform attack 4
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AnimMontage")
+		bool bAcceptsFourthAttackInput;
+
+	void Attack();
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float Speed;
@@ -34,6 +53,7 @@ protected:
 	
 	UFUNCTION()
 		void AnimNotify_DamageOFF();
+
 
 
 

@@ -46,12 +46,29 @@ public:
 		UAnimSequence * DodgeAnim;
 
 	// Attack 1
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Anims")
-		UAnimSequence * AttackAnim;
+	//UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Anims")
+	//	UAnimSequence * AttackAnim;
 
 	// Strafe
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Anims")
 		UAnimSequence * StrafeAnim;
+
+	// Attack montage (Combo) 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AnimMontage")
+		UAnimMontage* MeleeAttackMontage;
+
+	// True if Chip can preform attack 2
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AnimMontage")
+		bool bAcceptsSecondAttackInput;
+
+	// True if Chip can preform attack 3
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AnimMontage")
+		bool bAcceptsThirdAttackInput;
+
+	// True if Chip can preform attack 4
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AnimMontage")
+		bool bAcceptsFourthAttackInput;
+
 
 #pragma endregion Animations
 
@@ -59,7 +76,7 @@ public:
 #pragma 
 	//apply the animation funtion here o
 
-	void LightAttack();
+	void Attack();
 	void Shoot();
 	void DodgeLeft();
 

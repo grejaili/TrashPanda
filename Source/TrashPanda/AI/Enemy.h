@@ -53,7 +53,7 @@ protected:
 		uint32 DamageReduction;
 
 	UPROPERTY(EditAnyWhere, Category = Stats)
-		uint32 Damage;
+		float Damage;
 
 	UPROPERTY(EditAnywhere, Category = AIBehavior)
 		uint32 MoveRadius;

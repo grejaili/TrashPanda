@@ -145,7 +145,7 @@ void ATest1Controller::LightAttackPressed()
 {
 	APawn* const MyPawn = GetPawn();
 	//UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
-	Cast<AChip>(MyPawn)->LightAttack();
+	Cast<AChip>(MyPawn)->Attack();
 
 }
 
