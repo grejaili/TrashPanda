@@ -46,6 +46,12 @@ public:
 
 	void IsW(float Value);
 	bool movingFront;
+	bool Dodgding = false;
+	class UAnimInstance* AnimInstance;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Dodge)
+		float DodgeDistance;
+
 
 	void  RightStrafe(float Value);
 	bool AnimDirectionRight = false;

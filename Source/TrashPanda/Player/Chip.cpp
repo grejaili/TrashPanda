@@ -25,7 +25,10 @@ AChip::AChip()
 	PlayerSphere->InitSphereRadius(40.0f);
 	PlayerSphere->SetCollisionProfileName(TEXT("PAWN"));
 
-	//CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
+
+	AnimInstance = GetMesh()->GetAnimInstance();
+	//PlayerSphere->Phy
+		///CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 500.0f; // The camera follows at this distance behind the character	
@@ -45,6 +48,9 @@ void AChip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//I might need to implement
+
+
+
 }
 
 #pragma region 
@@ -81,25 +87,36 @@ void AChip::Shoot()
 
 void AChip::DodgeLeft()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Dodge Right"));
-	PlayerSphere->AddForce(FVector(100, 0, 0));
+	//PlayerSphere->AddForce(FVector(100, 0, 0));
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
+	//	Cast<UChipAnimInstance>(AnimInstance)->IsDodgding = true;
 }
 
 void AChip::DodgeRight()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Dodge Left"));
+	Dodgding = true;
+	//PlayerSphere->AddForce(FVector(100, 0, 0));
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * DodgeDistance, true, true);
 }
-
-
 
 void AChip::DodgeBack()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
 }
 
+
+
 void  AChip::RightStrafe(float Value)
 {
-	if (Value == 0) 
+	if (Value == 0)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
 		AnimDirectionRight = false;
@@ -111,19 +128,17 @@ void  AChip::RightStrafe(float Value)
 	}
 }
 
-void AChip::IsW(float Value) 
+void AChip::IsW(float Value)
 {
-	
-		if (Value == 0)
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
-			movingFront = false;
-		}
-		else
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
-			movingFront = true;
-		}
 
-
+	if (Value == 0)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
+		movingFront = false;
+	}
+	else
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
+		movingFront = true;
+	}
 }

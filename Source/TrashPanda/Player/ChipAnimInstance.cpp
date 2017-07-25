@@ -17,21 +17,11 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Speed = OwningPawn->GetVelocity().Size();
 		Direction = OwningPawn->AnimDirectionRight;
 		ClickingW = OwningPawn->movingFront;
-
+		
 	}
 }
 
 void UChipAnimInstance::isAttacking(bool onOff)
-{
-
-}
-
-void UChipAnimInstance::AnimNotify_DamageON()
-{
-	
-}
-
-void UChipAnimInstance::AnimNotify_DamageOFF()
 {
 
 }
@@ -42,4 +32,14 @@ bool UChipAnimInstance::getbIsAttacking()
 	return true;
 }
 
+void UChipAnimInstance::AnimNotify_DamageON()
+{
+	
+}
+
+
+void UChipAnimInstance::AnimNotify_DamageOFF()
+{
+
+}
 
