@@ -48,23 +48,23 @@ void ATest1Controller::SetupInputComponent()
 #pragma endregion Combat REGION
 
 
-	InputComponent->BindAction("DodgeLEFT", IE_Pressed, this, &ThisClass::DoubleClick);
+	InputComponent->BindAction("DodgeLEFT", IE_DoubleClick, this, &ThisClass::DodgeLeft);
+	InputComponent->BindAction("DodgeRIGHT", IE_DoubleClick, this, &ThisClass::DodgeRight);
+	InputComponent->BindAction("DodgeBACK", IE_DoubleClick, this, &ThisClass::DodgeBack);
 
 }
 
 void ATest1Controller::MoveForward(float Value)
 {
-
-		APawn* const MyPawn = GetPawn();
-		if (MyPawn)
-		{
-			const FRotator Rotation = MyPawn->GetControlRotation();
-			const FRotator YawRotation(0, Rotation.Yaw, 0);
-			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-			MyPawn->AddMovementInput(Direction, Value);
-		}
-	
-
+	APawn* const MyPawn = GetPawn();
+	if (MyPawn)
+	{
+		const FRotator Rotation = MyPawn->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		MyPawn->AddMovementInput(Direction, Value);
+		Cast<AChip>(MyPawn)->IsW(Value);
+	}
 }
 
 void ATest1Controller::MoveSides(float Value)
@@ -78,6 +78,8 @@ void ATest1Controller::MoveSides(float Value)
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
+
+		Cast<AChip>(MyPawn)->RightStrafe(Value);
 		MyPawn->AddMovementInput(Direction, Value);
 	}
 
@@ -134,26 +136,25 @@ void ATest1Controller::ShootPressed()
 
 
 
-void ATest1Controller::DoubleClick()
+void ATest1Controller::DodgeLeft()
 {
-	if (bIsPossibleDodgeLeft == false)
-	{
-		
 
-		GetWorld()->GetTimerManager().ClearTimer(DodgeLeftTimeHandler);
-		GetWorld()->GetTimerManager().SetTimer(DodgeLeftTimeHandler, 0.5, false);
-		bIsPossibleDodgeLeft = true;
-	}
-	
-	else if ((bIsPossibleDodgeLeft == true) && (GetWorld()->GetTimerManager().GetTimerRemaining(DodgeLeftTimeHandler) > 0))
-	{
-		// set variable to true
-		APawn* const MyPawn = GetPawn();
-		Cast<AChip>(MyPawn)->DodgeLeft();
-		bIsPossibleDodgeLeft = false;
-	}
+	APawn* const MyPawn = GetPawn();
+	Cast<AChip>(MyPawn)->DodgeLeft();
 
 
 }
 
+void ATest1Controller::DodgeRight()
+{
+	APawn* const MyPawn = GetPawn();
+	Cast<AChip>(MyPawn)->DodgeRight();
+}
 
+
+
+void ATest1Controller::DodgeBack()
+{
+	APawn* const MyPawn = GetPawn();
+	Cast<AChip>(MyPawn)->DodgeBack();
+}

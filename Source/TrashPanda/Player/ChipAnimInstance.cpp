@@ -9,29 +9,21 @@
 
 void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
-	/*
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
 	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
 	if (OwningPawn)
 	{
 		Speed = OwningPawn->GetVelocity().Size();
-		bisLightAttackingAnim = OwningPawn->GetIsLightAttacking();
+		Direction = OwningPawn->AnimDirectionRight;
+		ClickingW = OwningPawn->movingFront;
 
 	}
-	*/
 }
 
 void UChipAnimInstance::isAttacking(bool onOff)
 {
-	//if (onOff == true)
-	//{
-	//	bisAttackingAnim = true;
-	//}
-	//else if (onOff == false)
-	//{
-	//	bisAttackingAnim = false;
-	//}
+
 }
 
 void UChipAnimInstance::AnimNotify_DamageON()
@@ -49,3 +41,5 @@ bool UChipAnimInstance::getbIsAttacking()
 	//return bisLightAttackingAnim;
 	return true;
 }
+
+

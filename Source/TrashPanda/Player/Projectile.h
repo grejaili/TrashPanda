@@ -21,6 +21,10 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 
 
+	UPROPERTY(EditDefaultsOnly)
+		class UStaticMeshComponent* StaticMesh;
+
+
 #pragma
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = Projectile)
 		float OverlapRadius;
