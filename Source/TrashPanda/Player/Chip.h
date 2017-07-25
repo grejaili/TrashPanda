@@ -38,12 +38,17 @@ public:
 	void DodgeLeft();
 	void DodgeRight();
 	void DodgeBack();
-	float  GetDirection();
 
+
+	void IsW(float Value);
+	bool movingFront;
+
+	void  RightStrafe(float Value);
+	bool AnimDirectionRight = false;
 	//shooting mechanics
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<AProjectile> ProjectileClass;
-		
+
 
 
 #pragma endregion Combat REGION

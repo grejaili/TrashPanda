@@ -56,17 +56,15 @@ void ATest1Controller::SetupInputComponent()
 
 void ATest1Controller::MoveForward(float Value)
 {
-
-		APawn* const MyPawn = GetPawn();
-		if (MyPawn)
-		{
-			const FRotator Rotation = MyPawn->GetControlRotation();
-			const FRotator YawRotation(0, Rotation.Yaw, 0);
-			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-			MyPawn->AddMovementInput(Direction, Value);
-		}
-	
-
+	APawn* const MyPawn = GetPawn();
+	if (MyPawn)
+	{
+		const FRotator Rotation = MyPawn->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		MyPawn->AddMovementInput(Direction, Value);
+		Cast<AChip>(MyPawn)->IsW(Value);
+	}
 }
 
 void ATest1Controller::MoveSides(float Value)
@@ -80,6 +78,8 @@ void ATest1Controller::MoveSides(float Value)
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
+
+		Cast<AChip>(MyPawn)->RightStrafe(Value);
 		MyPawn->AddMovementInput(Direction, Value);
 	}
 

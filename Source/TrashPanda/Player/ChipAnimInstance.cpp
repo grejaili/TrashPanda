@@ -15,21 +15,15 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (OwningPawn)
 	{
 		Speed = OwningPawn->GetVelocity().Size();
-		Direction = OwningPawn->GetDirection();
+		Direction = OwningPawn->AnimDirectionRight;
+		ClickingW = OwningPawn->movingFront;
 
 	}
 }
 
 void UChipAnimInstance::isAttacking(bool onOff)
 {
-	//if (onOff == true)
-	//{
-	//	bisAttackingAnim = true;
-	//}
-	//else if (onOff == false)
-	//{
-	//	bisAttackingAnim = false;
-	//}
+
 }
 
 void UChipAnimInstance::AnimNotify_DamageON()

@@ -11,7 +11,6 @@
 #include "UI/PauseWidget.h"
 #include "EngineUtils.h"
 #include "Projectile.h"
-
 #include "TrashPandaGameModeBase.h"
 
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
@@ -31,10 +30,7 @@ AChip::AChip()
 
 	//INITILIZING
 	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/MyProjectile.MyProjectile'"));
-	
 	ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
-
-
 }
 
 
@@ -71,20 +67,15 @@ void AChip::LightAttack()
 
 void AChip::Shoot()
 {
-
 	//UWorld* wp = GetWorld();
 	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Shoot");
-	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass,FVector( GetActorLocation().X+30, GetActorLocation().X + 30, GetActorLocation().X + 30), FRotator::ZeroRotator);
-
-
+	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, FVector(GetActorLocation().X + 30, GetActorLocation().X + 30, GetActorLocation().X + 30), FRotator::ZeroRotator);
 }
 #pragma endregion Combat Region
 
 void AChip::DodgeLeft()
 {
-
 	UE_LOG(LogTemp, Warning, TEXT("Dodge Right"));
-
 }
 
 void AChip::DodgeRight()
@@ -99,12 +90,33 @@ void AChip::DodgeBack()
 	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
 }
 
-float  AChip::GetDirection()
+void  AChip::RightStrafe(float Value)
 {
-	const FRotator Rotation = GetControlRotation();
-	const FRotator YawRotation(0, Rotation.Yaw, 0);
-	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	if (Value == 0) 
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
+		AnimDirectionRight = false;
+	}
+	else
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
+		AnimDirectionRight = true;
+	}
+}
 
-	return Direction.Size()
-		;
+void AChip::IsW(float Value) 
+{
+	
+		if (Value == 0)
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
+			movingFront = false;
+		}
+		else
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
+			movingFront = true;
+		}
+
+
 }

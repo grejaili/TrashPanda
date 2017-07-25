@@ -29,7 +29,10 @@ protected:
 		float Speed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-		float  Direction;
+		bool  Direction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  ClickingW;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool bisLightAttackingAnim;
