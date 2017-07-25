@@ -11,7 +11,6 @@
 #include "UI/PauseWidget.h"
 #include "EngineUtils.h"
 #include "Projectile.h"
-
 #include "TrashPandaGameModeBase.h"
 
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
@@ -19,6 +18,12 @@
 // Sets default values
 AChip::AChip()
 {
+
+
+	PlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Root"));
+	PlayerSphere->SetupAttachment(RootComponent);
+	PlayerSphere->InitSphereRadius(40.0f);
+	PlayerSphere->SetCollisionProfileName(TEXT("PAWN"));
 
 	//CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -31,10 +36,7 @@ AChip::AChip()
 
 	//INITILIZING
 	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/MyProjectile.MyProjectile'"));
-	
 	ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
-
-
 }
 
 
@@ -71,18 +73,57 @@ void AChip::LightAttack()
 
 void AChip::Shoot()
 {
-
 	//UWorld* wp = GetWorld();
 	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Shoot");
-	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass,FVector( GetActorLocation().X+30, GetActorLocation().X + 30, GetActorLocation().X + 30), FRotator::ZeroRotator);
-
-
+	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, FVector(GetActorLocation().X + 30, GetActorLocation().X + 30, GetActorLocation().X + 30), FRotator::ZeroRotator);
 }
 #pragma endregion Combat Region
 
 void AChip::DodgeLeft()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Dodge Right"));
+	PlayerSphere->AddForce(FVector(100, 0, 0));
+}
 
-	UE_LOG(LogTemp, Warning, TEXT("THEREFORE I STRAFE"));
+void AChip::DodgeRight()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Dodge Left"));
+}
+
+
+
+void AChip::DodgeBack()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
+}
+
+void  AChip::RightStrafe(float Value)
+{
+	if (Value == 0) 
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
+		AnimDirectionRight = false;
+	}
+	else
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
+		AnimDirectionRight = true;
+	}
+}
+
+void AChip::IsW(float Value) 
+{
+	
+		if (Value == 0)
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
+			movingFront = false;
+		}
+		else
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
+			movingFront = true;
+		}
+
 
 }

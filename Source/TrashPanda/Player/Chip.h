@@ -16,6 +16,10 @@ public:
 
 
 #pragma
+
+	UPROPERTY(EditDefaultsOnly)
+		USphereComponent* PlayerSphere;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class USpringArmComponent* CameraBoom;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -36,11 +40,19 @@ public:
 	void LightAttack();
 	void Shoot();
 	void DodgeLeft();
+	void DodgeRight();
+	void DodgeBack();
 
+
+	void IsW(float Value);
+	bool movingFront;
+
+	void  RightStrafe(float Value);
+	bool AnimDirectionRight = false;
 	//shooting mechanics
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<AProjectile> ProjectileClass;
-		
+
 
 
 #pragma endregion Combat REGION
