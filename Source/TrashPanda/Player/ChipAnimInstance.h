@@ -50,6 +50,9 @@ protected:
 	UFUNCTION()
 		void AnimNotify_DamageOFF();
 
+	UFUNCTION()
+		void AnimNotify_Dodge_OFF();
+
 
 
 

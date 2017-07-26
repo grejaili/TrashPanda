@@ -98,13 +98,15 @@ void AChip::DodgeLeft()
 
 void AChip::DodgeRight()
 {
-	Dodgding = true;
+
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	//this->AddMovementInput(Direction, );
 	this->LaunchCharacter(Direction * DodgeDistance, true, true);
+	//AnimInstance->IsDodgding = true;
+
 }
 
 void AChip::DodgeBack()
@@ -131,14 +133,14 @@ void  AChip::RightStrafe(float Value)
 void AChip::IsW(float Value)
 {
 
-	if (Value == 0)
+	if (Value > 0)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
-		movingFront = false;
+		movingFront = true;
 	}
 	else
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
-		movingFront = true;
+		movingFront = false;
 	}
 }

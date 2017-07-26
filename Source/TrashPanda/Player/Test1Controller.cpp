@@ -63,6 +63,7 @@ void ATest1Controller::MoveForward(float Value)
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		MyPawn->AddMovementInput(Direction, Value);
+		
 		Cast<AChip>(MyPawn)->IsW(Value);
 	}
 }

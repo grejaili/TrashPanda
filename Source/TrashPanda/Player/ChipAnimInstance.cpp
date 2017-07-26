@@ -17,7 +17,7 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Speed = OwningPawn->GetVelocity().Size();
 		Direction = OwningPawn->AnimDirectionRight;
 		ClickingW = OwningPawn->movingFront;
-		
+		Isdodging
 	}
 }
 
@@ -42,4 +42,11 @@ void UChipAnimInstance::AnimNotify_DamageOFF()
 {
 
 }
+
+
+void UChipAnimInstance::AnimNotify_Dodge_OFF()
+{
+
+}
+
 

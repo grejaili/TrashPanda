@@ -36,7 +36,7 @@ public:
 
 #pragma 
 	//apply the animation funtion here o
-
+	
 	void LightAttack();
 	void Shoot();
 	void DodgeLeft();
@@ -49,7 +49,7 @@ public:
 	bool Dodgding = false;
 	class UAnimInstance* AnimInstance;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Dodge)
+	UPROPERTY( EditAnywhere, Category = Dodge)
 		float DodgeDistance;
 
 
