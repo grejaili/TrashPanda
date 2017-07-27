@@ -46,7 +46,10 @@ public:
 
 	void IsW(float Value);
 	bool movingFront;
+
 	bool Dodgding = false;
+	bool BackDodge = false;
+	
 	class UAnimInstance* AnimInstance;
 
 	UPROPERTY( EditAnywhere, Category = Dodge)

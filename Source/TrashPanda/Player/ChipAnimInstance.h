@@ -22,8 +22,7 @@ public:
 	UFUNCTION()
 		bool getbIsAttacking();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-		bool  IsDodgding;
+
 
 protected:
 
@@ -40,7 +39,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool bisLightAttackingAnim;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  IsDodgding;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  IsBackDodgding;
 
 
 protected:
@@ -52,6 +54,9 @@ protected:
 
 	UFUNCTION()
 		void AnimNotify_Dodge_OFF();
+	UFUNCTION()
+		void AnimNotify_BackDodged_OFF();
+
 
 
 

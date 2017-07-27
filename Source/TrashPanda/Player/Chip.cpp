@@ -87,31 +87,38 @@ void AChip::Shoot()
 
 void AChip::DodgeLeft()
 {
+	Dodgding = true;
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	//this->AddMovementInput(Direction, );
 	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
-	//	Cast<UChipAnimInstance>(AnimInstance)->IsDodgding = true;
+
+
 }
 
 void AChip::DodgeRight()
 {
-
+	Dodgding = true;
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	//this->AddMovementInput(Direction, );
 	this->LaunchCharacter(Direction * DodgeDistance, true, true);
-	//AnimInstance->IsDodgding = true;
 
 }
 
 void AChip::DodgeBack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
+	BackDodge = true;
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
+//	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
 }
 
 

@@ -17,7 +17,8 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Speed = OwningPawn->GetVelocity().Size();
 		Direction = OwningPawn->AnimDirectionRight;
 		ClickingW = OwningPawn->movingFront;
-		Isdodging
+		IsDodgding = OwningPawn->Dodgding;
+		IsBackDodgding = OwningPawn->BackDodge;
 	}
 }
 
@@ -37,16 +38,33 @@ void UChipAnimInstance::AnimNotify_DamageON()
 	
 }
 
-
 void UChipAnimInstance::AnimNotify_DamageOFF()
 {
 
 }
 
 
+
+
 void UChipAnimInstance::AnimNotify_Dodge_OFF()
 {
-
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("DODGE Variable"));
+		OwningPawn->Dodgding = false;
+	}
 }
+
+
+void UChipAnimInstance::AnimNotify_BackDodged_OFF()
+{
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		OwningPawn->BackDodge = false;
+	}
+}
+
 
 
