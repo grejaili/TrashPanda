@@ -116,10 +116,9 @@ void AEnemy::AttackHeavy(UObject* CPlayer)
 }
 
 
-void  AEnemy:: WalkingSound()
-{
 
-}
+
+
 
 
 
@@ -139,8 +138,3 @@ float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, c
 
 	return ActualDamage;
 }
-
-
-
-
-

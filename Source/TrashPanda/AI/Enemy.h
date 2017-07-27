@@ -69,17 +69,6 @@ protected:
 
 
 
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
+float 	TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
 	bool AttackHappening;
-
-	//SOUNDS
-
-
-	void WalkingSound();
-
-
-//	USoundClass
-
-	  
-
 };

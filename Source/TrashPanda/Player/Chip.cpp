@@ -79,9 +79,16 @@ void AChip::LightAttack()
 
 void AChip::Shoot()
 {
-	//UWorld* wp = GetWorld();
-	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Shoot");
-	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, FVector(GetActorLocation().X + 30, GetActorLocation().X + 30, GetActorLocation().X + 30), FRotator::ZeroRotator);
+	FVector PlayerPos = this->GetActorLocation();
+	//PlayerPos.X += 100;
+	//PlayerPos.Y+= 200;
+	PlayerPos.Z+= 50;
+
+	AProjectile*  Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, FRotator::ZeroRotator);
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	Projectile->InitVelocity(Direction);
 }
 #pragma endregion Combat Region
 
@@ -118,7 +125,7 @@ void AChip::DodgeBack()
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 	//this->AddMovementInput(Direction, );
 	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
-//	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
+	//	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
 }
 
 
