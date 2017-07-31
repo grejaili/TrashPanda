@@ -19,31 +19,19 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		ClickingW = OwningPawn->movingFront;
 		IsDodgding = OwningPawn->Dodgding;
 		IsBackDodgding = OwningPawn->BackDodge;
+		IsAttacking = OwningPawn->IsAttacking;
 	}
 }
 
-void UChipAnimInstance::isAttacking(bool onOff)
+
+void UChipAnimInstance::AnimNotify_AttackFinish()
 {
-
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		OwningPawn->IsAttacking = false;
+	}
 }
-
-bool UChipAnimInstance::getbIsAttacking()
-{
-	//return bisLightAttackingAnim;
-	return true;
-}
-
-void UChipAnimInstance::AnimNotify_DamageON()
-{
-	
-}
-
-void UChipAnimInstance::AnimNotify_DamageOFF()
-{
-
-}
-
-
 
 
 void UChipAnimInstance::AnimNotify_Dodge_OFF()
@@ -55,7 +43,6 @@ void UChipAnimInstance::AnimNotify_Dodge_OFF()
 		OwningPawn->Dodgding = false;
 	}
 }
-
 
 void UChipAnimInstance::AnimNotify_BackDodged_OFF()
 {

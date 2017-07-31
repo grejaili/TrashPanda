@@ -97,7 +97,7 @@ void AEnemy::AttackMelle(UObject* CPlayer)
 	if (GetGlobalCD())
 	{
 	//	print("Attack  Melle");
-		AttackHappening = true;
+		bIsAttacking = true;
 		//place the animations calls here
 
 		SetGlobalCD();
@@ -114,12 +114,6 @@ void AEnemy::AttackHeavy(UObject* CPlayer)
 
 	SetGlobalCD();
 }
-
-
-
-
-
-
 
 
 float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser)

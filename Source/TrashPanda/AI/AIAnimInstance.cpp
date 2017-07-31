@@ -14,6 +14,7 @@ void UAIAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (OwningPawn)
 	{
 		Speed = OwningPawn->GetVelocity().Size();
+		bIsAttacking = OwningPawn->bIsAttacking;
 	}
 
 
@@ -21,15 +22,12 @@ void UAIAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 }
 
 
-bool UAIAnimInstance::getbisAttacking()
+
+void UAIAnimInstance::AnimNotify_AttackFinish()
 {
-	return bIsAttacking;
-}
-
-
-void  UAIAnimInstance::isAttacking(bool  OnOff)
-{
-	
-
-
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		OwningPawn->bIsAttacking = false;
+	}
 }

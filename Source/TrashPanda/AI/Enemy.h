@@ -41,7 +41,7 @@ public:
 
 	void AttackMelle(UObject* Player);
 	void AttackHeavy(UObject* Player);
-
+	bool bIsAttacking = false;
 
 
 protected:

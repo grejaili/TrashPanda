@@ -17,10 +17,6 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSceonds) override;
 
 
-	UFUNCTION()
-		void isAttacking(bool OnOff);
-	UFUNCTION()
-		bool getbisAttacking();
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -28,8 +24,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool	bIsAttacking;
 
-
-
-
+	void  AnimNotify_AttackFinish();
 
 };
