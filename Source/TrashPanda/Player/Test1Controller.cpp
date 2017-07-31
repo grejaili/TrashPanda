@@ -41,14 +41,16 @@ void ATest1Controller::SetupInputComponent()
 	//COMBAT INPUTS
 
 #pragma
-	//Attack_Heavy
+
 	InputComponent->BindAction("Attack_Light", IE_Pressed, this, &ThisClass::LightAttackPressed);
 	InputComponent->BindAction("Attack_Shoot", IE_Pressed, this, &ThisClass::ShootPressed);
 
 #pragma endregion Combat REGION
 
 
-
+	InputComponent->BindAction("DodgeLEFT", IE_DoubleClick, this, &ThisClass::DodgeLeft);
+	InputComponent->BindAction("DodgeRIGHT", IE_DoubleClick, this, &ThisClass::DodgeRight);
+	InputComponent->BindAction("DodgeBACK", IE_DoubleClick, this, &ThisClass::DodgeBack);
 
 }
 
@@ -59,11 +61,11 @@ void ATest1Controller::MoveForward(float Value)
 	{
 		const FRotator Rotation = MyPawn->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		MyPawn->AddMovementInput(Direction, Value);
+		
+		Cast<AChip>(MyPawn)->IsW(Value);
 	}
-
 }
 
 void ATest1Controller::MoveSides(float Value)
@@ -77,6 +79,8 @@ void ATest1Controller::MoveSides(float Value)
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
+
+		Cast<AChip>(MyPawn)->RightStrafe(Value);
 		MyPawn->AddMovementInput(Direction, Value);
 	}
 
@@ -100,10 +104,7 @@ void ATest1Controller::LookUpAtRate(float Rate)
 
 void ATest1Controller::CameraYControll(float Rate)
 {
-
-
 	APawn* const MyPawn = GetPawn();
-
 	Cast<AChip>(MyPawn)->CameraYAxisMovement(Rate);
 }
 
@@ -131,4 +132,30 @@ void ATest1Controller::ShootPressed()
 	Cast<AChip>(MyPawn)->Shoot();
 
 
+}
+
+
+
+
+void ATest1Controller::DodgeLeft()
+{
+
+	APawn* const MyPawn = GetPawn();
+	Cast<AChip>(MyPawn)->DodgeLeft();
+
+
+}
+
+void ATest1Controller::DodgeRight()
+{
+	APawn* const MyPawn = GetPawn();
+	Cast<AChip>(MyPawn)->DodgeRight();
+}
+
+
+
+void ATest1Controller::DodgeBack()
+{
+	APawn* const MyPawn = GetPawn();
+	Cast<AChip>(MyPawn)->DodgeBack();
 }

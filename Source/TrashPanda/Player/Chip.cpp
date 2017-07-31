@@ -11,7 +11,6 @@
 #include "UI/PauseWidget.h"
 #include "EngineUtils.h"
 #include "Projectile.h"
-
 #include "TrashPandaGameModeBase.h"
 
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
@@ -20,7 +19,16 @@
 AChip::AChip()
 {
 
-	//CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
+
+	PlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Root"));
+	PlayerSphere->SetupAttachment(RootComponent);
+	PlayerSphere->InitSphereRadius(40.0f);
+	PlayerSphere->SetCollisionProfileName(TEXT("PAWN"));
+
+
+	AnimInstance = GetMesh()->GetAnimInstance();
+	//PlayerSphere->Phy
+		///CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 500.0f; // The camera follows at this distance behind the character	
@@ -31,10 +39,7 @@ AChip::AChip()
 
 	//INITILIZING
 	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/MyProjectile.MyProjectile'"));
-	
 	ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
-
-
 }
 
 
@@ -43,6 +48,9 @@ void AChip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//I might need to implement
+
+
+
 }
 
 #pragma region 
@@ -71,11 +79,82 @@ void AChip::LightAttack()
 
 void AChip::Shoot()
 {
+	FVector PlayerPos = this->GetActorLocation();
+	//PlayerPos.X += 100;
+	//PlayerPos.Y+= 200;
+	PlayerPos.Z+= 50;
 
-	//UWorld* wp = GetWorld();
-	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Shoot");
-	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass,FVector( GetActorLocation().X+30, GetActorLocation().X + 30, GetActorLocation().X + 30), FRotator::ZeroRotator);
+	AProjectile*  Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, FRotator::ZeroRotator);
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	Projectile->InitVelocity(Direction);
+}
+#pragma endregion Combat Region
+
+void AChip::DodgeLeft()
+{
+	Dodgding = true;
+	//PlayerSphere->AddForce(FVector(100, 0, 0));
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
 
 
 }
-#pragma endregion Combat Region
+
+void AChip::DodgeRight()
+{
+	Dodgding = true;
+	//PlayerSphere->AddForce(FVector(100, 0, 0));
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * DodgeDistance, true, true);
+
+}
+
+void AChip::DodgeBack()
+{
+	BackDodge = true;
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
+	//	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
+}
+
+
+
+void  AChip::RightStrafe(float Value)
+{
+	if (Value == 0)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
+		AnimDirectionRight = false;
+	}
+	else
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
+		AnimDirectionRight = true;
+	}
+}
+
+void AChip::IsW(float Value)
+{
+
+	if (Value > 0)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
+		movingFront = true;
+	}
+	else
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
+		movingFront = false;
+	}
+}
