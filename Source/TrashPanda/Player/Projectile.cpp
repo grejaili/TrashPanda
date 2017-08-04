@@ -28,8 +28,7 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
-	ProjectileMovement->InitialSpeed = 3000.f;
-	ProjectileMovement->MaxSpeed = 3000.f;
+	//ProjectileMovement->InitialSpeed = 100.f;
 
 }
 

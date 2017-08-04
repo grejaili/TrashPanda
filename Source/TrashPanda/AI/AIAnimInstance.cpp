@@ -2,6 +2,7 @@
 
 #include "TrashPanda.h"
 #include "Enemy.h"
+#include "Player/Chip.h"
 #include "AIAnimInstance.h"
 
 
@@ -28,6 +29,6 @@ void UAIAnimInstance::AnimNotify_AttackFinish()
 	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
 	if (OwningPawn)
 	{
-		OwningPawn->bIsAttacking = false;
+		OwningPawn->IsAttacking = false;
 	}
 }
