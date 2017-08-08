@@ -38,7 +38,8 @@ AChip::AChip()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	//INITILIZING
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/MyProjectile.MyProjectile'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/Player/Bullet.Bullet'"));
+	
 	ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
 }
 
