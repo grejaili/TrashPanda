@@ -34,16 +34,8 @@ protected:
 	class UStaticMeshComponent* mesh;
 
 	UPROPERTY(EditDefaultsOnly, Category = Weapon)
-	int32 LightDamage;
+	int32 BasicDamage;
 
-	UPROPERTY(EditDefaultsOnly, Category = Weapon)
-	int32 HeavyDamage;
-
-	UPROPERTY(EditDefaultsOnly, Category = Weapon)
-	int32 AttackSpeed;
-
-	UPROPERTY(EditDefaultsOnly, Category = Weapon)
-	TEnumAsByte<WeaponType> WType;
 
 protected:
 	UFUNCTION()

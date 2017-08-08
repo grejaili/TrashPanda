@@ -6,8 +6,8 @@
 #include "ChipAnimInstance.generated.h"
 
 /**
- *
- */
+*
+*/
 UCLASS()
 class TRASHPANDA_API UChipAnimInstance : public UAnimInstance
 {

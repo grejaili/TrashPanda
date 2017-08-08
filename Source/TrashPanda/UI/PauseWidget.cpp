@@ -8,23 +8,23 @@
 
 void UPauseWidget::NativeConstruct()
 {
-		Super::NativeConstruct();
+	Super::NativeConstruct();
 
-		
 
-	
-			ResumeButton->OnClicked.AddDynamic(this, &ThisClass::OnResumeClicked);
-		
 
-	
-			QuitButton->OnClicked.AddDynamic(this, &ThisClass::OnQuitClicked);
-		
-		//Part 2: Alternate way to get variables/functions from other classes
-		//PauseWidgetItem = Cast<AChip>(GetWorld()->GetFirstPlayerController()->GetPawn());
-		//if (!PauseWidgetItem)
-		//{
-		//	UE_LOG(LogTemp, Display, TEXT("Pause widget failed to find player"));
-		//}
+
+	ResumeButton->OnClicked.AddDynamic(this, &ThisClass::OnResumeClicked);
+
+
+
+	QuitButton->OnClicked.AddDynamic(this, &ThisClass::OnQuitClicked);
+
+	//Part 2: Alternate way to get variables/functions from other classes
+	//PauseWidgetItem = Cast<AChip>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	//if (!PauseWidgetItem)
+	//{
+	//	UE_LOG(LogTemp, Display, TEXT("Pause widget failed to find player"));
+	//}
 }
 
 void UPauseWidget::OnResumeClicked()
@@ -34,7 +34,7 @@ void UPauseWidget::OnResumeClicked()
 	//Get chip and all of his functions/variables
 	if (AChip* player = Cast<AChip>(GetOwningPlayer()->GetPawn()))
 	{
-//		player->PauseGame();
+		//		player->PauseGame();
 	}
 	else
 	{

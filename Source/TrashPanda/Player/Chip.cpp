@@ -11,6 +11,7 @@
 #include "UI/PauseWidget.h"
 #include "EngineUtils.h"
 #include "Projectile.h"
+#include "Items/BaseWeapon.h"
 #include "TrashPandaGameModeBase.h"
 
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
@@ -38,9 +39,14 @@ AChip::AChip()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	//INITILIZING
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/Player/Bullet.Bullet'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/Player/Projectile.Projectile'"));
 	
 	ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
+
+	//hand_rSocket
+
+
+
 }
 
 
@@ -157,5 +163,25 @@ void AChip::IsW(float Value)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
 		movingFront = false;
+	}
+}
+
+
+
+void AChip::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	// instantiate the melee weapon if a bp was selected
+	if (Weapon)
+	{
+		MeleeWeapon = GetWorld()->SpawnActor<ABaseWeapon>(Weapon, FVector(0), FRotator(0));
+		if (MeleeWeapon)
+		{
+			//MeleeWeapon->WeaponHolder = this;
+			const USkeletalMeshSocket *socket = GetMesh()->GetSocketByName("hand_rSocket");
+			socket->AttachActor(MeleeWeapon, GetMesh());  // <-- attempt to put a sword in the right hand
+		}
+
 	}
 }

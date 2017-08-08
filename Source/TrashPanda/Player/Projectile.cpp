@@ -29,7 +29,7 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
 
-	ProjectileMovement->InitialSpeed = 100.f;
+	ProjectileMovement->InitialSpeed = 1000.f;
 }
 
 // Called when the game starts or when spawned
@@ -67,6 +67,7 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 
 void AProjectile::InitVelocity(const FVector& ShootDirection)
 {
-	
+
+	UE_LOG(LogTemp, Display, TEXT("WE ARE IN THE BEAM"));
 	Direction = ShootDirection;
 }

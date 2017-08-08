@@ -1,21 +1,25 @@
 // All Rights Reserved for Students Graduating TFS Summer 2017
 
 #include "TrashPanda.h"
+#include "AI/Enemy.h"
 #include "BaseWeapon.h"
 
 
 // Sets default values
-ABaseWeapon::ABaseWeapon()
+ABaseWeapon::ABaseWeapon(const class FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+
 	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
 	collider->CanCharacterStepUp(false);
 	RootComponent = collider;
-
+	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	mesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	
+
 }
 
 // Called when the game starts or when spawned
@@ -38,6 +42,14 @@ void ABaseWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	if (OtherActor->Tags.Contains("Enemy"))
 	{
 
+		UE_LOG(LogTemp, Display, TEXT("WE HIT IT"))
+		/*
+		APlayerController* PlayerController = NULL;
+		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
+		FDamageEvent DamageEvent(ValidDamageTypeClass);
+		const float DamageAmount = 10.0f;
+		OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
+		*/
 	}
 }
 
