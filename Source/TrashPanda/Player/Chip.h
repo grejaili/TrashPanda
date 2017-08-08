@@ -49,7 +49,7 @@ public:
 
 	bool Dodgding = false;
 	bool BackDodge = false;
-	
+	bool IsAttacking = false;
 	class UAnimInstance* AnimInstance;
 
 	UPROPERTY( EditAnywhere, Category = Dodge)

@@ -28,9 +28,8 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
-	ProjectileMovement->InitialSpeed = 3000.f;
-	ProjectileMovement->MaxSpeed = 3000.f;
 
+	ProjectileMovement->InitialSpeed = 100.f;
 }
 
 // Called when the game starts or when spawned
@@ -45,7 +44,7 @@ void AProjectile::BeginPlay()
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	ProjectileMovement->Velocity = 100 * Direction * ProjectileMovement->InitialSpeed;
 }
 
 
@@ -65,11 +64,9 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 
 }
 
+
 void AProjectile::InitVelocity(const FVector& ShootDirection)
 {
-	if (ProjectileMovement)
-	{
-		ProjectileMovement->Velocity = 7 * ShootDirection * ProjectileMovement->InitialSpeed;
-	}
-
+	
+	Direction = ShootDirection;
 }

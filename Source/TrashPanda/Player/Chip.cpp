@@ -27,7 +27,7 @@ AChip::AChip()
 
 
 	AnimInstance = GetMesh()->GetAnimInstance();
-	//PlayerSphere->Phy
+
 		///CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
@@ -38,7 +38,8 @@ AChip::AChip()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	//INITILIZING
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/MyProjectile.MyProjectile'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/Player/Bullet.Bullet'"));
+	
 	ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
 }
 
@@ -74,7 +75,8 @@ void AChip::CameraXAxisMovement(float Rate)
 void AChip::LightAttack()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Attack");
-	//printf("I ATTACKED");
+	IsAttacking = true;
+	
 }
 
 void AChip::Shoot()
@@ -114,7 +116,6 @@ void AChip::DodgeRight()
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	//this->AddMovementInput(Direction, );
 	this->LaunchCharacter(Direction * DodgeDistance, true, true);
-
 }
 
 void AChip::DodgeBack()
