@@ -34,6 +34,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		float  Combo = 0;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  isResetANim = false;
+
 protected:
 	UFUNCTION()
 		void AnimNotify_AttackFinish();
@@ -41,4 +44,6 @@ protected:
 		void AnimNotify_Dodge_OFF();
 	UFUNCTION()
 		void AnimNotify_BackDodged_OFF();
+	UFUNCTION()
+		void	AnimNotify_ComboFinish();
 };

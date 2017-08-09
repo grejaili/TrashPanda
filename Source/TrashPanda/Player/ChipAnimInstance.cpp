@@ -24,6 +24,7 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		if (IsAttacking == false)
 		{
 			Combo = 0;
+			isResetANim = false;
 		}
 
 	}
@@ -38,11 +39,24 @@ void UChipAnimInstance::AnimNotify_AttackFinish()
 	if (OwningPawn)
 	{
 		Combo += 1;
-		if (Combo > 3)
+		if (Combo == 4)
 		{
 			Combo = 0;
+			//OwningPawn->TurnOffCollider();
+			isResetANim = true;
+
 		}
-		OwningPawn->TurnOffCollider();
+	
+	}
+}
+void UChipAnimInstance::AnimNotify_ComboFinish()
+{
+	// dont use this
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		isResetANim = false;
+
 	}
 }
 

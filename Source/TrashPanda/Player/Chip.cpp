@@ -57,7 +57,6 @@ void AChip::Tick(float DeltaTime)
 	//I might need to implement
 
 
-
 }
 
 #pragma region 
