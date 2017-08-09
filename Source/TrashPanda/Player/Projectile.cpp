@@ -26,6 +26,7 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 	Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
 
+	//-----
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
 

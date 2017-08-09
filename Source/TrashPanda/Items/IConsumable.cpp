@@ -4,10 +4,6 @@
 #include "IConsumable.h"
 
 
-AIConsumable::AIConsumable()
-{
-
-}
 
 void AIConsumable::BeginPlay()
 {
