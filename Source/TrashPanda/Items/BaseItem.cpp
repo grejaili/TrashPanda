@@ -6,7 +6,7 @@
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
 // Sets default values
-ABaseItem::ABaseItem()
+ABaseItem::ABaseItem(const class FObjectInitializer& ObjectInitializer)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;

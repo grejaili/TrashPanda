@@ -38,7 +38,7 @@ protected:
 	UStaticMeshComponent* mesh;
 
 	UPROPERTY(EditDefaultsOnly)
-		USphereComponent* collider;
+		UBoxComponent* collider;
 
 
 	UFUNCTION(Category = Item)

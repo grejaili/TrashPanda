@@ -18,7 +18,7 @@ class TRASHPANDA_API ABaseWeapon : public AActor
 	
 public:	
 	// Sets default values for this actor's properties
-	ABaseWeapon();
+	ABaseWeapon(const class FObjectInitializer& ObjectInitializer);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
