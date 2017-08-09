@@ -38,7 +38,7 @@ void UChipAnimInstance::AnimNotify_AttackFinish()
 	if (OwningPawn)
 	{
 		Combo += 1;
-		if (Combo > 4)
+		if (Combo > 3)
 		{
 			Combo = 0;
 		}
