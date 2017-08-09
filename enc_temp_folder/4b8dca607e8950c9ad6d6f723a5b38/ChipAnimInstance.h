@@ -31,9 +31,6 @@ protected:
 		bool  IsBackDodgding;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool  IsAttacking;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-		float  Combo = 0;
-
 protected:
 	UFUNCTION()
 		void AnimNotify_AttackFinish();

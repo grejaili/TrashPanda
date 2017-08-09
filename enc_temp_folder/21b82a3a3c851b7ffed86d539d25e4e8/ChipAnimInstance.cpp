@@ -20,15 +20,7 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		IsDodgding = OwningPawn->Dodgding;
 		IsBackDodgding = OwningPawn->BackDodge;
 		IsAttacking = OwningPawn->IsAttacking;
-
-		if (IsAttacking == false)
-		{
-			Combo = 0;
-		}
-
 	}
-
-
 }
 
 
@@ -37,11 +29,7 @@ void UChipAnimInstance::AnimNotify_AttackFinish()
 	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
 	if (OwningPawn)
 	{
-		Combo += 1;
-		if (Combo > 4)
-		{
-			Combo = 0;
-		}
+		//OwningPawn->IsAttacking = false;
 		OwningPawn->TurnOffCollider();
 	}
 }

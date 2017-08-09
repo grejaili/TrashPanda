@@ -53,16 +53,17 @@ void ABaseWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		APlayerController* PlayerController = NULL;
 		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
 		FDamageEvent DamageEvent(ValidDamageTypeClass);
-		const float DamageAmount = 10.0f;
+		const float DamageAmount = 3.0f;
 		OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
 		
 	}
 }
 
-void ABaseWeapon::SetCollision()
+void ABaseWeapon::SetCollision(bool OnOff)
 {
 
-	this->SetActorEnableCollision(false);
+	UE_LOG(LogTemp, Display, TEXT("collision off"));
+	this->SetActorEnableCollision(OnOff);
 }
 
 

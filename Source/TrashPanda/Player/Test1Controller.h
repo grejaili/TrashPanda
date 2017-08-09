@@ -57,7 +57,7 @@ protected:
 
 	void DodgeRight();
 	void DodgeBack();
-
+	void LightAttackReleased();
 
 
 

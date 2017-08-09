@@ -44,9 +44,7 @@ void ATest1Controller::SetupInputComponent()
 
 	InputComponent->BindAction("Attack_Light", IE_Pressed, this, &ThisClass::LightAttackPressed);
 	InputComponent->BindAction("Attack_Light", IE_Repeat, this, &ThisClass::LightAttackPressed);
-	InputComponent->BindAction("Attack_Light", IE_Released, this, &ThisClass::LightAttackReleased);
-
-
+	InputComponent->BindAction("Attack_Light", IE_Released, this, &ThisClass::LightAttackPressed);
 	InputComponent->BindAction("Attack_Shoot", IE_Pressed, this, &ThisClass::ShootPressed);
 
 #pragma endregion Combat REGION

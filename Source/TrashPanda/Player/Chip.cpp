@@ -78,12 +78,25 @@ void AChip::CameraXAxisMovement(float Rate)
 
 #pragma
 
+
+//		ATTACKKKKKKKKKKK------------------------------
 void AChip::LightAttack()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Attack");
+	MeleeWeapon->SetCollision(true);
 	IsAttacking = true;
+
+	// combo timing will be placed here
+
 	
 }
+
+void AChip::TurnOffCollider()
+{
+	MeleeWeapon->SetCollision(false);
+
+}
+
 
 void AChip::Shoot()
 {
