@@ -39,10 +39,13 @@ void UChipAnimInstance::AnimNotify_AttackFinish()
 	if (OwningPawn)
 	{
 		Combo += 1;
+
+
+
 		if (Combo == 4)
 		{
 			Combo = 0;
-			//OwningPawn->TurnOffCollider();
+			
 			isResetANim = true;
 
 		}
@@ -56,7 +59,7 @@ void UChipAnimInstance::AnimNotify_ComboFinish()
 	if (OwningPawn)
 	{
 		isResetANim = false;
-
+		OwningPawn->KnockItBack();
 	}
 }
 

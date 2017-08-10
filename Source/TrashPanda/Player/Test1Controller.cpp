@@ -60,34 +60,61 @@ void ATest1Controller::SetupInputComponent()
 
 void ATest1Controller::MoveForward(float Value)
 {
-	APawn* const MyPawn = GetPawn();
-	if (MyPawn)
-	{
-		const FRotator Rotation = MyPawn->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		MyPawn->AddMovementInput(Direction, Value);
+	
+		APawn* const MyPawn = GetPawn();
+		if (MyPawn)
+		{
+			const FRotator Rotation = MyPawn->GetControlRotation();
+			const FRotator YawRotation(0, Rotation.Yaw, 0);
+			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+			MyPawn->AddMovementInput(Direction, Value);
+			if (attacking == false)
+			{
 
-		Cast<AChip>(MyPawn)->IsW(Value);
-	}
+				Cast<AChip>(MyPawn)->IsW(Value);
+			}
+			else
+			{
+				Cast<AChip>(MyPawn)->IsW(Value*0.25);
+			}
+
+
+		}
+
+	
+
 }
 
 void ATest1Controller::MoveSides(float Value)
 {
-	APawn* const MyPawn = GetPawn();
-	if (MyPawn)
+	if (attacking == false)
 	{
-		const FRotator Rotation = MyPawn->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		// get right vector 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		// add movement in that direction
+		APawn* const MyPawn = GetPawn();
+		if (MyPawn)
+		{
+			const FRotator Rotation = MyPawn->GetControlRotation();
+			const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		Cast<AChip>(MyPawn)->RightStrafe(Value);
-		MyPawn->AddMovementInput(Direction, Value);
+			// get right vector 
+			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+			// add movement in that direction
+
+			Cast<AChip>(MyPawn)->RightStrafe(Value);
+		
+
+			if (attacking == false)
+			{
+				MyPawn->AddMovementInput(Direction, Value);
+			}
+			else
+			{
+				MyPawn->AddMovementInput(Direction, Value*0.25);
+			}
+
+		}
+
 	}
-
 }
 
 
@@ -126,7 +153,7 @@ void ATest1Controller::LightAttackPressed()
 	APawn* const MyPawn = GetPawn();
 	//UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
 	Cast<AChip>(MyPawn)->LightAttack();
-
+	attacking = true;
 }
 
 
@@ -135,7 +162,7 @@ void ATest1Controller::LightAttackReleased()
 	APawn* const MyPawn = GetPawn();
 	UE_LOG(LogTemp, Warning, TEXT("STOP ATTACKING"));
 	Cast<AChip>(MyPawn)->IsAttacking = false;
-
+	attacking = false;
 }
 
 

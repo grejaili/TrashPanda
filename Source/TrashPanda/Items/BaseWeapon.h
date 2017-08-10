@@ -48,4 +48,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Pawn)
 		UParticleSystem* Particle;
 
+
+	bool KnockIt;
 };

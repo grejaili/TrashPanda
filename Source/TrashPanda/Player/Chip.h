@@ -74,6 +74,7 @@ public:
 	
 	void TurnOffCollider();
 
+	void KnockItBack();
 
 
 };

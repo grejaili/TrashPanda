@@ -50,13 +50,14 @@ void ABaseWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	if (OtherActor->Tags.Contains("Enemy"))
 	{
+		AEnemy* DamagedActor = Cast<AEnemy>(OtherActor);
 
 		UE_LOG(LogTemp, Display, TEXT("WE HIT IT"))
 
 			APlayerController* PlayerController = NULL;
 		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
 		FDamageEvent DamageEvent(ValidDamageTypeClass);
-		const float DamageAmount = 3.0f;
+		const float DamageAmount = 1.0f;
 		OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
 		if (Particle)
 		{
@@ -67,14 +68,17 @@ void ABaseWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		//OtherComp->AddForce (  FVector (0.0f, 0.0f, 2000));
 
 		//this->AddMovementInput(Direction, );
-		AEnemy* DamagedActor = Cast<AEnemy>(OtherActor);
+		
 
-		const FRotator Rotation = DamagedActor-> GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-
-		DamagedActor->LaunchCharacter(Direction * -1000, true, true);
-
+		if (KnockIt == true)
+		{
+			const FRotator Rotation = DamagedActor->GetControlRotation();
+			const FRotator YawRotation(0, Rotation.Yaw, 0);
+			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+			DamagedActor->LaunchCharacter(Direction * -5000, true, true);
+			KnockIt = false;
+		}
+		
 
 
 	}
