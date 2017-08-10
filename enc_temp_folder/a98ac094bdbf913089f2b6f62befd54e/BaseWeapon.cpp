@@ -8,7 +8,7 @@
 // Sets default values
 ABaseWeapon::ABaseWeapon(const class FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
@@ -27,9 +27,9 @@ ABaseWeapon::ABaseWeapon(const class FObjectInitializer& ObjectInitializer) :Sup
 	Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
 
+	
 
-
-
+	
 
 }
 
@@ -37,13 +37,13 @@ ABaseWeapon::ABaseWeapon(const class FObjectInitializer& ObjectInitializer) :Sup
 void ABaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 }
 
 // Called every frame
-void ABaseWeapon::Tick(float DeltaTime)
+void ABaseWeapon::Tick( float DeltaTime )
 {
-	Super::Tick(DeltaTime);
+	Super::Tick( DeltaTime );
 }
 
 void ABaseWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -52,31 +52,18 @@ void ABaseWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	{
 
 		UE_LOG(LogTemp, Display, TEXT("WE HIT IT"))
-
-			APlayerController* PlayerController = NULL;
+		
+		APlayerController* PlayerController = NULL;
 		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
 		FDamageEvent DamageEvent(ValidDamageTypeClass);
 		const float DamageAmount = 3.0f;
 		OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
+		
+
 		if (Particle)
 		{
 			UGameplayStatics::SpawnEmitterAtLocation(this, Particle, GetActorLocation(), GetActorRotation());
-
 		}
-
-		//OtherComp->AddForce (  FVector (0.0f, 0.0f, 2000));
-
-		//this->AddMovementInput(Direction, );
-		AEnemy* DamagedActor = Cast<AEnemy>(OtherActor);
-
-		const FRotator Rotation = DamagedActor-> GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-
-		DamagedActor->LaunchCharacter(Direction * -1000, true, true);
-
-
-
 	}
 }
 
