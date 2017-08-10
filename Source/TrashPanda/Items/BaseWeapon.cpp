@@ -27,6 +27,9 @@ ABaseWeapon::ABaseWeapon(const class FObjectInitializer& ObjectInitializer) :Sup
 	Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
 
+	
+
+	
 
 }
 
@@ -56,6 +59,11 @@ void ABaseWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		const float DamageAmount = 3.0f;
 		OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
 		
+
+		if (Particle)
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(this, Particle, GetActorLocation(), GetActorRotation());
+		}
 	}
 }
 

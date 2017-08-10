@@ -45,4 +45,7 @@ public:
 
 	void SetCollision(bool OnOff);
 
+	UPROPERTY(EditDefaultsOnly, Category = Pawn)
+		UParticleSystem* Particle;
+
 };
