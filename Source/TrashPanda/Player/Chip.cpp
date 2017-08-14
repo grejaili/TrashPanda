@@ -198,7 +198,8 @@ void AChip::PostInitializeComponents()
 	}
 }
 
-void AChip::KnockItBack()
+void AChip::KnockItBack
+()
 {
 	MeleeWeapon->KnockIt = true;
 

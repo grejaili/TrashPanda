@@ -47,7 +47,10 @@ void UChipAnimInstance::AnimNotify_AttackFinish()
 			Combo = 0;
 			
 			isResetANim = true;
-
+		}
+		else
+		{
+			isResetANim = false;
 		}
 	
 	}
