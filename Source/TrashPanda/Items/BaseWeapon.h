@@ -49,5 +49,5 @@ public:
 		UParticleSystem* Particle;
 
 
-	bool KnockIt;
+	bool KnockIt = true;
 };
