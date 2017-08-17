@@ -14,7 +14,6 @@ class TRASHPANDA_API AIMaterial : public ABaseItem
 	GENERATED_BODY()
 
 public:
-	AIMaterial();
 	virtual void BeginPlay() override;
 
 protected:

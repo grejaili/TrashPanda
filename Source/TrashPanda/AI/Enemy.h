@@ -41,7 +41,7 @@ public:
 
 	void AttackMelle(UObject* Player);
 	void AttackHeavy(UObject* Player);
-
+	bool bIsAttacking = false;
 
 
 protected:
@@ -52,8 +52,8 @@ protected:
 	UPROPERTY(EditAnyWhere, Category = Stats)
 		uint32 DamageReduction;
 
-	UPROPERTY(EditAnyWhere, Category = Stats)
-		uint32 Damage;
+//	UPROPERTY(EditAnyWhere, Category = Stats)
+	//	uint32 Damage;
 
 	UPROPERTY(EditAnywhere, Category = AIBehavior)
 		uint32 MoveRadius;
@@ -69,17 +69,6 @@ protected:
 
 
 
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
+float 	TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
 	bool AttackHappening;
-
-	//SOUNDS
-
-
-	void WalkingSound();
-
-
-//	USoundClass
-
-	  
-
 };

@@ -12,7 +12,7 @@ class TRASHPANDA_API ABaseItem : public AActor
 	
 public:	
 	// Sets default values for this actor's properties
-	ABaseItem();
+	ABaseItem(const class FObjectInitializer& ObjectInitializer);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -38,7 +38,7 @@ protected:
 	UStaticMeshComponent* mesh;
 
 	UPROPERTY(EditDefaultsOnly)
-	UBoxComponent* collider;
+		UBoxComponent* collider;
 
 
 	UFUNCTION(Category = Item)
@@ -46,6 +46,8 @@ protected:
 	
 	UFUNCTION(Category = Item)
 	virtual bool Consume(int32 toUSE);
+
+	USphereComponent* CollisionComp;
 
 	UFUNCTION()
 	void setIsOnGround();

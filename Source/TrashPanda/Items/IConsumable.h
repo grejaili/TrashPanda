@@ -15,7 +15,7 @@ class TRASHPANDA_API AIConsumable : public ABaseItem
 	GENERATED_BODY()
 	
 public:
-	AIConsumable();
+
 	virtual void BeginPlay() override;
 
 

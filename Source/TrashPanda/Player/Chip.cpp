@@ -11,6 +11,7 @@
 #include "UI/PauseWidget.h"
 #include "EngineUtils.h"
 #include "Projectile.h"
+#include "Items/BaseWeapon.h"
 #include "TrashPandaGameModeBase.h"
 
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
@@ -25,7 +26,10 @@ AChip::AChip()
 	PlayerSphere->InitSphereRadius(40.0f);
 	PlayerSphere->SetCollisionProfileName(TEXT("PAWN"));
 
-	//CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
+
+	AnimInstance = GetMesh()->GetAnimInstance();
+
+	///CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 500.0f; // The camera follows at this distance behind the character	
@@ -35,8 +39,22 @@ AChip::AChip()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	//INITILIZING
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/MyProjectile.MyProjectile'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/Player/Projectile.Projectile'"));
+
 	ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
+
+	//hand_rSocket
+
+
+
+}
+
+void AChip::BeginPlay() 
+{
+	UpdateStamina();
+	//GetWorldTimerManager().SetTimer(this, &AMatineeActor::CheckPriorityRefresh, 1.0f, true);
+	//(FTimerHandle& InOutHandle, float InRate, bool InbLoop, float InFirstDelay = -1.f)
+
 }
 
 
@@ -45,6 +63,7 @@ void AChip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//I might need to implement
+	
 }
 
 #pragma region 
@@ -65,41 +84,72 @@ void AChip::CameraXAxisMovement(float Rate)
 
 #pragma
 
+
+//		ATTACKKKKKKKKKKK------------------------------
 void AChip::LightAttack()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Attack");
-	//printf("I ATTACKED");
+		GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "entra porrra");
+		MeleeWeapon->SetCollision(true);
+		IsAttacking = true;
+
 }
+
+void AChip::TurnOffCollider()
+{
+	MeleeWeapon->SetCollision(false);
+}
+
 
 void AChip::Shoot()
 {
-	//UWorld* wp = GetWorld();
-	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Shoot");
-	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, FVector(GetActorLocation().X + 30, GetActorLocation().X + 30, GetActorLocation().X + 30), FRotator::ZeroRotator);
+	FVector PlayerPos = this->GetActorLocation();
+	PlayerPos.Z += 50;
+	AProjectile*  Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, FRotator::ZeroRotator);
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	Projectile->InitVelocity(Direction);
 }
 #pragma endregion Combat Region
 
 void AChip::DodgeLeft()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Dodge Right"));
-	PlayerSphere->AddForce(FVector(100, 0, 0));
+	Dodgding = true;
+	//PlayerSphere->AddForce(FVector(100, 0, 0));
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
 }
 
 void AChip::DodgeRight()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Dodge Left"));
+	Dodgding = true;
+	//PlayerSphere->AddForce(FVector(100, 0, 0));
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * DodgeDistance, true, true);
 }
-
-
 
 void AChip::DodgeBack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
+	BackDodge = true;
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
+	//	UE_LOG(LogTemp, Warning, TEXT("Dodge Back"));
 }
+
+
 
 void  AChip::RightStrafe(float Value)
 {
-	if (Value == 0) 
+	if (Value == 0)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
 		AnimDirectionRight = false;
@@ -111,19 +161,50 @@ void  AChip::RightStrafe(float Value)
 	}
 }
 
-void AChip::IsW(float Value) 
+void AChip::IsW(float Value)
 {
-	
-		if (Value == 0)
+
+	if (Value > 0)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
+		movingFront = true;
+	}
+	else
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
+		movingFront = false;
+	}
+}
+
+
+
+void AChip::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	// instantiate the melee weapon if a bp was selected
+	if (Weapon)
+	{
+		MeleeWeapon = GetWorld()->SpawnActor<ABaseWeapon>(Weapon, FVector(0), FRotator(0));
+		if (MeleeWeapon)
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
-			movingFront = false;
-		}
-		else
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
-			movingFront = true;
+			//MeleeWeapon->WeaponHolder = this;
+			const USkeletalMeshSocket *socket = GetMesh()->GetSocketByName("hand_rSocket");
+			socket->AttachActor(MeleeWeapon, GetMesh());  // <-- attempt to put a sword in the right hand
 		}
 
+	}
+}
+
+void AChip::KnockItBack()
+{
+	MeleeWeapon->KnockIt = true;
+}
+
+
+
+void AChip::StaminaRegen()
+{
+	CurStamina += 10;
 
 }

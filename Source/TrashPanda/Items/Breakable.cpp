@@ -22,6 +22,7 @@ ABreakable::ABreakable()
 	Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlap);
 	
+
 	static ConstructorHelpers::FObjectFinder<UBlueprint> MatBP(TEXT("'/Game/DropMaterials/RazorBladesBP.RazorBladesBP'"));
 	if (MatBP.Object)
 	{
@@ -59,11 +60,8 @@ void ABreakable::OnOverlap(UPrimitiveComponent * OverlappedComponent, AActor * O
 		AIMaterial* item = GetWorld()->SpawnActor<AIMaterial>(MaterialClass, GetActorLocation(), FRotator::ZeroRotator);
 
 	}
-
 	this->Destroy();
  
-
-	
 }
 
 

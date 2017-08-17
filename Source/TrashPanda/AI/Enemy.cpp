@@ -81,10 +81,10 @@ void AEnemy::SetGlobalCD()
 
 void AEnemy::SetGlobalCD(float CD)
 {
-	check (CD < BaseGlobalCD)
-	
+	check(CD < BaseGlobalCD)
+
 		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
-		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, CD, false);
+	GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, CD, false);
 }
 
 
@@ -96,10 +96,10 @@ void AEnemy::AttackMelle(UObject* CPlayer)
 
 	if (GetGlobalCD())
 	{
-	//	print("Attack  Melle");
-		AttackHappening = true;
-		//place the animations calls here
+		//	print("Attack  Melle");
 
+		bIsAttacking = true;
+		
 		SetGlobalCD();
 	}
 
@@ -114,13 +114,6 @@ void AEnemy::AttackHeavy(UObject* CPlayer)
 
 	SetGlobalCD();
 }
-
-
-void  AEnemy:: WalkingSound()
-{
-
-}
-
 
 
 float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser)
@@ -139,8 +132,3 @@ float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, c
 
 	return ActualDamage;
 }
-
-
-
-
-
