@@ -30,7 +30,7 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
 
-	ProjectileMovement->InitialSpeed = 1000.f;
+	ProjectileMovement->InitialSpeed = 10000.f;
 }
 
 // Called when the game starts or when spawned
@@ -45,7 +45,8 @@ void AProjectile::BeginPlay()
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	ProjectileMovement->Velocity = 100 * Direction * ProjectileMovement->InitialSpeed;
+	UE_LOG(LogTemp, Display, TEXT("WE ARE moving"));
+	ProjectileMovement->Velocity = 100000 * Direction * ProjectileMovement->InitialSpeed;
 }
 
 
