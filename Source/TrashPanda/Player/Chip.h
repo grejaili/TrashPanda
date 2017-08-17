@@ -14,8 +14,7 @@ class TRASHPANDA_API AChip : public ACharacter
 public:
 	AChip();
 	virtual void Tick(float DeltaSeconds) override;
-	virtual void PostInitializeComponents() override;
-	virtual void BeginPlay() override;
+	virtual void PostInitializeComponents();
 
 #pragma
 
@@ -58,16 +57,6 @@ public:
 		float DodgeDistance;
 
 
-	UPROPERTY(EditAnywhere, Category = Stamina)
-		float MeeleAttackStamina;
-
-	UPROPERTY(EditAnywhere, Category = Stamina)
-		float Stamina;
-
-	float CurStamina;
-	void StaminaRegen();
-
-
 	void  RightStrafe(float Value);
 	bool AnimDirectionRight = false;
 	//shooting mechanics
@@ -82,7 +71,7 @@ public:
 #pragma endregion Combat REGION
 
 public:
-	
+
 	void TurnOffCollider();
 
 	void KnockItBack();
