@@ -71,7 +71,7 @@ public:
 #pragma endregion Combat REGION
 
 public:
-	
+
 	void TurnOffCollider();
 
 	void KnockItBack();

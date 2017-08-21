@@ -29,7 +29,7 @@ AChip::AChip()
 
 	AnimInstance = GetMesh()->GetAnimInstance();
 
-		///CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
+	///CAMERA SETTINGS IS SUPOSSE TO BE IN THE PAWN
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 500.0f; // The camera follows at this distance behind the character	
@@ -38,9 +38,9 @@ AChip::AChip()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-	//INITILIZING
+												   //INITILIZING
 	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/Player/Projectile.Projectile'"));
-	
+
 	ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
 
 	//hand_rSocket
@@ -87,7 +87,7 @@ void AChip::LightAttack()
 
 	// combo timing will be placed here
 
-	
+
 }
 
 void AChip::TurnOffCollider()
@@ -102,7 +102,7 @@ void AChip::Shoot()
 	FVector PlayerPos = this->GetActorLocation();
 	//PlayerPos.X += 100;
 	//PlayerPos.Y+= 200;
-	PlayerPos.Z+= 50;
+	PlayerPos.Z += 50;
 
 	AProjectile*  Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, FRotator::ZeroRotator);
 	const FRotator Rotation = GetControlRotation();
