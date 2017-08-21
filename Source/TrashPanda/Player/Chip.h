@@ -60,6 +60,7 @@ public:
 	void  RightStrafe(float Value);
 	bool AnimDirectionRight = false;
 	//shooting mechanics
+	
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<AProjectile> ProjectileClass;
 

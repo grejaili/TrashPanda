@@ -39,9 +39,9 @@ AChip::AChip()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 												   //INITILIZING
-	static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/Player/Projectile.Projectile'"));
+	//static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/Player/Projectile.Projectile'"));
 
-	ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
+	//ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
 
 	//hand_rSocket
 
@@ -108,7 +108,7 @@ void AChip::Shoot()
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	Projectile->InitVelocity(Direction);
+ 
 }
 #pragma endregion Combat Region
 
