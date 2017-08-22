@@ -11,10 +11,11 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
-	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
-	CollisionComp->InitSphereRadius(30.f);
 
-	CollisionComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	//	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
+//	CollisionComp->InitSphereRadius(30.f);
+//	CollisionComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
@@ -33,7 +34,7 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 	//UE_LOG(LogTemp, Display, TEXT("WE ARE moving"));
 	//
-	ProjectileMovement->Velocity = direcao * Speed;
+	ProjectileMovement->Velocity = direcao * 1000.f;
 
 
 }
@@ -43,12 +44,12 @@ void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//UE_LOG(LogTemp, Display, TEXT("WE ARE moving"));
-	ProjectileMovement->Velocity = direcao * Speed;
+	ProjectileMovement->Velocity = direcao * 1000.f;
 
 }
 
 
-void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AProjectile::OnHit(AActor* OtherActor,UPrimitiveComponent* OtherComp,FVector NormalImpulse,const FHitResult& Hit)
 {
 	UE_LOG(LogTemp, Display, TEXT("I had the collision"));
 
