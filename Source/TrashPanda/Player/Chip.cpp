@@ -108,7 +108,7 @@ void AChip::Shoot()
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
- 
+	Projectile->Direction(Direction);
 }
 #pragma endregion Combat Region
 
