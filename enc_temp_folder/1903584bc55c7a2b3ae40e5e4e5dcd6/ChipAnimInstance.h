@@ -26,11 +26,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool bisLightAttackingAnim;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-		bool  IsDodgdingLeft;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-		bool  IsDodgdingRight;
-
-
+		bool  IsDodgding;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool  IsBackDodgding;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
