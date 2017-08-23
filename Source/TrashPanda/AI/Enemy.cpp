@@ -57,7 +57,7 @@ FVector AEnemy::NextPos()
 //GLOBAL CD FOR HABILITES
 bool AEnemy::GetGlobalCD()
 {
-	if (GetWorld()->GetTimerManager().GetTimerRemaining(AttackTimerHandler) <= 0)
+	if (GetWorld()->GetTimerManager().GetTimerRemaining(AttackTimerHandler) <= 5)
 	{
 		bIsPossibletoAttack = true;
 	}
