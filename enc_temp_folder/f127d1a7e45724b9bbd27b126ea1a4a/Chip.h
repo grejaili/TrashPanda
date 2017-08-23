@@ -48,8 +48,7 @@ public:
 	void IsW(float Value);
 	bool movingFront;
 
-	bool DodgdingLeft = false;
-	bool DodgingRight = false;
+	bool Dodgding = false;
 	bool BackDodge = false;
 	bool IsAttacking = false;
 	class UAnimInstance* AnimInstance;

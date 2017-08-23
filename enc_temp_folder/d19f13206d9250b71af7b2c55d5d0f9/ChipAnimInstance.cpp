@@ -73,8 +73,7 @@ void UChipAnimInstance::AnimNotify_Dodge_OFF()
 	if (OwningPawn)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("DODGE Variable"));
-		OwningPawn->DodgdingLeft = false;
-		OwningPawn->DodgingRight = false;
+		OwningPawn->Dodgding = false;
 	}
 }
 
