@@ -49,7 +49,11 @@ void AProjectile::Tick(float DeltaTime)
 }
 
 
+void AProjectile::OnHit(AActor* OtherActor,UPrimitiveComponent* OtherComp,FVector NormalImpulse,const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Display, TEXT("I had the collision"));
 
+}
 
 void AProjectile::Direction(const FVector& ShootDirection)
 {
