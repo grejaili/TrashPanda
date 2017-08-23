@@ -17,8 +17,9 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Speed = OwningPawn->GetVelocity().Size();
 		Direction = OwningPawn->AnimDirectionRight;
 		ClickingW = OwningPawn->movingFront;
-		IsDodgding = OwningPawn->Dodgding;
-		IsBackDodgding = OwningPawn->BackDodge;
+		IsDodgdingLeft = OwningPawn->DodgingRight;
+		IsDodgdingRight = OwningPawn->DodgdingLeft;
+		IsBackDodgding = OwningPawn->DodgingRight;
 		IsAttacking = OwningPawn->IsAttacking;
 
 		if (IsAttacking == false)
