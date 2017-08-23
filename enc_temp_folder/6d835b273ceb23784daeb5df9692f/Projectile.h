@@ -36,5 +36,6 @@ public:
 
 	USphereComponent* CollisionComp;
 
+	void OnHit(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 };

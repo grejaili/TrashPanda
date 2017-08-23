@@ -114,7 +114,7 @@ void AChip::Shoot()
 
 void AChip::DodgeLeft()
 {
-	DodgdingLeft = true;
+	Dodgding = true;
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -127,8 +127,7 @@ void AChip::DodgeLeft()
 
 void AChip::DodgeRight()
 {
-
-	bool DodgingRight  = true;
+	Dodgding = true;
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
