@@ -22,11 +22,10 @@ void UBTService_DistanceCheck::TickNode(UBehaviorTreeComponent& OwnerComp, uint8
 	Pawn = Cast<AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
 
 
-  AChip* Target = Cast<AChip>( OwnerComp.GetBlackboardComponent()->GetValue<UBlackboardKeyType_Object>(TEXT("Target")));
+	AChip* Target = Cast<AChip>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(TEXT("Player")));
+	float aux = CheckDistance(Target->GetActorLocation(), Pawn->GetActorLocation());
 
-
-  OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Float>(TEXT("PlayerDistance"),
-	  CheckDistance(Target->GetActorLocation(), Pawn->GetActorLocation()));
+	OwnerComp.GetBlackboardComponent()->SetValueAsFloat (TEXT("AttackDistance"),aux );
 
 
 }

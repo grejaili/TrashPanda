@@ -29,7 +29,11 @@ EBTNodeResult::Type UBTTask_FindPlayer::ExecuteTask(UBehaviorTreeComponent& Owne
 	if (FoundTarget != NULL)
 	{
 		OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Bool>(TEXT("InCombat"), true);
-	
+		OwnerComp.GetBlackboardComponent()->SetValueAsVector (TEXT("PlayerPos"), FoundTarget->GetActorLocation());
+		
+		
+		OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Player"), FoundTarget);
+
 		AbortTask(OwnerComp, NodeMemory);
 	}
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
@@ -46,7 +50,7 @@ AActor* UBTTask_FindPlayer::FindTarget(class UAIPerceptionComponent* PerceptionC
 	PerceptionComponent->GetHostileActors(Hostiles);
 	if (Hostiles.Num() > 0)
 	{
-		OwnerComp.GetAIOwner()->MoveToActor(Hostiles[0]);
+
 		return Hostiles[0];
 	}
 	return NULL;

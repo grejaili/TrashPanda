@@ -33,23 +33,13 @@ void AEnemy::Tick(float DeltaTime)
 
 }
 
-
-FVector AEnemy::NextPos()
+void AEnemy::Shoot(FVector Target)
 {
-	float TmpRandom = FMath::RandRange(0, 360);
-	float t = FMath::DegreesToRadians(TmpRandom);
+// implement bullet here
 
-
-	float x = MoveRadius*cos(t) + this->GetActorLocation().X;
-	float y = MoveRadius*sin(t) + this->GetActorLocation().X;
-
-
-	FVector RandomPos;
-	RandomPos.X = x;
-	RandomPos.Z = 0;
-	RandomPos.Y = y;
-	return  RandomPos;
+	UE_LOG(LogTemp, Warning, TEXT("IM Shooting"));
 }
+
 
 // COMBAT MECHANICS AND FUNCTIONS
 
@@ -67,7 +57,7 @@ bool AEnemy::GetGlobalCD()
 		bIsPossibletoAttack = false;
 	}
 
-
+	
 	return bIsPossibletoAttack;
 }
 

@@ -25,7 +25,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = Behavior)
 		class UBehaviorTree* EnemyBehavior;
 
-	FVector NextPos();
+	void Shoot(FVector Target);
+
 
 	//CDS TIMERS
 	bool GetGlobalCD();
@@ -55,8 +56,7 @@ protected:
 //	UPROPERTY(EditAnyWhere, Category = Stats)
 	//	uint32 Damage;
 
-	UPROPERTY(EditAnywhere, Category = AIBehavior)
-		uint32 MoveRadius;
+	
 	// ATTACK OPTIONS
 	UPROPERTY(EditAnyWhere, Category = AIBehavior)
 		uint32 MelleAttackRange;

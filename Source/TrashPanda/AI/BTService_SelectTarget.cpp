@@ -25,7 +25,7 @@ void UBTService_SelectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	AActor* FoundTarget = FindTarget(Perception, OwningCharacter);
 	
 	
-	OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Object>(TEXT("Target"), FoundTarget);
+	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("Goal"), FoundTarget->GetActorLocation());
 
 	if (FoundTarget != NULL)
 	{
