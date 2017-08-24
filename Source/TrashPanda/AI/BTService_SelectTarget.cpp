@@ -30,6 +30,7 @@ void UBTService_SelectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	if (FoundTarget != NULL)
 	{
 		OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Bool>(TEXT("InCombat"), true);
+
 	}
 
 }

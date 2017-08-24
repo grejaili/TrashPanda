@@ -36,6 +36,8 @@ ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Oth
 		return GetAttitudeTowardsPlayer(Other);
 	}
 
+	
+
 	return ETeamAttitude::Neutral;
 }
 
@@ -59,7 +61,7 @@ void AEnemyAIController::Tick(float DeltaTime)
 	//I have to change this but IDK how to make it better
 	NextLocation = Pawn->NextPos();
 
-	//NON COMBAT BEHAVIORS
+	//NON COMBAS
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == false)
 	{
 		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
