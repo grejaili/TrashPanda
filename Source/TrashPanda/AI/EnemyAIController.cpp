@@ -20,6 +20,7 @@ void AEnemyAIController::Possess(APawn* InPawn)
 	}
 
 	Pawn = Cast<AEnemy>(InPawn);
+	RandomMove();
 }
 
 
@@ -35,6 +36,8 @@ ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Oth
 
 		return GetAttitudeTowardsPlayer(Other);
 	}
+
+
 
 	return ETeamAttitude::Neutral;
 }
@@ -57,13 +60,15 @@ void AEnemyAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	//I have to change this but IDK how to make it better
-	NextLocation = Pawn->NextPos();
 
-	//NON COMBAT BEHAVIORS
+	//NON COMBAS
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == false)
 	{
 		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
 	}
+	RandomMove();
+
+
 }
 
 void AEnemyAIController::AttackCommand()
@@ -75,4 +80,32 @@ void AEnemyAIController::AttackCommand()
 	{
 		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 	}
+}
+
+void AEnemyAIController::RandomMove()
+{
+
+
+	float x = Pawn->GetActorLocation().X;
+	float y = Pawn->GetActorLocation().Y;
+
+
+	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == false)
+	{
+
+
+		Goal.X = x + FMath::RandRange(-10000, 10000);
+		Goal.Y = y + FMath::RandRange(-10000, 10000);
+		Goal.Z = 0 + FMath::RandRange(-10000, 10000);
+		this->GetBrainComponent()->GetBlackboardComponent()->SetValueAsVector(TEXT("Goal"), Goal);
+	}
+
+
+
+
+	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == true)
+	{
+
+	}
+
 }

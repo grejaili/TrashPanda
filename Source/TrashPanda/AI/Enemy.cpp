@@ -33,23 +33,13 @@ void AEnemy::Tick(float DeltaTime)
 
 }
 
-
-FVector AEnemy::NextPos()
+void AEnemy::Shoot(FVector Target)
 {
-	float TmpRandom = FMath::RandRange(0, 360);
-	float t = FMath::DegreesToRadians(TmpRandom);
+// implement bullet here
 
-
-	float x = MoveRadius*cos(t) + this->GetActorLocation().X;
-	float y = MoveRadius*sin(t) + this->GetActorLocation().X;
-
-
-	FVector RandomPos;
-	RandomPos.X = x;
-	RandomPos.Z = 0;
-	RandomPos.Y = y;
-	return  RandomPos;
+	UE_LOG(LogTemp, Warning, TEXT("IM Shooting"));
 }
+
 
 // COMBAT MECHANICS AND FUNCTIONS
 
@@ -57,7 +47,7 @@ FVector AEnemy::NextPos()
 //GLOBAL CD FOR HABILITES
 bool AEnemy::GetGlobalCD()
 {
-	if (GetWorld()->GetTimerManager().GetTimerRemaining(AttackTimerHandler) <= 0)
+	if (GetWorld()->GetTimerManager().GetTimerRemaining(AttackTimerHandler) <= 5)
 	{
 		bIsPossibletoAttack = true;
 	}
@@ -67,7 +57,7 @@ bool AEnemy::GetGlobalCD()
 		bIsPossibletoAttack = false;
 	}
 
-
+	
 	return bIsPossibletoAttack;
 }
 
@@ -81,10 +71,10 @@ void AEnemy::SetGlobalCD()
 
 void AEnemy::SetGlobalCD(float CD)
 {
-	check (CD < BaseGlobalCD)
-	
+	check(CD < BaseGlobalCD)
+
 		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
-		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, CD, false);
+	GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, CD, false);
 }
 
 
@@ -96,10 +86,10 @@ void AEnemy::AttackMelle(UObject* CPlayer)
 
 	if (GetGlobalCD())
 	{
-	//	print("Attack  Melle");
-		bIsAttacking = true;
-		//place the animations calls here
+		//	print("Attack  Melle");
 
+		bIsAttacking = true;
+		
 		SetGlobalCD();
 	}
 

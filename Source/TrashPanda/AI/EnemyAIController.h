@@ -32,7 +32,7 @@ public:
 	ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
 	static ETeamAttitude::Type GetAttitudeTowards(FGenericTeamId TeamA, FGenericTeamId TeamB);
 
-
+	FVector Goal;
 
 
 protected:
@@ -47,6 +47,8 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	FVector NextLocation;
 
+	void RandomMove();
 
+	
 
 };

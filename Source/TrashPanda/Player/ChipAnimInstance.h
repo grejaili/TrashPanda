@@ -6,8 +6,8 @@
 #include "ChipAnimInstance.generated.h"
 
 /**
- *
- */
+*
+*/
 UCLASS()
 class TRASHPANDA_API UChipAnimInstance : public UAnimInstance
 {
@@ -26,11 +26,21 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool bisLightAttackingAnim;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-		bool  IsDodgding;
+		bool  IsDodgdingLeft;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  IsDodgdingRight;
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool  IsBackDodgding;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool  IsAttacking;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		float  Combo = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  isResetANim = false;
+
 protected:
 	UFUNCTION()
 		void AnimNotify_AttackFinish();
@@ -38,4 +48,6 @@ protected:
 		void AnimNotify_Dodge_OFF();
 	UFUNCTION()
 		void AnimNotify_BackDodged_OFF();
+	UFUNCTION()
+		void	AnimNotify_ComboFinish();
 };

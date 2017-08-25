@@ -3,6 +3,7 @@
 #include "GameFramework/Character.h"
 #include "Ai/Enemy.h"
 #include "Projectile.h"
+#include "Items/BaseWeapon.h"
 #include "Chip.generated.h"
 
 UCLASS()
@@ -13,7 +14,7 @@ class TRASHPANDA_API AChip : public ACharacter
 public:
 	AChip();
 	virtual void Tick(float DeltaSeconds) override;
-
+	virtual void PostInitializeComponents();
 
 #pragma
 
@@ -36,7 +37,7 @@ public:
 
 #pragma 
 	//apply the animation funtion here o
-	
+
 	void LightAttack();
 	void Shoot();
 	void DodgeLeft();
@@ -47,26 +48,35 @@ public:
 	void IsW(float Value);
 	bool movingFront;
 
-	bool Dodgding = false;
+	bool DodgdingLeft = false;
+	bool DodgingRight = false;
 	bool BackDodge = false;
 	bool IsAttacking = false;
 	class UAnimInstance* AnimInstance;
 
-	UPROPERTY( EditAnywhere, Category = Dodge)
+	UPROPERTY(EditAnywhere, Category = Dodge)
 		float DodgeDistance;
 
 
 	void  RightStrafe(float Value);
 	bool AnimDirectionRight = false;
 	//shooting mechanics
+	
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<AProjectile> ProjectileClass;
 
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<ABaseWeapon> Weapon;
 
+	ABaseWeapon* MeleeWeapon;
 
 #pragma endregion Combat REGION
 
+public:
 
+	void TurnOffCollider();
+
+	void KnockItBack();
 
 
 };

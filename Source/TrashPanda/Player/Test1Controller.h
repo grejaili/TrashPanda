@@ -57,9 +57,9 @@ protected:
 
 	void DodgeRight();
 	void DodgeBack();
+	void LightAttackReleased();
 
-
-
+	bool attacking = false;
 
 
 };

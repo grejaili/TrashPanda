@@ -12,30 +12,29 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 	PrimaryActorTick.bCanEverTick = true;
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
-	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+		CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
+	CollisionComp->InitSphereRadius(30.f);
+	CollisionComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-
-	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
-	if (CollisionComp != NULL)
-	{
-		CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
-		CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
-	}
-
 	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
 	Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
 
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
-
-	ProjectileMovement->InitialSpeed = 100.f;
+	
 }
+
+
 
 // Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	//UE_LOG(LogTemp, Display, TEXT("WE ARE moving"));
+	//
+	ProjectileMovement->Velocity = direcao * 1000.f;
 
 
 }
@@ -44,29 +43,16 @@ void AProjectile::BeginPlay()
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	ProjectileMovement->Velocity = 100 * Direction * ProjectileMovement->InitialSpeed;
+	//UE_LOG(LogTemp, Display, TEXT("WE ARE moving"));
+	ProjectileMovement->Velocity = direcao * 1000.f;
+
 }
 
 
-void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+
+
+void AProjectile::Direction(const FVector& ShootDirection)
 {
-
-	if (OtherActor->ActorHasTag("Enemy"))
-	{
-		UE_LOG(LogTemp, Display, TEXT("WE ARE IN THE BEAM"));
-
-		APlayerController* PlayerController = NULL;
-		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
-		FDamageEvent DamageEvent(ValidDamageTypeClass);
-		const float DamageAmount = 1.0f;
-		OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
-	}
-
+	direcao = ShootDirection;
 }
 
-
-void AProjectile::InitVelocity(const FVector& ShootDirection)
-{
-	
-	Direction = ShootDirection;
-}
