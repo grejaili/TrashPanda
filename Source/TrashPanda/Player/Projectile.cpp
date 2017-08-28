@@ -15,11 +15,13 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 		CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
 	CollisionComp->InitSphereRadius(30.f);
 	CollisionComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-
+	CollisionComp->SetCollisionProfileName("Projectile");
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
 	Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	Collider->SetCollisionProfileName("Projectile");
+
 
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;

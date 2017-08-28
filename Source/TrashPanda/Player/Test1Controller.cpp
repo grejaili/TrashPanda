@@ -52,9 +52,9 @@ void ATest1Controller::MoveForward(float Value)
 		{
 			Cast<AChip>(MyPawn)->IsW(Value);
 		}
-		else
+		if (attacking == true)
 		{
-			Cast<AChip>(MyPawn)->IsW(Value*0.25);
+			Cast<AChip>(MyPawn)->IsW(Value*0.1);
 		}
 	}
 }
