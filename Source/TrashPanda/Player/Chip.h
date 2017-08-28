@@ -2,7 +2,7 @@
 
 #include "GameFramework/Character.h"
 #include "Ai/Enemy.h"
-#include "Projectile.h"
+#include "Player/Projectile.h"
 #include "Items/BaseWeapon.h"
 #include "Chip.generated.h"
 
@@ -77,6 +77,6 @@ public:
 	void TurnOffCollider();
 
 	void KnockItBack();
-
-
+	UPROPERTY(EditAnywhere, Category = Projectile)
+	FVector MuzzleOffset;
 };
