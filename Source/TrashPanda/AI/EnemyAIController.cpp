@@ -68,6 +68,7 @@ void AEnemyAIController::Tick(float DeltaTime)
 	}
 	RandomMove();
 
+	UE_LOG(LogTemp, Warning, TEXT("Your COMPILING WHY IS CRASHING THE ENGINE"));
 
 }
 

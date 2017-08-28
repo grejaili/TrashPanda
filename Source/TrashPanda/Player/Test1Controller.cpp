@@ -121,7 +121,7 @@ void ATest1Controller::LightAttackPressed()
 void ATest1Controller::LightAttackReleased()
 {
 	APawn* const MyPawn = GetPawn();
-	UE_LOG(LogTemp, Warning, TEXT("STOP ATTACKING"));
+	UE_LOG(LogTemp, Warning, TEXT("STOP now "));
 	Cast<AChip>(MyPawn)->IsAttacking = false;
 	attacking = false;
 }
