@@ -95,6 +95,8 @@ void AEnemy::AttackMelle(UObject* CPlayer)
 
 
 
+
+
 }
 
 void AEnemy::AttackHeavy(UObject* CPlayer)
@@ -122,3 +124,42 @@ float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, c
 
 	return ActualDamage;
 }
+/*
+ void AEnemy:: Shoot()
+{
+	FVector Pos= this->GetActorLocation();
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0,Rotation.Yaw,0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	FVector CameraLoc;
+	FRotator CameraRot;
+	GetActorEyesViewPoint(CameraLoc,CameraRot);
+
+	FVector const MuzzleLocation = CameraLoc + Ftransform(CameraRot).TransformVector(MuzzleOffset);
+	FRotator MuzzleRotation = CameraRot;
+	MuzzleRotation.Pitch += 10.0f;
+	UWorld* const World = GetWorld();
+
+	if ( World )
+	{
+	if (ProjectileClass != NULL)
+	{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = Instigator;
+
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, FRotator::ZeroRotator);
+	if (Projectile)
+	{
+	// find launch direction
+	FVector const LaunchDir = MuzzleRotation.Vector();
+	Projectile->Speed = 1000 ;
+
+	}
+	}
+
+
+
+
+
+*/
