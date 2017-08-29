@@ -76,7 +76,10 @@ void AEnemyAIController::AttackCommand(FVector Location)
 {
 	
 
-	this->MoveToLocation(Location);
+	
+
+	//this->MoveToLocation(Location);
+	//this->StopMovement();
 	/*
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
 	{
@@ -91,15 +94,15 @@ void AEnemyAIController::RandomMove()
 
 	float x = Pawn->GetActorLocation().X;
 	float y = Pawn->GetActorLocation().Y;
-
+	float z = Pawn->GetActorLocation().Z;
 
 	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == false)
 	{
 
 
-		Goal.X = x + FMath::RandRange(-1000000, 1000000);
-		Goal.Y = y + FMath::RandRange(-1000000, 1000000);
-		Goal.Z = 0 + FMath::RandRange(-1000000, 1000000);
+		Goal.X = x + FMath::RandRange(-1000, 1000);
+		Goal.Y = y + FMath::RandRange(-1000, 1000);
+		Goal.Z = z + FMath::RandRange(-1000, 1000);
 		this->GetBrainComponent()->GetBlackboardComponent()->SetValueAsVector(TEXT("Goal"), Goal);
 	}
 
