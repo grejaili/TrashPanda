@@ -95,9 +95,9 @@ void AEnemyAIController::RandomMove()
 	{
 
 
-		Goal.X = x + FMath::RandRange(-10000, 10000);
-		Goal.Y = y + FMath::RandRange(-10000, 10000);
-		Goal.Z = 0 + FMath::RandRange(-10000, 10000);
+		Goal.X = x + FMath::RandRange(-1000000, 1000000);
+		Goal.Y = y + FMath::RandRange(-1000000, 1000000);
+		Goal.Z = 0 + FMath::RandRange(-1000000, 1000000);
 		this->GetBrainComponent()->GetBlackboardComponent()->SetValueAsVector(TEXT("Goal"), Goal);
 	}
 

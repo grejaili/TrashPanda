@@ -15,26 +15,42 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
-
 	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
 	CollisionComp->SetCollisionProfileName("Projectile");
 
 
-	if (CollisionComp != NULL)
-	{
-		//CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
-	//	CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
-		//CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
-
-	}
-
-	//Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
-	//Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	//Collider->SetCollisionProfileName("Projectile");
-
 
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
+
+
+
+
+
+	StaticMesh->BodyInstance.SetCollisionProfileName("Projectile");
+
+	StaticMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnOverlapBegin);
+
+
+
+
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement0"));
+
+	ProjectileMovement->UpdatedComponent = StaticMesh;
+
+	ProjectileMovement->InitialSpeed = 3000.f;
+
+	ProjectileMovement->MaxSpeed = 3000.f;
+
+	ProjectileMovement->bRotationFollowsVelocity = true;
+
+	ProjectileMovement->bShouldBounce = false;
+
+	ProjectileMovement->ProjectileGravityScale = 0.f;
+
+
+	InitialLifeSpan = 3.0f;
+
 
 }
 
