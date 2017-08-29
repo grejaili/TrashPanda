@@ -72,15 +72,17 @@ void AEnemyAIController::Tick(float DeltaTime)
 
 }
 
-void AEnemyAIController::AttackCommand()
+void AEnemyAIController::AttackCommand(FVector Location)
 {
-	// COMBAT BEHAVIORS
+	
 
-
+	this->MoveToLocation(Location);
+	/*
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
 	{
 		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 	}
+	*/
 }
 
 void AEnemyAIController::RandomMove()

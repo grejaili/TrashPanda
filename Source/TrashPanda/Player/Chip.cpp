@@ -99,20 +99,12 @@ void AChip::TurnOffCollider()
 
 void AChip::Shoot()
 {
+	
 	FVector PlayerPos = this->GetActorLocation();
-
+	UWorld* const World = GetWorld();
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	FVector  CameraLoc;
-	FRotator CameraRot;
-	GetActorEyesViewPoint(CameraLoc, CameraRot);
-	
-	FVector const MuzzleLocation = CameraLoc + FTransform(CameraRot).TransformVector(MuzzleOffset);
-	FRotator MuzzleRotation = CameraRot;
-	MuzzleRotation.Pitch += 10.0f;			// skew the aim upwards a bit
-	UWorld* const World = GetWorld();
-	
 		
 	if (World)
 	{
@@ -122,11 +114,12 @@ void AChip::Shoot()
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
 
-			AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, FRotator::ZeroRotator);
+			AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, YawRotation);
 			if (Projectile)
 			{
 				// find launch direction
-				FVector const LaunchDir = MuzzleRotation.Vector();
+//				FVector const Direction = MuzzleRotation.Vector();
+				Projectile->Direction(Direction);
 				Projectile->Speed = 1000 ;
 
 			}

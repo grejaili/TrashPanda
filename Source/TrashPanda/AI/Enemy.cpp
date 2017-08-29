@@ -1,4 +1,5 @@
 #include "TrashPanda.h"
+//#include "Kismet/KismetSystemLibrary.h"
 #include "Enemy.h"
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
@@ -35,10 +36,12 @@ void AEnemy::Tick(float DeltaTime)
 
 void AEnemy::Shoot(FVector Target)
 {
-// implement bullet here
 
+		//FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Target);
+	
 
-//	UE_LOG(LogTemp, Warning, TEXT("IM Shooting"));
+	
+
 }
 
 

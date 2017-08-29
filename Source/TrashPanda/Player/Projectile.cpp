@@ -15,8 +15,8 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
-	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
-	CollisionComp->SetCollisionProfileName("Projectile");
+	//CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
+	//StaticMesh->SetCollisionProfileName("Projectile");
 
 
 
@@ -29,19 +29,19 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 
 	StaticMesh->BodyInstance.SetCollisionProfileName("Projectile");
 
-	StaticMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
-
-
+	StaticMesh->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
+	
+	StaticMesh->SetEnableGravity(false);
 
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement0"));
 
 	ProjectileMovement->UpdatedComponent = StaticMesh;
 
-	ProjectileMovement->InitialSpeed = 3000.f;
+	ProjectileMovement->InitialSpeed = 4000.f;
 
-	ProjectileMovement->MaxSpeed = 3000.f;
-
+	ProjectileMovement->MaxSpeed = 4000.f;
+	
 	ProjectileMovement->bRotationFollowsVelocity = true;
 
 	ProjectileMovement->bShouldBounce = false;
@@ -80,7 +80,7 @@ void AProjectile::Direction(const FVector& ShootDirection)
 	direcao = ShootDirection;
 }
 
-void AProjectile::OnHit(UPrimitiveComponent* SomeComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor->ActorHasTag("Enemy"))
 	{
@@ -88,7 +88,8 @@ void AProjectile::OnHit(UPrimitiveComponent* SomeComp, AActor* OtherActor, UPrim
 		APlayerController* PlayerController = NULL;
 		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
 		FDamageEvent DamageEvent(ValidDamageTypeClass);
-		const float DamageAmount = 1.0f;
+		const float DamageAmount = 5.0f;
 		OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
+		this->Destroy();
 	}
 }

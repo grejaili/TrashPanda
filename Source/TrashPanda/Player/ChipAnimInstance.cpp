@@ -43,7 +43,7 @@ void UChipAnimInstance::AnimNotify_AttackFinish()
 
 
 
-		if (Combo == 4)
+		if (Combo == 3)
 		{
 			Combo = 0;
 			
