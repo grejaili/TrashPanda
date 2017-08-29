@@ -18,12 +18,15 @@
 
 EBTNodeResult::Type UBTTask_RangedAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AChip* Player = Cast<AChip>(OwnerComp.GetBlackboardComponent()->GetValueAsObject("Player"));
-	AEnemy* Self = Cast <AEnemy>( OwnerComp.GetAIOwner()->GetPawn());
+//	AChip* Player = Cast<AChip>(OwnerComp.GetBlackboardComponent()->GetValueAsObject("Player"));
+	//AEnemy* Self = Cast <AEnemy>( OwnerComp.GetAIOwner()->GetPawn());
 
 
-	Self->Shoot(Player->GetActorLocation());
+	AEnemyAIController*  controller = Cast<AEnemyAIController>(OwnerComp.GetAIOwner());
 
+	AChip* Player = Cast<AChip>( OwnerComp.GetBlackboardComponent()->GetValueAsObject("Player"));
+
+	controller->AttackCommand(Player->GetActorLocation());
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }
 

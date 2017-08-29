@@ -38,7 +38,7 @@ void AEnemy::Shoot(FVector Target)
 {
 
 		//FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Target);
-	
+		this->setrotation
 
 	
 
