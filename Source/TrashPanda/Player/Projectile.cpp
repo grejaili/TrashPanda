@@ -29,7 +29,7 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 
 	StaticMesh->BodyInstance.SetCollisionProfileName("Projectile");
 
-	StaticMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnOverlapBegin);
+	StaticMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 
 
 
@@ -80,7 +80,7 @@ void AProjectile::Direction(const FVector& ShootDirection)
 	direcao = ShootDirection;
 }
 
-void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AProjectile::OnHit(UPrimitiveComponent* SomeComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	if (OtherActor->ActorHasTag("Enemy"))
 	{
