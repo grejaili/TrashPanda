@@ -9,30 +9,48 @@
 AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+//	PrimaryActorTick.bCanEverTick = true;
+//	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	//	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
-		//CollisionComp->InitSphereRadius(30.f);
-		//CollisionComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-		//CollisionComp->SetCollisionProfileName("Projectile");
 
-	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
-	if (CollisionComp != NULL)
-	{
-		CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
-		CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
-	}
+	//CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
+	//StaticMesh->SetCollisionProfileName("Projectile");
 
-
-	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
-	Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	Collider->SetCollisionProfileName("Projectile");
 
 
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
+
+
+
+
+
+	StaticMesh->BodyInstance.SetCollisionProfileName("Projectile");
+
+	StaticMesh->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
+	
+	StaticMesh->SetEnableGravity(false);
+
+
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement0"));
+
+	ProjectileMovement->UpdatedComponent = StaticMesh;
+
+	ProjectileMovement->InitialSpeed = 4000.f;
+
+	ProjectileMovement->MaxSpeed = 4000.f;
+	
+	ProjectileMovement->bRotationFollowsVelocity = true;
+
+	ProjectileMovement->bShouldBounce = false;
+
+	ProjectileMovement->ProjectileGravityScale = 0.f;
+
+
+	InitialLifeSpan = 3.0f;
+
 
 }
 
@@ -55,11 +73,7 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	//UE_LOG(LogTemp, Display, TEXT("WE ARE moving"));
 	ProjectileMovement->Velocity = direcao * 1000.f;
-
 }
-
-
-
 
 void AProjectile::Direction(const FVector& ShootDirection)
 {
@@ -74,7 +88,8 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		APlayerController* PlayerController = NULL;
 		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
 		FDamageEvent DamageEvent(ValidDamageTypeClass);
-		const float DamageAmount = 1.0f;
+		const float DamageAmount = 5.0f;
 		OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
+		this->Destroy();
 	}
 }

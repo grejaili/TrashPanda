@@ -72,15 +72,17 @@ void AEnemyAIController::Tick(float DeltaTime)
 
 }
 
-void AEnemyAIController::AttackCommand()
+void AEnemyAIController::AttackCommand(FVector Location)
 {
-	// COMBAT BEHAVIORS
+	
 
-
+	this->MoveToLocation(Location);
+	/*
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
 	{
 		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 	}
+	*/
 }
 
 void AEnemyAIController::RandomMove()
@@ -95,9 +97,9 @@ void AEnemyAIController::RandomMove()
 	{
 
 
-		Goal.X = x + FMath::RandRange(-10000, 10000);
-		Goal.Y = y + FMath::RandRange(-10000, 10000);
-		Goal.Z = 0 + FMath::RandRange(-10000, 10000);
+		Goal.X = x + FMath::RandRange(-1000000, 1000000);
+		Goal.Y = y + FMath::RandRange(-1000000, 1000000);
+		Goal.Z = 0 + FMath::RandRange(-1000000, 1000000);
 		this->GetBrainComponent()->GetBlackboardComponent()->SetValueAsVector(TEXT("Goal"), Goal);
 	}
 

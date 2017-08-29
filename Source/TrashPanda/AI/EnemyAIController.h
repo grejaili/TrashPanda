@@ -23,7 +23,7 @@ public:
 	
 	
 	// ATTACK FUNCTIONS----------
-	void AttackCommand();
+	void AttackCommand(FVector Location);
 
 
 
