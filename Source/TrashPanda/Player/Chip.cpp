@@ -100,16 +100,14 @@ void AChip::TurnOffCollider()
 void AChip::Shoot()
 {
 	FVector PlayerPos = this->GetActorLocation();
-	//PlayerPos.X += 100;
-	//PlayerPos.Y+= 200;
-	PlayerPos.Z += 50;
+
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 	FVector  CameraLoc;
 	FRotator CameraRot;
 	GetActorEyesViewPoint(CameraLoc, CameraRot);
-	// MuzzleOffset is in camera space, so transform it to world space before offsetting from the camera to find the   final muzzle position
+	
 	FVector const MuzzleLocation = CameraLoc + FTransform(CameraRot).TransformVector(MuzzleOffset);
 	FRotator MuzzleRotation = CameraRot;
 	MuzzleRotation.Pitch += 10.0f;			// skew the aim upwards a bit

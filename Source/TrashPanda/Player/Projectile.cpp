@@ -9,26 +9,28 @@
 AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+//	PrimaryActorTick.bCanEverTick = true;
+//	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	//	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
-		//CollisionComp->InitSphereRadius(30.f);
-		//CollisionComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-		//CollisionComp->SetCollisionProfileName("Projectile");
+
 
 	CollisionComp = ObjectInitializer.CreateOptionalDefaultSubobject<USphereComponent>(this, TEXT("SphereComp"));
+	CollisionComp->SetCollisionProfileName("Projectile");
+
+
 	if (CollisionComp != NULL)
 	{
-		CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
-		CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
+		//CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
+	//	CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
+		//CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
+
 	}
 
-
-	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
-	Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	Collider->SetCollisionProfileName("Projectile");
+	//Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
+	//Collider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	//Collider->SetCollisionProfileName("Projectile");
 
 
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
@@ -55,11 +57,7 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	//UE_LOG(LogTemp, Display, TEXT("WE ARE moving"));
 	ProjectileMovement->Velocity = direcao * 1000.f;
-
 }
-
-
-
 
 void AProjectile::Direction(const FVector& ShootDirection)
 {

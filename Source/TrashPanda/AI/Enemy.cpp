@@ -37,7 +37,8 @@ void AEnemy::Shoot(FVector Target)
 {
 // implement bullet here
 
-	UE_LOG(LogTemp, Warning, TEXT("IM Shooting"));
+
+//	UE_LOG(LogTemp, Warning, TEXT("IM Shooting"));
 }
 
 
