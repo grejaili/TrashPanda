@@ -3,6 +3,7 @@
 #include "TrashPanda.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "EnemyAIController.h"
+#include "Player/Chip.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyAllTypes.h"
@@ -68,16 +69,15 @@ void AEnemyAIController::Tick(float DeltaTime)
 	}
 	RandomMove();
 
-	UE_LOG(LogTemp, Warning, TEXT("Your COMPILING WHY IS CRASHING THE ENGINE"));
 
 }
 
-void AEnemyAIController::AttackCommand(FVector Location)
+void AEnemyAIController::AttackCommand(AChip* Player)
 {
 	
 
 	
-
+//	this->SetFocus();
 	//this->MoveToLocation(Location);
 	//this->StopMovement();
 	/*
@@ -108,10 +108,5 @@ void AEnemyAIController::RandomMove()
 
 
 
-
-	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == true)
-	{
-
-	}
 
 }

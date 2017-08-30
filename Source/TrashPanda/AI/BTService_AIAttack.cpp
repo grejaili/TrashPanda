@@ -22,7 +22,7 @@ void UBTService_AIAttack::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 	AChip* Player = Cast<AChip>(OwnerComp.GetAIOwner()->GetPawn());
 
 
-	controller->AttackCommand(Player->GetActorLocation());
+	controller->AttackCommand(Player);
 
 
 
