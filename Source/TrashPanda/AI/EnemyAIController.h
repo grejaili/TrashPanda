@@ -4,6 +4,7 @@
 
 #include "AIController.h"
 #include "Enemy.h"
+#include "Player/Chip.h"
 #include "EnemyAIController.generated.h"
 
 /**
@@ -23,7 +24,7 @@ public:
 	
 	
 	// ATTACK FUNCTIONS----------
-	void AttackCommand(FVector Location);
+	void AttackCommand(AChip* Player);
 
 
 

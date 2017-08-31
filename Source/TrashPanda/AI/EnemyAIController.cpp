@@ -3,6 +3,7 @@
 #include "TrashPanda.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "EnemyAIController.h"
+#include "Player/Chip.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyAllTypes.h"
@@ -60,24 +61,23 @@ void AEnemyAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	//I have to change this but IDK how to make it better
-
+	RandomMove();
 	//NON COMBAS
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == false)
 	{
 		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
 	}
-	RandomMove();
 
-	UE_LOG(LogTemp, Warning, TEXT("Your COMPILING WHY IS CRASHING THE ENGINE"));
+
 
 }
 
-void AEnemyAIController::AttackCommand(FVector Location)
+void AEnemyAIController::AttackCommand(AChip* Player)
 {
 	
 
 	
-
+//	this->SetFocus();
 	//this->MoveToLocation(Location);
 	//this->StopMovement();
 	/*
@@ -92,26 +92,20 @@ void AEnemyAIController::RandomMove()
 {
 
 
-	float x = Pawn->GetActorLocation().X;
-	float y = Pawn->GetActorLocation().Y;
-	float z = Pawn->GetActorLocation().Z;
+	
+	FVector Position = Pawn->GetActorLocation();
 
 	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == false)
 	{
 
 
-		Goal.X = x + FMath::RandRange(-1000, 1000);
-		Goal.Y = y + FMath::RandRange(-1000, 1000);
-		Goal.Z = z + FMath::RandRange(-1000, 1000);
+		Goal.X = Position.X + 1000000;
+		Goal.Y = Position.Y + 1000000;
+		Goal.Z = Position.Z + 1000000;
 		this->GetBrainComponent()->GetBlackboardComponent()->SetValueAsVector(TEXT("Goal"), Goal);
 	}
 
 
 
-
-	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == true)
-	{
-
-	}
 
 }

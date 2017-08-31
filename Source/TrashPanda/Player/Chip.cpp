@@ -147,12 +147,16 @@ void AChip::DodgeLeft()
 void AChip::DodgeRight()
 {
 
-	bool DodgingRight = true;
+	DodgingRight = true;
+	
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
+	
+	
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	//this->AddMovementInput(Direction, );
+	print("dodge right");
 	this->LaunchCharacter(Direction * DodgeDistance, true, true);
 }
 

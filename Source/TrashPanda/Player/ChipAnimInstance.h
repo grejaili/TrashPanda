@@ -29,6 +29,8 @@ protected:
 		bool  IsDodgdingLeft;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool  IsDodgdingRight;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  DodgeRight;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
