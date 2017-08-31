@@ -5,6 +5,7 @@
 #include "ChipAnimInstance.h"
 
 
+#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
 
 void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -17,9 +18,13 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Speed = OwningPawn->GetVelocity().Size();
 		Direction = OwningPawn->AnimDirectionRight;
 		ClickingW = OwningPawn->movingFront;
-		IsDodgdingLeft = OwningPawn->DodgingRight;
-		IsDodgdingRight = OwningPawn->DodgdingLeft;
-		IsBackDodgding = OwningPawn->DodgingRight;
+		
+		IsDodgdingLeft = OwningPawn->DodgdingLeft ;
+		IsDodgdingRight = OwningPawn->DodgingRight;
+		DodgeRight = OwningPawn->DodgingRight;
+
+
+		IsBackDodgding = OwningPawn->BackDodge;
 		IsAttacking = OwningPawn->IsAttacking;
 
 		if (IsAttacking == false)

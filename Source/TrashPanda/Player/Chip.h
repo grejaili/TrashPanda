@@ -50,6 +50,7 @@ public:
 
 	bool DodgdingLeft = false;
 	bool DodgingRight = false;
+
 	bool BackDodge = false;
 	bool IsAttacking = false;
 	class UAnimInstance* AnimInstance;
@@ -58,7 +59,7 @@ public:
 		float DodgeDistance;
 
 
-	void  RightStrafe(float Value);
+	void RightStrafe(float Value);
 	bool AnimDirectionRight = false;
 	//shooting mechanics
 	
