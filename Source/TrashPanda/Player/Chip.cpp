@@ -97,15 +97,36 @@ void AChip::TurnOffCollider()
 }
 
 
+void AChip::Launch()
+{
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * DodgeDistance, true, true);
+}
+
+void AChip::LaunchBasic()
+{
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * BasicLaunch, true, true);
+}
+
+
 void AChip::Shoot()
 {
+	Shooting = true;
+
 	
 	FVector PlayerPos = this->GetActorLocation();
 	UWorld* const World = GetWorld();
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		
+
 	if (World)
 	{
 		if (ProjectileClass != NULL)
@@ -120,7 +141,7 @@ void AChip::Shoot()
 				// find launch direction
 //				FVector const Direction = MuzzleRotation.Vector();
 				Projectile->Direction(Direction);
-				Projectile->Speed = 1000 ;
+				Projectile->Speed = 1000;
 
 			}
 		}
@@ -148,10 +169,10 @@ void AChip::DodgeRight()
 {
 
 	DodgingRight = true;
-	
+
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
-	
-	
+
+
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
@@ -175,16 +196,27 @@ void AChip::DodgeBack()
 
 void  AChip::RightStrafe(float Value)
 {
-	if (Value == 0)
+	if (Value > 0)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
-		AnimDirectionRight = false;
+		GoingRight = true;
+		GoingLeft = false;
+
 	}
-	else
+	else if (Value < 0)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
-		AnimDirectionRight = true;
+		GoingLeft = true;
+		GoingRight = false;
 	}
+
+	else
+	{
+		GoingLeft = true;
+		GoingRight = false;
+	}
+	
+	
 }
 
 void AChip::IsW(float Value)

@@ -16,16 +16,23 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (OwningPawn)
 	{
 		Speed = OwningPawn->GetVelocity().Size();
-		Direction = OwningPawn->AnimDirectionRight;
-		ClickingW = OwningPawn->movingFront;
 		
+		Left = OwningPawn->GoingLeft;
+		Right = OwningPawn->GoingRight;
+
+
+	
+
+		ClickingW = OwningPawn->movingFront;
 		IsDodgdingLeft = OwningPawn->DodgdingLeft ;
 		IsDodgdingRight = OwningPawn->DodgingRight;
 		DodgeRight = OwningPawn->DodgingRight;
-
+		IsShooting = OwningPawn->Shooting;
 
 		IsBackDodgding = OwningPawn->BackDodge;
 		IsAttacking = OwningPawn->IsAttacking;
+
+
 
 		if (IsAttacking == false)
 		{
@@ -94,3 +101,29 @@ void UChipAnimInstance::AnimNotify_BackDodged_OFF()
 }
 
 
+void UChipAnimInstance::AnimNotify_ShootingOver()
+{
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		OwningPawn->Shooting = false;
+	}
+}
+
+void UChipAnimInstance::AnimNotify_Launch()
+{
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		OwningPawn->Launch();
+	}
+}
+
+void UChipAnimInstance::AnimNotify_LaunchBasicAttack()
+{
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		OwningPawn->LaunchBasic();
+	}
+}

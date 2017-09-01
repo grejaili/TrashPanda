@@ -37,6 +37,7 @@ void ATest1Controller::SetupInputComponent()
 	InputComponent->BindAction("DodgeLEFT", IE_DoubleClick, this, &ThisClass::DodgeLeft);
 	InputComponent->BindAction("DodgeRIGHT", IE_DoubleClick, this, &ThisClass::DodgeRight);
 	InputComponent->BindAction("DodgeBACK", IE_DoubleClick, this, &ThisClass::DodgeBack);
+
 }
 
 void ATest1Controller::MoveForward(float Value)
@@ -80,6 +81,8 @@ void ATest1Controller::MoveSides(float Value)
 			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 			// add movement in that direction
 			Cast<AChip>(MyPawn)->RightStrafe(Value);
+		
+
 			if (attacking == false)
 			{
 				MyPawn->AddMovementInput(Direction, Value);
