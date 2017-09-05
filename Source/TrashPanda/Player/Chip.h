@@ -74,6 +74,9 @@ public:
 
 	ABaseWeapon* MeleeWeapon;
 
+	UPROPERTY(EditAnyWhere, Category = Stats)
+		uint32 Health;
+
 #pragma endregion Combat REGION
 
 public:
@@ -83,6 +86,7 @@ public:
 	void KnockItBack();
 	UPROPERTY(EditAnywhere, Category = Projectile)
 	FVector MuzzleOffset;
+	float 	TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
 
 	void Launch();
 	void LaunchBasic();

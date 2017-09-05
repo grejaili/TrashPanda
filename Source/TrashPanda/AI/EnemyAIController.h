@@ -24,7 +24,7 @@ public:
 	
 	
 	// ATTACK FUNCTIONS----------
-	void AttackCommand(AChip* Player);
+	void RangedAttack();
 
 
 

@@ -22,13 +22,5 @@ void UBTService_AIAttack::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 	AChip* Player = Cast<AChip>(OwnerComp.GetAIOwner()->GetPawn());
 
 
-	controller->AttackCommand(Player);
-
-
-
-
-
-		// set the calculation to distance here
-
-
+	controller->RangedAttack();
 }

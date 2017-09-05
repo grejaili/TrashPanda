@@ -2,6 +2,7 @@
 #pragma once
 
 #include "GameFramework/Character.h"
+#include "Player/Projectile.h"
 #include "Enemy.generated.h"
 
 UCLASS()
@@ -33,6 +34,8 @@ public:
 	void SetGlobalCD(float CD);
 	void SetGlobalCD();
 
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<AProjectile> ProjectileClass;
 	UPROPERTY(EditAnywhere, Category = AIBehavior)
 		float BaseGlobalCD;
 
@@ -40,7 +43,7 @@ public:
 	//------- ATTACK FUNCTIONS
 
 
-	void AttackMelle(UObject* Player);
+
 	void AttackHeavy(UObject* Player);
 	bool bIsAttacking = false;
 
@@ -53,11 +56,11 @@ protected:
 	UPROPERTY(EditAnyWhere, Category = Stats)
 		uint32 DamageReduction;
 
-//	UPROPERTY(EditAnyWhere, Category = Stats)
-	//	uint32 Damage;
+	//	UPROPERTY(EditAnyWhere, Category = Stats)
+		//	uint32 Damage;
 
-	
-	// ATTACK OPTIONS
+
+		// ATTACK OPTIONS
 	UPROPERTY(EditAnyWhere, Category = AIBehavior)
 		uint32 MelleAttackRange;
 	UPROPERTY(EditAnywhere, Category = AIBehavior)
@@ -69,6 +72,6 @@ protected:
 
 
 
-float 	TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
+	float 	TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
 	bool AttackHappening;
 };

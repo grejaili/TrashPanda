@@ -22,9 +22,10 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
+	
 
-
-
+	
+	
 
 
 	StaticMesh->BodyInstance.SetCollisionProfileName("Projectile");
@@ -54,6 +55,10 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 
 }
 
+void AProjectile::SetShooter(FString s) {
+
+	Shooter = s;
+}
 
 
 // Called when the game starts or when spawned
@@ -73,6 +78,7 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	//UE_LOG(LogTemp, Display, TEXT("WE ARE moving"));
 	ProjectileMovement->Velocity = direcao * 1000.f;
+
 }
 
 void AProjectile::Direction(const FVector& ShootDirection)
@@ -84,12 +90,39 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	if (OtherActor->ActorHasTag("Enemy"))
 	{
-		UE_LOG(LogTemp, Display, TEXT("WE ARE IN THE BEAM"));
+
+
+	
+		UE_LOG(LogTemp, Display, TEXT("Enemy shooter"));
 		APlayerController* PlayerController = NULL;
 		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
 		FDamageEvent DamageEvent(ValidDamageTypeClass);
 		const float DamageAmount = 5.0f;
-		OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
-		this->Destroy();
+	
+		if (Shooter == "Player")
+		{
+			OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
+			
+			this->Destroy();
+		}
+		
 	}
+
+	if (OtherActor->ActorHasTag("Player"))
+	{
+		UE_LOG(LogTemp, Display, TEXT("Player shooter"));
+		APlayerController* PlayerController = NULL;
+		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
+		FDamageEvent DamageEvent(ValidDamageTypeClass);
+		const float DamageAmount = 5.0f;
+
+
+		if (Shooter == "Enemy")
+		{
+			//UE_LOG(LogTemp, Display, TEXT("Player Collided"));
+			OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
+			this->Destroy();
+		}
+	}
+
 }
