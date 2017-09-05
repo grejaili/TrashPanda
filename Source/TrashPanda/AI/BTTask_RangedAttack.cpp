@@ -26,6 +26,9 @@ EBTNodeResult::Type UBTTask_RangedAttack::ExecuteTask(UBehaviorTreeComponent& Ow
 
 	AChip* Player = Cast<AChip>( OwnerComp.GetBlackboardComponent()->GetValueAsObject("Player"));
 
+
+
+
 	controller->RangedAttack();
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }

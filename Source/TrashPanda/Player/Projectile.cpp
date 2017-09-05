@@ -50,7 +50,7 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 	ProjectileMovement->ProjectileGravityScale = 0.f;
 
 
-	InitialLifeSpan = 3.0f;
+	InitialLifeSpan = 1.0f;
 
 
 }

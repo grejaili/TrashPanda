@@ -72,7 +72,12 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<ABaseWeapon> Weapon;
 
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<AActor> RangedWeapon;
+
 	ABaseWeapon* MeleeWeapon;
+	AActor* RWeapon;
 
 	UPROPERTY(EditAnyWhere, Category = Stats)
 		uint32 Health;

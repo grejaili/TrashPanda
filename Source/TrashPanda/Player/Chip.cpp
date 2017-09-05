@@ -64,12 +64,12 @@ void AChip::Tick(float DeltaTime)
 void AChip::CameraYAxisMovement(float Rate)
 {
 
-	AddControllerPitchInput(Rate*TurnRate  * GetWorld()->GetDeltaSeconds());
+//	AddControllerPitchInput(Rate* TurnRate  * GetWorld()->GetDeltaSeconds());
 }
 
 void AChip::CameraXAxisMovement(float Rate)
 {
-	AddControllerYawInput(Rate *TurnRate * GetWorld()->GetDeltaSeconds());
+	AddControllerYawInput(Rate * TurnRate * GetWorld()->GetDeltaSeconds());
 }
 
 
@@ -163,7 +163,6 @@ void AChip::DodgeLeft()
 	//this->AddMovementInput(Direction, );
 	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
 
-
 }
 
 void AChip::DodgeRight()
@@ -250,9 +249,24 @@ void AChip::PostInitializeComponents()
 			//MeleeWeapon->WeaponHolder = this;
 			const USkeletalMeshSocket *socket = GetMesh()->GetSocketByName("hand_rSocket");
 			socket->AttachActor(MeleeWeapon, GetMesh());  // <-- attempt to put a sword in the right hand
+			MeleeWeapon->Bora = Cast<APawn>(this);
 		}
 
 	}
+
+	if (RangedWeapon)
+	{
+		RWeapon = GetWorld()->SpawnActor<AActor>(RangedWeapon, FVector(0), FRotator(0));
+		if (RWeapon)
+		{
+			//MeleeWeapon->WeaponHolder = this;
+			const USkeletalMeshSocket *socket = GetMesh()->GetSocketByName("lowerarm_lSocket");
+			socket->AttachActor(RWeapon, GetMesh());  // <-- attempt to put a sword in the right hand
+		}
+
+	}
+
+	//lowerarm_lSocket
 }
 
 void AChip::KnockItBack
@@ -273,7 +287,6 @@ float AChip::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, cl
 		if (Health <= 0.f)
 		{
 			//SetLifeSpan(0.001f);
-
 			UE_LOG(LogTemp, Warning, TEXT("I died"));
 
 		}

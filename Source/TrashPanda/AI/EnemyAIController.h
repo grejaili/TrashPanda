@@ -34,7 +34,7 @@ public:
 	static ETeamAttitude::Type GetAttitudeTowards(FGenericTeamId TeamA, FGenericTeamId TeamB);
 
 	FVector Goal;
-
+	bool Attacking = false;
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
@@ -44,7 +44,7 @@ protected:
 
 	virtual ETeamAttitude::Type GetAttitudeTowardsPlayer(const AActor& Other) const;
 	AEnemy* Pawn;
-
+	
 	UPROPERTY(VisibleAnywhere)
 	FVector NextLocation;
 

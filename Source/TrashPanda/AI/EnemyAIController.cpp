@@ -69,7 +69,26 @@ void AEnemyAIController::Tick(float DeltaTime)
 	}
 
 
+	if (Attacking == true)
+	{
+		FVector FocalPoint = GetFocalPoint();
+		if (!FocalPoint.IsZero() && GetPawn())
+		{
+			FVector Direction = FocalPoint - GetPawn()->GetActorLocation();
+			FRotator NewControlRotation = Direction.Rotation();
 
+			NewControlRotation.Yaw = FRotator::ClampAxis(NewControlRotation.Yaw);
+
+			SetControlRotation(NewControlRotation);
+
+			APawn* const P = GetPawn();
+			if (P)
+			{
+				P->FaceRotation(NewControlRotation, DeltaTime);
+			}
+
+		}
+	}
 }
 
 void AEnemyAIController::RangedAttack()

@@ -9,6 +9,7 @@ enum WeaponType
 };
 
 #include "GameFramework/Actor.h"
+
 #include "BaseWeapon.generated.h"
 
 UCLASS()
@@ -38,6 +39,7 @@ protected:
 
 	USphereComponent* CollisionComp;
 
+
 	
 public:
 	UFUNCTION()
@@ -50,4 +52,6 @@ public:
 
 
 	bool KnockIt = true;
+
+	APawn*  Bora;
 };
