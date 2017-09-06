@@ -69,14 +69,15 @@ void AEnemyAIController::Tick(float DeltaTime)
 	}
 
 
-	if (Attacking == true)
+	if (Att == true)
 	{
+
 		FVector FocalPoint = GetFocalPoint();
 		if (!FocalPoint.IsZero() && GetPawn())
 		{
 			FVector Direction = FocalPoint - GetPawn()->GetActorLocation();
 			FRotator NewControlRotation = Direction.Rotation();
-
+		//	SetFocalPoint()
 			NewControlRotation.Yaw = FRotator::ClampAxis(NewControlRotation.Yaw);
 
 			SetControlRotation(NewControlRotation);

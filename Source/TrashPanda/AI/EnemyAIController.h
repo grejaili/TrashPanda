@@ -34,7 +34,7 @@ public:
 	static ETeamAttitude::Type GetAttitudeTowards(FGenericTeamId TeamA, FGenericTeamId TeamB);
 
 	FVector Goal;
-	bool Attacking = false;
+	bool Att = false;
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
