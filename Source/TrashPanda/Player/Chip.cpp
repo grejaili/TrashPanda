@@ -148,7 +148,7 @@ void AChip::DodgeRight()
 {
 
 	DodgingRight = true;
-	
+
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
 	
 	
