@@ -169,13 +169,7 @@ void AChip::DodgeRight()
 {
 
 	DodgingRight = true;
-<<<<<<< HEAD
-=======
-	
-	//PlayerSphere->AddForce(FVector(100, 0, 0));
-	
->>>>>>> parent of cb23128... commit
-	
+
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
 
 
