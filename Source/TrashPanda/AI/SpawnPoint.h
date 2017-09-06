@@ -25,4 +25,13 @@ void SetGlobalCD();
  bool GetGlobalCD();
  FTimerHandle RespawnTimeHandler;
 
+ UPROPERTY(EditAnywhere, Category = SpawnParams)
+	 float BaseGlobalCD;
+
+
+
+
+ UPROPERTY(EditDefaultsOnly, Category = SpawnParams)
+	 TSubclassOf<AEnemy> Enemy;
+
 };

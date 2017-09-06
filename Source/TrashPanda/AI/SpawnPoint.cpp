@@ -23,29 +23,33 @@ void ASpawnPoint::BeginPlay()
 void ASpawnPoint::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+	if (GetGlobalCD() == true)
+	{
+		SetGlobalCD();
+		UE_LOG(LogTemp, Warning, TEXT("SPAWN LITTLE BITCH"));
+	}
 
 }
 
 
 bool ASpawnPoint::GetGlobalCD()
 {
-	if (GetWorld()->GetTimerManager().GetTimerRemaining(AttackTimerHandler) <= 5)
+	
+	if (GetWorld()->GetTimerManager().GetTimerRemaining(RespawnTimeHandler) <= 0)
 	{
-		bIsPossibletoAttack = true;
+		return true;
 	}
 
 	else
 	{
-		bIsPossibletoAttack = false;
+	return false;
 	}
 
-
-	return bIsPossibletoAttack;
 }
 
 
 void ASpawnPoint::SetGlobalCD()
 {
-	GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandler);
-	GetWorld()->GetTimerManager().SetTimer(AttackTimerHandler, BaseGlobalCD, false);
+	GetWorld()->GetTimerManager().ClearTimer(RespawnTimeHandler);
+	GetWorld()->GetTimerManager().SetTimer(RespawnTimeHandler, BaseGlobalCD, false);
 }

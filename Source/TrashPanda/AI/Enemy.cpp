@@ -78,7 +78,7 @@ void AEnemy::Shoot(FVector Target)
 
 
 
-	//	SetGlobalCD();
+
 	}
 
 
