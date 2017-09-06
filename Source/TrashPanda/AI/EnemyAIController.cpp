@@ -69,43 +69,48 @@ void AEnemyAIController::Tick(float DeltaTime)
 	}
 
 
+	if (Att == true)
+	{
 
+		FVector FocalPoint = GetFocalPoint();
+		if (!FocalPoint.IsZero() && GetPawn())
+		{
+			FVector Direction = FocalPoint - GetPawn()->GetActorLocation();
+			FRotator NewControlRotation = Direction.Rotation();
+		//	SetFocalPoint()
+			NewControlRotation.Yaw = FRotator::ClampAxis(NewControlRotation.Yaw);
+
+			SetControlRotation(NewControlRotation);
+
+			APawn* const P = GetPawn();
+			if (P)
+			{
+				P->FaceRotation(NewControlRotation, DeltaTime);
+			}
+
+		}
+	}
 }
 
-void AEnemyAIController::AttackCommand(AChip* Player)
+void AEnemyAIController::RangedAttack()
 {
-	
-
-	
-//	this->SetFocus();
-	//this->MoveToLocation(Location);
-	//this->StopMovement();
-	/*
-	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
-	{
-		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
-	}
-	*/
+		
+		if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
+		{
+			Pawn->Shoot(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsVector(TEXT("PlayerPos")));
+		}
+		
 }
 
 void AEnemyAIController::RandomMove()
 {
-
-
-	
 	FVector Position = Pawn->GetActorLocation();
-
 	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == false)
 	{
 
-
-		Goal.X = Position.X + 1000000;
-		Goal.Y = Position.Y + 1000000;
-		Goal.Z = Position.Z + 1000000;
+		Goal.X = Position.X + FMath::RandRange(-200, 200);
+		Goal.Y = Position.Y + FMath::RandRange(-200, 200);
+		Goal.Z = Position.Z + FMath::RandRange(-200, 200);
 		this->GetBrainComponent()->GetBlackboardComponent()->SetValueAsVector(TEXT("Goal"), Goal);
 	}
-
-
-
-
 }

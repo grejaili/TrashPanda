@@ -19,7 +19,8 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	void Direction(const FVector& ShootDirection);
 
-
+	FString Shooter;
+	void SetShooter(FString s);
 
 	UPROPERTY(EditDefaultsOnly)
 		class UStaticMeshComponent* StaticMesh;

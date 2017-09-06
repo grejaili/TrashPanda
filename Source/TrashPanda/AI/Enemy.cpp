@@ -37,10 +37,53 @@ void AEnemy::Tick(float DeltaTime)
 void AEnemy::Shoot(FVector Target)
 {
 
-		//FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Target);
-	
+	//FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Target);
+	FVector PlayerPos = this->GetActorLocation();
+	UWorld* const World = GetWorld();
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-	
+
+
+	if (GetGlobalCD())
+	{
+		//	print("Attack  Melle");
+
+
+
+		if (World)
+		{
+			if (ProjectileClass != NULL)
+			{
+				FActorSpawnParameters SpawnParams;
+				SpawnParams.Owner = this;
+				SpawnParams.Instigator = Instigator;
+
+				AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, YawRotation);
+				UE_LOG(LogTemp, Warning, TEXT("AI Shooting"));
+				
+				if (Projectile)
+				{
+					// find launch direction
+					//				FVector const Direction = MuzzleRotation.Vector();
+					Projectile->Direction(Direction);
+					Projectile->Speed = 1000;
+					Projectile->SetShooter("Enemy");
+
+				}
+			}
+
+		}
+
+
+
+	//	SetGlobalCD();
+	}
+
+
+
+
 
 }
 
@@ -61,7 +104,7 @@ bool AEnemy::GetGlobalCD()
 		bIsPossibletoAttack = false;
 	}
 
-	
+
 	return bIsPossibletoAttack;
 }
 
@@ -83,25 +126,6 @@ void AEnemy::SetGlobalCD(float CD)
 
 
 
-//Light attack here too
-void AEnemy::AttackMelle(UObject* CPlayer)
-{
-
-
-	if (GetGlobalCD())
-	{
-		//	print("Attack  Melle");
-
-		bIsAttacking = true;
-		
-		SetGlobalCD();
-	}
-
-
-
-
-
-}
 
 void AEnemy::AttackHeavy(UObject* CPlayer)
 {
@@ -131,13 +155,7 @@ float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, c
 /*
  void AEnemy:: Shoot()
 {
-	FVector Pos= this->GetActorLocation();
-	const FRotator Rotation = GetControlRotation();
-	const FRotator YawRotation(0,Rotation.Yaw,0);
-	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	FVector CameraLoc;
-	FRotator CameraRot;
-	GetActorEyesViewPoint(CameraLoc,CameraRot);
+
 
 	FVector const MuzzleLocation = CameraLoc + Ftransform(CameraRot).TransformVector(MuzzleOffset);
 	FRotator MuzzleRotation = CameraRot;

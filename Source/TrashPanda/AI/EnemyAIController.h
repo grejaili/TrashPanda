@@ -24,7 +24,7 @@ public:
 	
 	
 	// ATTACK FUNCTIONS----------
-	void AttackCommand(AChip* Player);
+	void RangedAttack();
 
 
 
@@ -34,7 +34,7 @@ public:
 	static ETeamAttitude::Type GetAttitudeTowards(FGenericTeamId TeamA, FGenericTeamId TeamB);
 
 	FVector Goal;
-
+	bool Att = false;
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
@@ -44,7 +44,7 @@ protected:
 
 	virtual ETeamAttitude::Type GetAttitudeTowardsPlayer(const AActor& Other) const;
 	AEnemy* Pawn;
-
+	
 	UPROPERTY(VisibleAnywhere)
 	FVector NextLocation;
 

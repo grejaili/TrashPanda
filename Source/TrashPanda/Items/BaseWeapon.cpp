@@ -72,10 +72,10 @@ void ABaseWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 
 		if (KnockIt == true)
 		{
-			const FRotator Rotation = DamagedActor->GetControlRotation();
+			const FRotator Rotation = Bora->GetControlRotation();
 			const FRotator YawRotation(0, Rotation.Yaw, 0);
 			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-			DamagedActor->LaunchCharacter(Direction * -500, true, true);
+			DamagedActor->LaunchCharacter(Direction * 500, true, true);
 			//KnockIt = false;
 		}
 		
