@@ -2,7 +2,7 @@
 
 #include "GameFramework/Character.h"
 #include "Ai/Enemy.h"
-#include "Projectile.h"
+#include "Player/Projectile.h"
 #include "Items/BaseWeapon.h"
 #include "Chip.generated.h"
 
@@ -50,16 +50,20 @@ public:
 
 	bool DodgdingLeft = false;
 	bool DodgingRight = false;
+	bool Shooting = false;
+
 	bool BackDodge = false;
 	bool IsAttacking = false;
 	class UAnimInstance* AnimInstance;
 
 	UPROPERTY(EditAnywhere, Category = Dodge)
 		float DodgeDistance;
+	UPROPERTY(EditAnywhere, Category = Dodge)
+		float BasicLaunch;
 
-
-	void  RightStrafe(float Value);
-	bool AnimDirectionRight = false;
+	void RightStrafe(float Value);
+	bool GoingLeft = false;
+	bool GoingRight = false;
 	//shooting mechanics
 	
 	UPROPERTY(EditDefaultsOnly)
@@ -68,7 +72,15 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<ABaseWeapon> Weapon;
 
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<AActor> RangedWeapon;
+
 	ABaseWeapon* MeleeWeapon;
+	AActor* RWeapon;
+
+	UPROPERTY(EditAnyWhere, Category = Stats)
+		uint32 Health;
 
 #pragma endregion Combat REGION
 
@@ -77,6 +89,10 @@ public:
 	void TurnOffCollider();
 
 	void KnockItBack();
+	UPROPERTY(EditAnywhere, Category = Projectile)
+	FVector MuzzleOffset;
+	float 	TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
 
-
+	void Launch();
+	void LaunchBasic();
 };

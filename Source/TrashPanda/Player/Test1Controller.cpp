@@ -37,26 +37,35 @@ void ATest1Controller::SetupInputComponent()
 	InputComponent->BindAction("DodgeLEFT", IE_DoubleClick, this, &ThisClass::DodgeLeft);
 	InputComponent->BindAction("DodgeRIGHT", IE_DoubleClick, this, &ThisClass::DodgeRight);
 	InputComponent->BindAction("DodgeBACK", IE_DoubleClick, this, &ThisClass::DodgeBack);
+
 }
 
 void ATest1Controller::MoveForward(float Value)
 {
-	APawn* const MyPawn = GetPawn();
-	if (MyPawn)
+
+	if (attacking == false)
 	{
-		const FRotator Rotation = MyPawn->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		MyPawn->AddMovementInput(Direction, Value);
-		if (attacking == false)
+
+
+		APawn* const MyPawn = GetPawn();
+		if (MyPawn)
 		{
-			Cast<AChip>(MyPawn)->IsW(Value);
-		}
-		else
-		{
-			Cast<AChip>(MyPawn)->IsW(Value*0.25);
+
+			const FRotator Rotation = MyPawn->GetControlRotation();
+			const FRotator YawRotation(0, Rotation.Yaw, 0);
+			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+			MyPawn->AddMovementInput(Direction, Value);
+			if (attacking == false)
+			{
+				Cast<AChip>(MyPawn)->IsW(Value);
+			}
+			if (attacking == true)
+			{
+				Cast<AChip>(MyPawn)->IsW(Value*0.1);
+			}
 		}
 	}
+
 }
 
 void ATest1Controller::MoveSides(float Value)
@@ -72,6 +81,8 @@ void ATest1Controller::MoveSides(float Value)
 			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 			// add movement in that direction
 			Cast<AChip>(MyPawn)->RightStrafe(Value);
+		
+
 			if (attacking == false)
 			{
 				MyPawn->AddMovementInput(Direction, Value);
@@ -114,8 +125,8 @@ void ATest1Controller::LightAttackPressed()
 {
 	APawn* const MyPawn = GetPawn();
 	//UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
-		Cast<AChip>(MyPawn)->LightAttack();
-		attacking = true;	
+	Cast<AChip>(MyPawn)->LightAttack();
+	attacking = true;
 }
 
 void ATest1Controller::LightAttackReleased()

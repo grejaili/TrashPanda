@@ -5,21 +5,21 @@ using System.Collections.Generic;
 
 public class TrashPandaEditorTarget : TargetRules
 {
-    public TrashPandaEditorTarget(TargetInfo Target)
-    {
-        Type = TargetType.Editor;
-    }
+	public TrashPandaEditorTarget(TargetInfo Target)
+	{
+		Type = TargetType.Editor;
+	}
 
-    //
-    // TargetRules interface.
-    //
+	//
+	// TargetRules interface.
+	//
 
-    public override void SetupBinaries(
-        TargetInfo Target,
-        ref List<UEBuildBinaryConfiguration> OutBuildBinaryConfigurations,
-        ref List<string> OutExtraModuleNames
-        )
-    {
-        OutExtraModuleNames.AddRange(new string[] { "TrashPanda" });
-    }
+	public override void SetupBinaries(
+		TargetInfo Target,
+		ref List<UEBuildBinaryConfiguration> OutBuildBinaryConfigurations,
+		ref List<string> OutExtraModuleNames
+		)
+	{
+		OutExtraModuleNames.AddRange( new string[] { "TrashPanda" } );
+	}
 }

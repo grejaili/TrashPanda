@@ -1,4 +1,5 @@
 #include "TrashPanda.h"
+//#include "Kismet/KismetSystemLibrary.h"
 #include "Enemy.h"
 #define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
@@ -35,9 +36,55 @@ void AEnemy::Tick(float DeltaTime)
 
 void AEnemy::Shoot(FVector Target)
 {
-// implement bullet here
 
-	UE_LOG(LogTemp, Warning, TEXT("IM Shooting"));
+	//FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), Target);
+	FVector PlayerPos = this->GetActorLocation();
+	UWorld* const World = GetWorld();
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+
+
+	if (GetGlobalCD())
+	{
+		//	print("Attack  Melle");
+
+
+
+		if (World)
+		{
+			if (ProjectileClass != NULL)
+			{
+				FActorSpawnParameters SpawnParams;
+				SpawnParams.Owner = this;
+				SpawnParams.Instigator = Instigator;
+
+				AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, YawRotation);
+				UE_LOG(LogTemp, Warning, TEXT("AI Shooting"));
+				
+				if (Projectile)
+				{
+					// find launch direction
+					//				FVector const Direction = MuzzleRotation.Vector();
+					Projectile->Direction(Direction);
+					Projectile->Speed = 1000;
+					Projectile->SetShooter("Enemy");
+
+				}
+			}
+
+		}
+
+
+
+
+	}
+
+
+
+
+
 }
 
 
@@ -57,7 +104,7 @@ bool AEnemy::GetGlobalCD()
 		bIsPossibletoAttack = false;
 	}
 
-	
+
 	return bIsPossibletoAttack;
 }
 
@@ -79,23 +126,6 @@ void AEnemy::SetGlobalCD(float CD)
 
 
 
-//Light attack here too
-void AEnemy::AttackMelle(UObject* CPlayer)
-{
-
-
-	if (GetGlobalCD())
-	{
-		//	print("Attack  Melle");
-
-		bIsAttacking = true;
-		
-		SetGlobalCD();
-	}
-
-
-
-}
 
 void AEnemy::AttackHeavy(UObject* CPlayer)
 {
@@ -122,3 +152,36 @@ float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, c
 
 	return ActualDamage;
 }
+/*
+ void AEnemy:: Shoot()
+{
+
+
+	FVector const MuzzleLocation = CameraLoc + Ftransform(CameraRot).TransformVector(MuzzleOffset);
+	FRotator MuzzleRotation = CameraRot;
+	MuzzleRotation.Pitch += 10.0f;
+	UWorld* const World = GetWorld();
+
+	if ( World )
+	{
+	if (ProjectileClass != NULL)
+	{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = Instigator;
+
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, FRotator::ZeroRotator);
+	if (Projectile)
+	{
+	// find launch direction
+	FVector const LaunchDir = MuzzleRotation.Vector();
+	Projectile->Speed = 1000 ;
+
+	}
+	}
+
+
+
+
+
+*/

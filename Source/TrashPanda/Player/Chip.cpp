@@ -64,12 +64,12 @@ void AChip::Tick(float DeltaTime)
 void AChip::CameraYAxisMovement(float Rate)
 {
 
-	AddControllerPitchInput(Rate*TurnRate  * GetWorld()->GetDeltaSeconds());
+//	AddControllerPitchInput(Rate* TurnRate  * GetWorld()->GetDeltaSeconds());
 }
 
 void AChip::CameraXAxisMovement(float Rate)
 {
-	AddControllerYawInput(Rate *TurnRate * GetWorld()->GetDeltaSeconds());
+	AddControllerYawInput(Rate * TurnRate * GetWorld()->GetDeltaSeconds());
 }
 
 
@@ -97,18 +97,59 @@ void AChip::TurnOffCollider()
 }
 
 
-void AChip::Shoot()
+void AChip::Launch()
 {
-	FVector PlayerPos = this->GetActorLocation();
-	//PlayerPos.X += 100;
-	//PlayerPos.Y+= 200;
-	PlayerPos.Z += 50;
-
-	AProjectile*  Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, FRotator::ZeroRotator);
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	Projectile->Direction(Direction);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * DodgeDistance, true, true);
+}
+
+void AChip::LaunchBasic()
+{
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	//this->AddMovementInput(Direction, );
+	this->LaunchCharacter(Direction * BasicLaunch, true, true);
+}
+
+
+void AChip::Shoot()
+{
+	Shooting = true;
+
+	
+	FVector PlayerPos = this->GetActorLocation();
+	UWorld* const World = GetWorld();
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+	if (World)
+	{
+		if (ProjectileClass != NULL)
+		{
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = Instigator;
+
+			AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, YawRotation);
+			if (Projectile)
+			{
+				// find launch direction
+//				FVector const Direction = MuzzleRotation.Vector();
+				Projectile->SetShooter("Player");
+				Projectile->Direction(Direction);
+				Projectile->Speed = 1000;
+
+			}
+		}
+
+	}
+
+
 }
 #pragma endregion Combat Region
 
@@ -122,18 +163,21 @@ void AChip::DodgeLeft()
 	//this->AddMovementInput(Direction, );
 	this->LaunchCharacter(Direction * -DodgeDistance, true, true);
 
-
 }
 
 void AChip::DodgeRight()
 {
 
-	bool DodgingRight = true;
+	DodgingRight = true;
+
 	//PlayerSphere->AddForce(FVector(100, 0, 0));
+
+
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	//this->AddMovementInput(Direction, );
+	print("dodge right");
 	this->LaunchCharacter(Direction * DodgeDistance, true, true);
 }
 
@@ -152,16 +196,27 @@ void AChip::DodgeBack()
 
 void  AChip::RightStrafe(float Value)
 {
-	if (Value == 0)
+	if (Value > 0)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Left Strafe"));
-		AnimDirectionRight = false;
+		GoingRight = true;
+		GoingLeft = false;
+
 	}
-	else
+	else if (Value < 0)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Right Strafe"));
-		AnimDirectionRight = true;
+		GoingLeft = true;
+		GoingRight = false;
 	}
+
+	else
+	{
+		GoingLeft = true;
+		GoingRight = false;
+	}
+	
+	
 }
 
 void AChip::IsW(float Value)
@@ -194,9 +249,24 @@ void AChip::PostInitializeComponents()
 			//MeleeWeapon->WeaponHolder = this;
 			const USkeletalMeshSocket *socket = GetMesh()->GetSocketByName("hand_rSocket");
 			socket->AttachActor(MeleeWeapon, GetMesh());  // <-- attempt to put a sword in the right hand
+			MeleeWeapon->Bora = Cast<APawn>(this);
 		}
 
 	}
+
+	if (RangedWeapon)
+	{
+		RWeapon = GetWorld()->SpawnActor<AActor>(RangedWeapon, FVector(0), FRotator(0));
+		if (RWeapon)
+		{
+			//MeleeWeapon->WeaponHolder = this;
+			const USkeletalMeshSocket *socket = GetMesh()->GetSocketByName("lowerarm_lSocket");
+			socket->AttachActor(RWeapon, GetMesh());  // <-- attempt to put a sword in the right hand
+		}
+
+	}
+
+	//lowerarm_lSocket
 }
 
 void AChip::KnockItBack
@@ -204,4 +274,23 @@ void AChip::KnockItBack
 {
 	MeleeWeapon->KnockIt = true;
 
+}
+
+float AChip::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser)
+{
+	// Call the base class - this will tell us how much damage to apply  
+	const float ActualDamage = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+	if (ActualDamage > 0.f)
+	{
+		Health -= ActualDamage;
+		// If the damage depletes our health set our lifespan to zero - which will destroy the actor  
+		if (Health <= 0.f)
+		{
+			//SetLifeSpan(0.001f);
+			UE_LOG(LogTemp, Warning, TEXT("I died"));
+
+		}
+	}
+
+	return ActualDamage;
 }

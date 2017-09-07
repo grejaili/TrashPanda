@@ -1,7 +1,9 @@
 // All Rights Reserved for Students Graduating TFS Summer 2017
 
 #include "TrashPanda.h"
+#include "Player/Chip.h"
 #include "EnemyAIController.h"
+#include "Enemy.h"
 #include "BTService_AIAttack.h"
 
 
@@ -17,14 +19,8 @@ void UBTService_AIAttack::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 
 	AEnemyAIController*  controller = Cast<AEnemyAIController>(OwnerComp.GetAIOwner());
 	
-//	AChip* OwningCharacter = Cast<AChip>(OwnerComp.GetAIOwner()->GetPawn());
+	AChip* Player = Cast<AChip>(OwnerComp.GetAIOwner()->GetPawn());
 
 
-
-
-
-
-		// set the calculation to distance here
-
-
+	controller->RangedAttack();
 }

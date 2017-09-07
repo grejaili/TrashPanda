@@ -5,6 +5,7 @@
 #include "ChipAnimInstance.h"
 
 
+#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
 
 void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -15,12 +16,23 @@ void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (OwningPawn)
 	{
 		Speed = OwningPawn->GetVelocity().Size();
-		Direction = OwningPawn->AnimDirectionRight;
+		
+		Left = OwningPawn->GoingLeft;
+		Right = OwningPawn->GoingRight;
+
+
+	
+
 		ClickingW = OwningPawn->movingFront;
-		IsDodgdingLeft = OwningPawn->DodgingRight;
-		IsDodgdingRight = OwningPawn->DodgdingLeft;
-		IsBackDodgding = OwningPawn->DodgingRight;
+		IsDodgdingLeft = OwningPawn->DodgdingLeft ;
+		IsDodgdingRight = OwningPawn->DodgingRight;
+		DodgeRight = OwningPawn->DodgingRight;
+		IsShooting = OwningPawn->Shooting;
+
+		IsBackDodgding = OwningPawn->BackDodge;
 		IsAttacking = OwningPawn->IsAttacking;
+
+
 
 		if (IsAttacking == false)
 		{
@@ -43,7 +55,7 @@ void UChipAnimInstance::AnimNotify_AttackFinish()
 
 
 
-		if (Combo == 4)
+		if (Combo == 3)
 		{
 			Combo = 0;
 			
@@ -89,3 +101,29 @@ void UChipAnimInstance::AnimNotify_BackDodged_OFF()
 }
 
 
+void UChipAnimInstance::AnimNotify_ShootingOver()
+{
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		OwningPawn->Shooting = false;
+	}
+}
+
+void UChipAnimInstance::AnimNotify_Launch()
+{
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		OwningPawn->Launch();
+	}
+}
+
+void UChipAnimInstance::AnimNotify_LaunchBasicAttack()
+{
+	AChip* OwningPawn = Cast<AChip>(TryGetPawnOwner());
+	if (OwningPawn)
+	{
+		OwningPawn->LaunchBasic();
+	}
+}

@@ -3,6 +3,7 @@
 #include "TrashPanda.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "EnemyAIController.h"
+#include "Player/Chip.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyAllTypes.h"
@@ -60,53 +61,56 @@ void AEnemyAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	//I have to change this but IDK how to make it better
-
+	RandomMove();
 	//NON COMBAS
 	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == false)
 	{
 		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
 	}
-	RandomMove();
 
-	UE_LOG(LogTemp, Warning, TEXT("Your COMPILING WHY IS CRASHING THE ENGINE"));
 
+	if (Att == true)
+	{
+
+		FVector FocalPoint = GetFocalPoint();
+		if (!FocalPoint.IsZero() && GetPawn())
+		{
+			FVector Direction = FocalPoint - GetPawn()->GetActorLocation();
+			FRotator NewControlRotation = Direction.Rotation();
+		//	SetFocalPoint()
+			NewControlRotation.Yaw = FRotator::ClampAxis(NewControlRotation.Yaw);
+
+			SetControlRotation(NewControlRotation);
+
+			APawn* const P = GetPawn();
+			if (P)
+			{
+				P->FaceRotation(NewControlRotation, DeltaTime);
+			}
+
+		}
+	}
 }
 
-void AEnemyAIController::AttackCommand()
+void AEnemyAIController::RangedAttack()
 {
-	// COMBAT BEHAVIORS
-
-
-	if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
-	{
-		Pawn->AttackMelle(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
-	}
+		
+		if (GetBrainComponent()->GetBlackboardComponent()->GetValue<UBlackboardKeyType_Bool>(TEXT("InCombat")) == true)
+		{
+			Pawn->Shoot(this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsVector(TEXT("PlayerPos")));
+		}
+		
 }
 
 void AEnemyAIController::RandomMove()
 {
-
-
-	float x = Pawn->GetActorLocation().X;
-	float y = Pawn->GetActorLocation().Y;
-
-
+	FVector Position = Pawn->GetActorLocation();
 	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == false)
 	{
 
-
-		Goal.X = x + FMath::RandRange(-10000, 10000);
-		Goal.Y = y + FMath::RandRange(-10000, 10000);
-		Goal.Z = 0 + FMath::RandRange(-10000, 10000);
+		Goal.X = Position.X + FMath::RandRange(-200, 200);
+		Goal.Y = Position.Y + FMath::RandRange(-200, 200);
+		Goal.Z = Position.Z + FMath::RandRange(-200, 200);
 		this->GetBrainComponent()->GetBlackboardComponent()->SetValueAsVector(TEXT("Goal"), Goal);
 	}
-
-
-
-
-	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == true)
-	{
-
-	}
-
 }

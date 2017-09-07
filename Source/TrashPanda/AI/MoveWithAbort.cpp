@@ -21,7 +21,7 @@ EBTNodeResult::Type UMoveWithAbort::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	AEnemy* Self = Cast <AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
 
 
-	Self->Shoot(Player->GetActorLocation());
+	//Self->Shoot(Player->GetActorLocation());
 
 	OwnerComp.GetAIOwner()->MoveToActor(Player, 500);
 

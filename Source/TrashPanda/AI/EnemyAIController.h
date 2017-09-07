@@ -4,6 +4,7 @@
 
 #include "AIController.h"
 #include "Enemy.h"
+#include "Player/Chip.h"
 #include "EnemyAIController.generated.h"
 
 /**
@@ -23,7 +24,7 @@ public:
 	
 	
 	// ATTACK FUNCTIONS----------
-	void AttackCommand();
+	void RangedAttack();
 
 
 
@@ -33,7 +34,7 @@ public:
 	static ETeamAttitude::Type GetAttitudeTowards(FGenericTeamId TeamA, FGenericTeamId TeamB);
 
 	FVector Goal;
-
+	bool Att = false;
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
@@ -43,7 +44,7 @@ protected:
 
 	virtual ETeamAttitude::Type GetAttitudeTowardsPlayer(const AActor& Other) const;
 	AEnemy* Pawn;
-
+	
 	UPROPERTY(VisibleAnywhere)
 	FVector NextLocation;
 

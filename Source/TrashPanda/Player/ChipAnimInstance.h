@@ -29,6 +29,16 @@ protected:
 		bool  IsDodgdingLeft;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool  IsDodgdingRight;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  DodgeRight;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  IsShooting;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  Left;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool  Right;
+
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -50,4 +60,10 @@ protected:
 		void AnimNotify_BackDodged_OFF();
 	UFUNCTION()
 		void	AnimNotify_ComboFinish();
+	UFUNCTION()
+		void	AnimNotify_ShootingOver();
+	UFUNCTION()
+		void  AnimNotify_Launch();
+	UFUNCTION()
+		void  AnimNotify_LaunchBasicAttack();
 };
