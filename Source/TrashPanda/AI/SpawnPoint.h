@@ -4,6 +4,7 @@
 
 #include "GameFramework/Actor.h"
 #include "Enemy.h"
+#include "EnemyAIController.h"
 #include "SpawnPoint.generated.h"
 
 UCLASS()
@@ -32,6 +33,11 @@ void SetGlobalCD();
 
 
  UPROPERTY(EditDefaultsOnly, Category = SpawnParams)
-	 TSubclassOf<AEnemy> Enemy;
+	 TSubclassOf<AEnemy> EnemyClass;
+
+ UPROPERTY(EditDefaultsOnly, Category = SpawnParams)
+	 TSubclassOf<AEnemyAIController> AIController;
+
+ void SpawnEnemy();
 
 };

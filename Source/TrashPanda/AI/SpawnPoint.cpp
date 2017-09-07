@@ -16,15 +16,17 @@ ASpawnPoint::ASpawnPoint()
 void ASpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	SetGlobalCD();
 }
 
 // Called every frame
 void ASpawnPoint::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+
 	if (GetGlobalCD() == true)
 	{
+		SpawnEnemy();
 		SetGlobalCD();
 		UE_LOG(LogTemp, Warning, TEXT("SPAWN LITTLE BITCH"));
 	}
@@ -52,4 +54,17 @@ void ASpawnPoint::SetGlobalCD()
 {
 	GetWorld()->GetTimerManager().ClearTimer(RespawnTimeHandler);
 	GetWorld()->GetTimerManager().SetTimer(RespawnTimeHandler, BaseGlobalCD, false);
+}
+
+
+void ASpawnPoint::SpawnEnemy()
+{
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = Instigator;
+
+	AEnemy* Enemy = GetWorld()-> SpawnActor<AEnemy>(EnemyClass, this->GetActorLocation(), this->GetActorRotation());
+
+   
 }

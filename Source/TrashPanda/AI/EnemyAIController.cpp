@@ -13,6 +13,7 @@
 
 void AEnemyAIController::Possess(APawn* InPawn)
 {
+
 	Super::Possess(InPawn);
 
 	if (BehaviorTreeAsset)
@@ -21,7 +22,7 @@ void AEnemyAIController::Possess(APawn* InPawn)
 	}
 
 	Pawn = Cast<AEnemy>(InPawn);
-	RandomMove();
+
 }
 
 
@@ -68,7 +69,7 @@ void AEnemyAIController::Tick(float DeltaTime)
 		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
 	}
 
-
+	RandomMove();
 	if (Att == true)
 	{
 
@@ -104,6 +105,7 @@ void AEnemyAIController::RangedAttack()
 
 void AEnemyAIController::RandomMove()
 {
+
 	FVector Position = Pawn->GetActorLocation();
 	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == false)
 	{

@@ -23,10 +23,14 @@ void UBTService_DistanceCheck::TickNode(UBehaviorTreeComponent& OwnerComp, uint8
 
 
 	AChip* Target = Cast<AChip>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(TEXT("Player")));
-	float aux = CheckDistance(Target->GetActorLocation(), Pawn->GetActorLocation());
+	if (Target)
+	{
+		float aux = CheckDistance(Target->GetActorLocation(), Pawn->GetActorLocation());
 
-	OwnerComp.GetBlackboardComponent()->SetValueAsFloat (TEXT("AttackDistance"),aux );
+		OwnerComp.GetBlackboardComponent()->SetValueAsFloat(TEXT("AttackDistance"), aux);
 
+	}
+	
 
 }
 
