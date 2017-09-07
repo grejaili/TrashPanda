@@ -68,29 +68,6 @@ void AEnemyAIController::Tick(float DeltaTime)
 	{
 		GetBrainComponent()->GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>(TEXT("RandomPos"), NextLocation);
 	}
-
-	RandomMove();
-	if (Att == true)
-	{
-
-		FVector FocalPoint = GetFocalPoint();
-		if (!FocalPoint.IsZero() && GetPawn())
-		{
-			FVector Direction = FocalPoint - GetPawn()->GetActorLocation();
-			FRotator NewControlRotation = Direction.Rotation();
-		//	SetFocalPoint()
-			NewControlRotation.Yaw = FRotator::ClampAxis(NewControlRotation.Yaw);
-
-			SetControlRotation(NewControlRotation);
-
-			APawn* const P = GetPawn();
-			if (P)
-			{
-				P->FaceRotation(NewControlRotation, DeltaTime);
-			}
-
-		}
-	}
 }
 
 void AEnemyAIController::RangedAttack()
@@ -110,9 +87,9 @@ void AEnemyAIController::RandomMove()
 	if (this->GetBrainComponent()->GetBlackboardComponent()->GetValueAsBool(TEXT("InCombat")) == false)
 	{
 
-		Goal.X = Position.X + FMath::RandRange(-200, 200);
-		Goal.Y = Position.Y + FMath::RandRange(-200, 200);
-		Goal.Z = Position.Z + FMath::RandRange(-200, 200);
+		Goal.X = Position.X + FMath::RandRange(-2000, 2000);
+		Goal.Y = Position.Y + FMath::RandRange(-2000, 2000);
+		Goal.Z = Position.Z + FMath::RandRange(-2000, 2000);
 		this->GetBrainComponent()->GetBlackboardComponent()->SetValueAsVector(TEXT("Goal"), Goal);
 	}
 }

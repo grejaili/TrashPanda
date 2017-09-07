@@ -19,25 +19,22 @@ EBTNodeResult::Type UBTTask_FindPlayer::ExecuteTask(UBehaviorTreeComponent& Owne
 {
 	UBehaviorTreeComponent* BehaviorTree = &OwnerComp;
 
-	AChip* OwningCharacter = Cast<AChip>(OwnerComp.GetAIOwner()->GetPawn());
 	UAIPerceptionComponent* Perception = OwnerComp.GetAIOwner()->GetPerceptionComponent();
-	AActor* FoundTarget = FindTarget(Perception, OwningCharacter, OwnerComp);
+	AChip* FoundTarget; //= FindTarget(Perception, OwningCharacter, OwnerComp);
 
-
-	OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Object>(TEXT("Target"), FoundTarget);
-
-	if (FoundTarget != NULL)
+	for (TObjectIterator<AChip> Itr; Itr; ++Itr)
 	{
-		OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Bool>(TEXT("InCombat"), true);
-		OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerPos"), FoundTarget->GetActorLocation());
-
-
+		// Access the subclass instance with the * or -> operators.
+		AChip *Component = *Itr;
+		FoundTarget = Component;
+		OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Bool>(TEXT("InCombat"), true);	
 		OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Player"), FoundTarget);
 		AEnemyAIController* Controller = Cast <AEnemyAIController>(OwnerComp.GetAIOwner());
 		Controller->Att = true;
-		Controller->SetFocalPoint(FoundTarget->GetActorLocation());
-		AbortTask(OwnerComp, NodeMemory);
+		Controller->SetFocus(FoundTarget);
 	}
+
+	AbortTask(OwnerComp, NodeMemory);
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }
 
