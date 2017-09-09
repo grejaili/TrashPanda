@@ -52,6 +52,7 @@ protected:
 
 	void LightAttackPressed();
 	void ShootPressed();
+	void ShootRelesead();
 #pragma endregion Combat Functions -----------------------------------------------------
 	void DodgeLeft();
 
@@ -60,6 +61,6 @@ protected:
 	void LightAttackReleased();
 
 	bool attacking = false;
-
+	bool shooting = false;
 
 };

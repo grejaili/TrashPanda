@@ -35,10 +35,18 @@ public:
 		class UStaticMeshComponent* StaticMesh;
 
 
+	void AddScore();
+
 	FTimerHandle TimeHandler;
 	void SetGlobalCD();
 	bool GetGlobalCD();
+	
+	bool AddPoints = false;
 
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+
+	UFUNCTION()
+		void OnOverlapEnds(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 };

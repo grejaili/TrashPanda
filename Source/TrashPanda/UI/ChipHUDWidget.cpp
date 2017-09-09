@@ -14,8 +14,8 @@ float UChipHUDWidget::GetPlayerHealth() const
 {
 	if (AChip* OwningCharacter = Cast<AChip>(GetOwningPlayerPawn()))
 	{
-//	return OwningCharacter->GetHealthAsPercentage();
-		return 0.0;
+		return OwningCharacter->Health;
+		//return 0.0;
 	}
 	else
 	{

@@ -33,6 +33,8 @@ void ATest1Controller::SetupInputComponent()
 	InputComponent->BindAction("Attack_Light", IE_Repeat, this, &ThisClass::LightAttackPressed);
 	InputComponent->BindAction("Attack_Light", IE_Released, this, &ThisClass::LightAttackReleased);
 	InputComponent->BindAction("Attack_Shoot", IE_Pressed, this, &ThisClass::ShootPressed);
+	InputComponent->BindAction("Attack_Shoot", IE_Released, this, &ThisClass::ShootRelesead);
+
 #pragma endregion Combat REGION
 	InputComponent->BindAction("DodgeLEFT", IE_DoubleClick, this, &ThisClass::DodgeLeft);
 	InputComponent->BindAction("DodgeRIGHT", IE_DoubleClick, this, &ThisClass::DodgeRight);
@@ -43,27 +45,30 @@ void ATest1Controller::SetupInputComponent()
 void ATest1Controller::MoveForward(float Value)
 {
 
-	if (attacking == false)
+	if ((attacking == false))
 	{
 
-
-		APawn* const MyPawn = GetPawn();
-		if (MyPawn)
+		if (shooting == false)
 		{
+			APawn* const MyPawn = GetPawn();
+			if (MyPawn)
+			{
 
-			const FRotator Rotation = MyPawn->GetControlRotation();
-			const FRotator YawRotation(0, Rotation.Yaw, 0);
-			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-			MyPawn->AddMovementInput(Direction, Value);
-			if (attacking == false)
-			{
-				Cast<AChip>(MyPawn)->IsW(Value);
-			}
-			if (attacking == true)
-			{
-				Cast<AChip>(MyPawn)->IsW(Value*0.1);
+				const FRotator Rotation = MyPawn->GetControlRotation();
+				const FRotator YawRotation(0, Rotation.Yaw, 0);
+				const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+				MyPawn->AddMovementInput(Direction, Value);
+				if (attacking == false)
+				{
+					Cast<AChip>(MyPawn)->IsW(Value);
+				}
+				if (attacking == true)
+				{
+					Cast<AChip>(MyPawn)->IsW(Value*0.1);
+				}
 			}
 		}
+
 	}
 
 }
@@ -72,25 +77,30 @@ void ATest1Controller::MoveSides(float Value)
 {
 	if (attacking == false)
 	{
-		APawn* const MyPawn = GetPawn();
-		if (MyPawn)
+		if (shooting == false)
 		{
-			const FRotator Rotation = MyPawn->GetControlRotation();
-			const FRotator YawRotation(0, Rotation.Yaw, 0);
-			// get right vector 
-			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-			// add movement in that direction
-			Cast<AChip>(MyPawn)->RightStrafe(Value);
-		
+			APawn* const MyPawn = GetPawn();
+			if (MyPawn)
+			{
+				const FRotator Rotation = MyPawn->GetControlRotation();
+				const FRotator YawRotation(0, Rotation.Yaw, 0);
+				// get right vector 
+				const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+				// add movement in that direction
+				Cast<AChip>(MyPawn)->RightStrafe(Value);
 
-			if (attacking == false)
-			{
-				MyPawn->AddMovementInput(Direction, Value);
+
+				if ((attacking == false) || (shooting == false))
+				{
+					MyPawn->AddMovementInput(Direction, Value);
+				}
+				else
+				{
+					MyPawn->AddMovementInput(Direction, Value*0.25);
+				}
 			}
-			else
-			{
-				MyPawn->AddMovementInput(Direction, Value*0.25);
-			}
+
+
 		}
 	}
 }
@@ -123,24 +133,37 @@ void ATest1Controller::CameraXControll(float Rate)
 
 void ATest1Controller::LightAttackPressed()
 {
-	APawn* const MyPawn = GetPawn();
-	//UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
-	Cast<AChip>(MyPawn)->LightAttack();
-	attacking = true;
+	if (shooting == false)
+	{
+		APawn* const MyPawn = GetPawn();
+		//UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
+		Cast<AChip>(MyPawn)->LightAttack();
+		attacking = true;
+	}
+
 }
 
 void ATest1Controller::LightAttackReleased()
 {
-	APawn* const MyPawn = GetPawn();
-	UE_LOG(LogTemp, Warning, TEXT("STOP now "));
-	Cast<AChip>(MyPawn)->IsAttacking = false;
-	attacking = false;
+	if (shooting == false)
+	{
+		APawn* const MyPawn = GetPawn();
+		UE_LOG(LogTemp, Warning, TEXT("STOP now "));
+		Cast<AChip>(MyPawn)->IsAttacking = false;
+		attacking = false;
+	}
+
 }
 
 void ATest1Controller::ShootPressed()
 {
-	APawn* const MyPawn = GetPawn();
-	Cast<AChip>(MyPawn)->Shoot();
+	if (attacking == false)
+	{
+		shooting = true;
+		APawn* const MyPawn = GetPawn();
+		Cast<AChip>(MyPawn)->Shoot();
+	}
+
 }
 
 void ATest1Controller::DodgeLeft()
@@ -159,4 +182,9 @@ void ATest1Controller::DodgeBack()
 {
 	APawn* const MyPawn = GetPawn();
 	Cast<AChip>(MyPawn)->DodgeBack();
+}
+
+void ATest1Controller::ShootRelesead() 
+{
+	shooting = false;
 }
