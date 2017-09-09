@@ -1,9 +1,5 @@
 #include "TrashPanda.h"
-#include "Items/BaseItem.h"
-#include "Player/InventoryComponent.h"
-#include "Items/IMaterial.h"
-#include "Player/InventoryWidget.h"
-#include "Items/IConsumable.h"
+
 #include "Player/ChipAnimInstance.h"
 #include "UI/CharacterWidgetSwitcher.h"
 #include "Player/Chip.h"
