@@ -24,13 +24,13 @@ void ASpawnPoint::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+	/*
 	if (GetGlobalCD() == true)
 	{
 		SpawnEnemy();
 		SetGlobalCD();
-		UE_LOG(LogTemp, Warning, TEXT("SPAWN LITTLE BITCH"));
 	}
-
+	*/
 }
 
 
