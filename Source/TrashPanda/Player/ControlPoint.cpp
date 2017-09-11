@@ -1,6 +1,7 @@
 // All Rights Reserved for Students Graduating TFS Summer 2017
 
 #include "TrashPanda.h"
+#include "AI/Enemy.h"
 #include "ControlPoint.h"
 
 
@@ -27,6 +28,23 @@ AControlPoint::AControlPoint()
 void AControlPoint::BeginPlay()
 {
 	Super::BeginPlay();
+	SetGlobalCD();
+	for (TObjectIterator<ASpawnPoint> Itr; Itr; ++Itr)
+	{
+
+		ASpawnPoint *Component = *Itr;
+		SpawnPoint = Component->GetActorLocation();
+
+	}
+
+	for (TObjectIterator<ASpawnPoint2> Itr; Itr; ++Itr)
+	{
+
+		ASpawnPoint2 *Component = *Itr;
+		SpawnPoint2 = Component->GetActorLocation();
+
+	}
+
 
 }
 
@@ -34,17 +52,16 @@ void AControlPoint::BeginPlay()
 void AControlPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if ((GetGlobalCD()) && (AddPoints == true))
+	if (GetGlobalCD())
 	{
-		AddScore();
-		SetGlobalCD();
+		//AddScore();
 	}
 
 }
 
 bool AControlPoint::GetGlobalCD()
 {
-	if (GetWorld()->GetTimerManager().GetTimerRemaining(TimeHandler) <= 0)
+	if (GetWorld()->GetTimerManager().GetTimerRemaining(TimeHandler) <= 1)
 	{
 		return true;
 	}
@@ -58,30 +75,29 @@ bool AControlPoint::GetGlobalCD()
 void AControlPoint::SetGlobalCD()
 {
 	GetWorld()->GetTimerManager().ClearTimer(TimeHandler);
-	GetWorld()->GetTimerManager().SetTimer(TimeHandler, 1, false);
+	GetWorld()->GetTimerManager().SetTimer(TimeHandler, 3, false);
 }
 
 void AControlPoint::AddScore()
 {
-	Score += 1;
+	GetWorld()->SpawnActor<AEnemy>(EnemyClass, SpawnPoint, this->GetActorRotation());
+
 
 }
 
 
 void AControlPoint::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-
 	if (OtherActor->ActorHasTag("Player"))
 	{
-		SetGlobalCD();
-		AddPoints = true;
-		// spawna a wave de inimigos 
+		WaveMechanics(Cast<AChip>(OtherActor)->WaveNumber);
+		Cast<AChip>(OtherActor)->WaveNumber++;
 	}
 
 }
 
 
-void  AControlPoint::OnOverlapEnds(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) 
+void  AControlPoint::OnOverlapEnds(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 
 
@@ -89,3 +105,36 @@ void  AControlPoint::OnOverlapEnds(class AActor* OtherActor, class UPrimitiveCom
 }
 
 
+void AControlPoint::WaveMechanics(int aux)
+{
+
+	if (PlayerPassed == false)
+	{
+		if (aux >= 1)
+		{
+			PlayerPassed = true;
+			SetGlobalCD();
+			GetWorld()->SpawnActor<AEnemy>(EnemyClass, SpawnPoint2, this->GetActorRotation());
+
+		}
+
+		if (aux == 0)
+		{
+			int32 aux = 0;
+			while (aux < 20)
+			{
+				aux++;
+				PlayerPassed = true;
+				SpawnPoint.X = SpawnPoint.X + FMath::RandRange(-350, 350);
+				SpawnPoint.Z = SpawnPoint.Z + FMath::RandRange(-350, 350);
+				SpawnPoint.Y = SpawnPoint.Y + FMath::RandRange(-350, 350);
+
+				AEnemy* enemy = GetWorld()->SpawnActor<AEnemy>(EnemyClass, SpawnPoint, this->GetActorRotation());
+
+			}
+
+		}
+	}
+
+
+}

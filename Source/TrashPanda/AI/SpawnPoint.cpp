@@ -16,7 +16,7 @@ ASpawnPoint::ASpawnPoint()
 void ASpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
-	SetGlobalCD();
+	//SetGlobalCD();
 }
 
 // Called every frame
@@ -24,20 +24,15 @@ void ASpawnPoint::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	/*
-	if (GetGlobalCD() == true)
-	{
-		SpawnEnemy();
-		SetGlobalCD();
-	}
-	*/
+
+	
 }
 
 
 bool ASpawnPoint::GetGlobalCD()
 {
 	
-	if (GetWorld()->GetTimerManager().GetTimerRemaining(RespawnTimeHandler) <= 0)
+if (GetWorld()->GetTimerManager().GetTimerRemaining(RespawnTimeHandler) <= 0)
 	{
 		return true;
 	}
@@ -52,19 +47,13 @@ bool ASpawnPoint::GetGlobalCD()
 
 void ASpawnPoint::SetGlobalCD()
 {
-	GetWorld()->GetTimerManager().ClearTimer(RespawnTimeHandler);
-	GetWorld()->GetTimerManager().SetTimer(RespawnTimeHandler, BaseGlobalCD, false);
+
 }
 
 
 void ASpawnPoint::SpawnEnemy()
 {
 
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.Owner = this;
-	SpawnParams.Instigator = Instigator;
-
-	AEnemy* Enemy = GetWorld()-> SpawnActor<AEnemy>(EnemyClass, this->GetActorLocation(), this->GetActorRotation());
 
    
 }

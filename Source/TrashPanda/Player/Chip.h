@@ -95,4 +95,6 @@ public:
 
 	void Launch();
 	void LaunchBasic();
+
+	int WaveNumber =0;
 };

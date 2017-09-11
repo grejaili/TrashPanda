@@ -22,6 +22,7 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
+protected:
 void SetGlobalCD();
  bool GetGlobalCD();
  FTimerHandle RespawnTimeHandler;
@@ -31,12 +32,13 @@ void SetGlobalCD();
 
 
 
-
  UPROPERTY(EditDefaultsOnly, Category = SpawnParams)
 	 TSubclassOf<AEnemy> EnemyClass;
 
  UPROPERTY(EditDefaultsOnly, Category = SpawnParams)
 	 TSubclassOf<AEnemyAIController> AIController;
+
+public :
 
  void SpawnEnemy();
 

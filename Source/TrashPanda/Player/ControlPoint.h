@@ -4,6 +4,9 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "AI/SpawnPoint.h"
+#include "AI/SpawnPoint2.h"
+
 #include "ControlPoint.generated.h"
 
 UCLASS()
@@ -43,8 +46,31 @@ public:
 	
 	bool AddPoints = false;
 
+	TArray<ASpawnPoint*> Points;
+
+
+	void WaveMechanics(int aux);
+	int wavecounter;
+
+	bool  PlayerPassed = false;
+
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+
+	UPROPERTY(EditDefaultsOnly, Category = SpawnParams)
+		TSubclassOf<AEnemy> EnemyClass;
+
+
+
+		FVector  SpawnPoint;
+		FVector  SpawnPoint2;
+		FVector  SpawnPoint3;
+
+
+	//	void Spawner1();
+		//void Spawner2();
+
 
 
 	UFUNCTION()
