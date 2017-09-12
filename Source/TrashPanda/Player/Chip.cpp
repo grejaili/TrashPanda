@@ -33,8 +33,7 @@ AChip::AChip()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-t
-
+	
 
 
 }
@@ -71,7 +70,7 @@ void AChip::CameraXAxisMovement(float Rate)
 //		ATTACKKKKKKKKKKK------------------------------
 void AChip::LightAttack()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, "Attack");
+
 	MeleeWeapon->SetCollision(true);
 	IsAttacking = true;
 
