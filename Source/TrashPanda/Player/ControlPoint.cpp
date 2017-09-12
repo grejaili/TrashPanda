@@ -113,8 +113,19 @@ void AControlPoint::WaveMechanics(int aux)
 		if (aux >= 1)
 		{
 			PlayerPassed = true;
-			SetGlobalCD();
-			GetWorld()->SpawnActor<AEnemy>(EnemyClass, SpawnPoint2, this->GetActorRotation());
+			int32 aux = 0;
+			while (aux < 30)
+			{
+				aux++;
+				PlayerPassed = true;
+				SpawnPoint.X = SpawnPoint.X + FMath::RandRange(-350, 350);
+				SpawnPoint.Z = SpawnPoint.Z + FMath::RandRange(-350, 350);
+				SpawnPoint.Y = SpawnPoint.Y + FMath::RandRange(-350, 350);
+
+				AEnemy* enemy = GetWorld()->SpawnActor<AEnemy>(EnemyClass, SpawnPoint, this->GetActorRotation());
+
+			}
+
 
 		}
 

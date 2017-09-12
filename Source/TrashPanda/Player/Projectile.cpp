@@ -22,16 +22,16 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 
 	ProjectileMovement = ObjectInitializer.CreateDefaultSubobject<UProjectileMovementComponent>(this, TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
-	
 
-	
-	
+
+
+
 
 
 	StaticMesh->BodyInstance.SetCollisionProfileName("Projectile");
 
 	StaticMesh->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
-	
+
 	StaticMesh->SetEnableGravity(false);
 
 
@@ -42,7 +42,7 @@ AProjectile::AProjectile(const class FObjectInitializer& ObjectInitializer) :Sup
 	ProjectileMovement->InitialSpeed = 4000.f;
 
 	ProjectileMovement->MaxSpeed = 4000.f;
-	
+
 	ProjectileMovement->bRotationFollowsVelocity = true;
 
 	ProjectileMovement->bShouldBounce = false;
@@ -77,8 +77,12 @@ void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//UE_LOG(LogTemp, Display, TEXT("WE ARE moving"));
-	ProjectileMovement->Velocity = direcao * 1000.f;
+	if (Shooter == "Player")
+		ProjectileMovement->Velocity = direcao * 1000.f;
 
+
+	if (Shooter == "Enemy")
+		ProjectileMovement->Velocity = direcao * 1.f;
 }
 
 void AProjectile::Direction(const FVector& ShootDirection)
@@ -92,20 +96,20 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	{
 
 
-	
+
 		UE_LOG(LogTemp, Display, TEXT("Enemy shooter"));
 		APlayerController* PlayerController = NULL;
 		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
 		FDamageEvent DamageEvent(ValidDamageTypeClass);
 		const float DamageAmount = 5.0f;
-	
+
 		if (Shooter == "Player")
 		{
 			OtherActor->TakeDamage(DamageAmount, DamageEvent, PlayerController, this);
-			
+
 			this->Destroy();
 		}
-		
+
 	}
 
 	if (OtherActor->ActorHasTag("Player"))
