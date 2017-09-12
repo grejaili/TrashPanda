@@ -1,7 +1,6 @@
 #include "TrashPanda.h"
 //#include "Kismet/KismetSystemLibrary.h"
 #include "Enemy.h"
-#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
 
 // Sets default values
@@ -48,8 +47,6 @@ void AEnemy::Shoot(FVector Target)
 
 	if (GetGlobalCD())
 	{
-		//	print("Attack  Melle");
-
 
 
 		if (World)
@@ -61,7 +58,7 @@ void AEnemy::Shoot(FVector Target)
 				SpawnParams.Instigator = Instigator;
 
 				AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, PlayerPos, YawRotation);
-				UE_LOG(LogTemp, Warning, TEXT("AI Shooting"));
+			//	UE_LOG(LogTemp, Warning, TEXT("AI Shooting"));
 				
 				if (Projectile)
 				{
@@ -146,7 +143,8 @@ float AEnemy::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, c
 		// If the damage depletes our health set our lifespan to zero - which will destroy the actor  
 		if (Health <= 0.f)
 		{
-			SetLifeSpan(0.001f);
+			
+			SetLifeSpan(0.0001f);
 		}
 	}
 

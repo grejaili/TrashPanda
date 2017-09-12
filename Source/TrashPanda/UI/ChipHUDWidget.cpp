@@ -12,15 +12,14 @@ void UChipHUDWidget::NativeConstruct()
 
 float UChipHUDWidget::GetPlayerHealth() const
 {
-	if (AChip* OwningCharacter = Cast<AChip>(GetOwningPlayerPawn()))
-	{
-		return OwningCharacter->Health;
-		//return 0.0;
-	}
-	else
-	{
-		return 0.0f;
-	}
+		AChip* OwningCharacter = Cast<AChip>(GetOwningPlayerPawn());
+
+		float  porc = (OwningCharacter->Health) * 0.01f; 
+		
+		return porc;
+	
+	
+
 }
 
 float UChipHUDWidget::GetPlayerFury() const

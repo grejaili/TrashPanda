@@ -5,8 +5,6 @@
 #include "ChipAnimInstance.h"
 
 
-#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
-
 
 void UChipAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {

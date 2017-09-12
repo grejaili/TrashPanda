@@ -113,28 +113,28 @@ void AControlPoint::WaveMechanics(int aux)
 		if (aux >= 1)
 		{
 			PlayerPassed = true;
-			int32 aux = 0;
-			while (aux < 30)
+			int32 loop = 0;
+			while (loop < 11)
 			{
-				aux++;
+				loop++;
 				PlayerPassed = true;
-				SpawnPoint.X = SpawnPoint.X + FMath::RandRange(-350, 350);
-				SpawnPoint.Z = SpawnPoint.Z + FMath::RandRange(-350, 350);
-				SpawnPoint.Y = SpawnPoint.Y + FMath::RandRange(-350, 350);
+				SpawnPoint2.X = SpawnPoint2.X + FMath::RandRange(-350, 350);
+				SpawnPoint2.Z = SpawnPoint2.Z + FMath::RandRange(-350, 350);
+				SpawnPoint2.Y = SpawnPoint2.Y + FMath::RandRange(-350, 350);
 
-				AEnemy* enemy = GetWorld()->SpawnActor<AEnemy>(EnemyClass, SpawnPoint, this->GetActorRotation());
+				AEnemy* enemy = GetWorld()->SpawnActor<AEnemy>(EnemyClass, SpawnPoint2, this->GetActorRotation());
 
 			}
-
+			
 
 		}
 
 		if (aux == 0)
 		{
-			int32 aux = 0;
-			while (aux < 20)
+			int32 loop = 0;
+			while (loop < 6)
 			{
-				aux++;
+				loop++;
 				PlayerPassed = true;
 				SpawnPoint.X = SpawnPoint.X + FMath::RandRange(-350, 350);
 				SpawnPoint.Z = SpawnPoint.Z + FMath::RandRange(-350, 350);
@@ -145,6 +145,8 @@ void AControlPoint::WaveMechanics(int aux)
 			}
 
 		}
+
+
 	}
 
 

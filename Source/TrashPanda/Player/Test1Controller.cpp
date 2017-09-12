@@ -2,7 +2,6 @@
 #include "TrashPanda.h"
 #include "Chip.h"
 #include "Test1Controller.h"
-#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
 ATest1Controller::ATest1Controller()
 {

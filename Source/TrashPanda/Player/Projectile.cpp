@@ -101,7 +101,7 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		APlayerController* PlayerController = NULL;
 		TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
 		FDamageEvent DamageEvent(ValidDamageTypeClass);
-		const float DamageAmount = 5.0f;
+		const float DamageAmount = 2.0f;
 
 		if (Shooter == "Player")
 		{

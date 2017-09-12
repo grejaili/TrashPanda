@@ -10,7 +10,6 @@
 #include "Items/BaseWeapon.h"
 #include "TrashPandaGameModeBase.h"
 
-#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red,text) 
 
 // Sets default values
 AChip::AChip()
@@ -34,12 +33,7 @@ AChip::AChip()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-												   //INITILIZING
-	//static ConstructorHelpers::FObjectFinder<UBlueprint> BulletBP(TEXT("Blueprint'/Game/Player/Projectile.Projectile'"));
-
-	//ProjectileClass = (UClass*)BulletBP.Object->GeneratedClass;
-
-	//hand_rSocket
+t
 
 
 
@@ -173,7 +167,7 @@ void AChip::DodgeRight()
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	//this->AddMovementInput(Direction, );
-	print("dodge right");
+	
 	this->LaunchCharacter(Direction * DodgeDistance, true, true);
 }
 
@@ -278,12 +272,13 @@ float AChip::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, cl
 	const float ActualDamage = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
 	if (ActualDamage > 0.f)
 	{
-		Health -= ActualDamage;
+		Health  = Health - ActualDamage;
 		// If the damage depletes our health set our lifespan to zero - which will destroy the actor  
 		if (Health <= 0.f)
 		{
-			//SetLifeSpan(0.001f);
-			UE_LOG(LogTemp, Warning, TEXT("I died"));
+			AGameMode* aux = Cast <AGameMode>(GetWorld()->GetAuthGameMode());
+
+			aux->RestartGame();
 
 		}
 	}
